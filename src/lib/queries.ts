@@ -12,6 +12,8 @@ export async function getSingletonPage(table: Table) {
 export async function upsertSingletonPage(table: Table, data: Record<string, unknown>) {
   const payload = { ...data }
   if (!payload.id) delete payload.id
+  if (!payload.created_at) delete payload.created_at
+  if (!payload.updated_at) delete payload.updated_at
   const { data: result, error } = await supabase
     .from(table)
     .upsert(payload, { onConflict: 'id' })
