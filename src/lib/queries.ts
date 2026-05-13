@@ -10,9 +10,11 @@ export async function getSingletonPage(table: Table) {
 }
 
 export async function upsertSingletonPage(table: Table, data: Record<string, unknown>) {
+  const payload = { ...data }
+  if (!payload.id) delete payload.id
   const { data: result, error } = await supabase
     .from(table)
-    .upsert(data, { onConflict: 'id' })
+    .upsert(payload, { onConflict: 'id' })
     .select()
     .single()
   if (error) throw error
