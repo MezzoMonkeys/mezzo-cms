@@ -8,7 +8,7 @@ import SeoTab from './SeoTab'
 import AeoTab from './AeoTab'
 import GeoTab from './GeoTab'
 
-const SITE_URL = 'https://mezzocollective.com'
+const SITE_URL = 'https://mezzo-html-dajvrqxex-mezzomonkeys-projects.vercel.app'
 
 const TABS = [
   { id: 'content', label: 'Content' },
