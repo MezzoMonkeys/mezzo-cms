@@ -1,5 +1,6 @@
 import EditorPage from '@/components/editors/EditorPage'
 import { TextField } from '@/components/editors/fields'
+import { PricingCategoriesSection } from '@/components/editors/PricingCategoriesSection'
 import type { PricingPage } from '@/lib/types'
 
 const DEFAULT: PricingPage = {
@@ -27,21 +28,7 @@ export default function PricingEditor() {
               onChange={e => onChange({ page_title: e.target.value })} />
           </section>
 
-          <section>
-            <h3 className="text-xs font-semibold uppercase tracking-widest mb-2 pb-2"
-              style={{ color: '#6b6b6b', borderBottom: '1px solid #e8e8e8' }}>
-              Pricing Categories & Cards
-            </h3>
-            <p className="text-sm mb-3" style={{ color: '#6b6b6b' }}>
-              Pricing categories (tabs) and their cards are managed as separate database records.
-            </p>
-            <div
-              className="rounded-xl p-4 text-sm"
-              style={{ background: '#f7f7f7', border: '1px solid #e8e8e8' }}
-            >
-              Full pricing card editor coming in next release — categories and cards can be managed in Supabase in the meantime.
-            </div>
-          </section>
+          <PricingCategoriesSection />
         </div>
       )}
     </EditorPage>
