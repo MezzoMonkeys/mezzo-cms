@@ -146,6 +146,8 @@ export interface PortfolioItem {
   image_url: string
   image_alt: string
   brand: string | null
+  brand_logo_url: string | null
+  brand_logo_alt: string | null
   date: string | null
   description: string | null
   layout_side: 'left' | 'right'
