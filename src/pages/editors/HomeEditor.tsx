@@ -14,6 +14,7 @@ const DEFAULT: HomePage = {
   aeo_primary_question: null, aeo_direct_answer: null, aeo_faq_blocks: [], aeo_speakable_content: null,
   geo_topic_clusters: [], geo_entity_mentions: [], geo_ai_summary: null, geo_llms_txt_flag: true,
   hero_subheading: null, hero_image: null, hero_image_alt: '',
+  hero_image_focal_x: null, hero_image_focal_y: null,
   brand_title: null, brand_subtitle: null, service_section_heading: null,
   our_work_heading: null, our_work_button_text: null, our_work_button_url: null, clients_title: null,
 }
@@ -35,7 +36,11 @@ export default function HomeEditor() {
               <ImageUpload label="Hero Image"
                 value={data.hero_image} altValue={data.hero_image_alt}
                 onChange={url => onChange({ hero_image: url })}
-                onAltChange={alt => onChange({ hero_image_alt: alt })} required />
+                onAltChange={alt => onChange({ hero_image_alt: alt })}
+                focalX={data.hero_image_focal_x}
+                focalY={data.hero_image_focal_y}
+                onFocalChange={(x, y) => onChange({ hero_image_focal_x: x, hero_image_focal_y: y })}
+                required />
             </div>
           </section>
 

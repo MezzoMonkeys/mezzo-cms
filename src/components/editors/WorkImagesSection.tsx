@@ -24,7 +24,8 @@ export function WorkImagesSection({ page, label = 'Work Images' }: Props) {
 
   function addItem() {
     setItems(prev => [...prev, {
-      id: crypto.randomUUID(), page, image_url: '', image_alt: '', sort_order: prev.length,
+      id: crypto.randomUUID(), page, image_url: '', image_alt: '',
+      focal_x: null, focal_y: null, sort_order: prev.length,
     }])
   }
 
@@ -107,6 +108,9 @@ export function WorkImagesSection({ page, label = 'Work Images' }: Props) {
                 altValue={item.image_alt}
                 onChange={url => updateItem(i, { image_url: url ?? '' })}
                 onAltChange={alt => updateItem(i, { image_alt: alt })}
+                focalX={item.focal_x}
+                focalY={item.focal_y}
+                onFocalChange={(x, y) => updateItem(i, { focal_x: x, focal_y: y })}
                 required
               />
             </div>

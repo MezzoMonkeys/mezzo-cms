@@ -8,7 +8,8 @@ import ImageUpload from '@/components/editors/ImageUpload'
 import type { PortfolioItem } from '@/lib/types'
 
 const BLANK: Omit<PortfolioItem, 'id' | 'sort_order'> = {
-  title: '', image_url: '', image_alt: '', brand: null, brand_logo_url: null, brand_logo_alt: null,
+  title: '', image_url: '', image_alt: '', image_focal_x: null, image_focal_y: null,
+  brand: null, brand_logo_url: null, brand_logo_alt: null,
   date: null, description: null, layout_side: 'left', colour_scheme: 'light', link_url: null,
   article_slug: null,
 }
@@ -171,6 +172,9 @@ export const PortfolioSection = forwardRef<PortfolioSectionHandle>(function Port
                 altValue={item.image_alt}
                 onChange={url => updateItem(i, { image_url: url ?? '' })}
                 onAltChange={alt => updateItem(i, { image_alt: alt })}
+                focalX={item.image_focal_x}
+                focalY={item.image_focal_y}
+                onFocalChange={(x, y) => updateItem(i, { image_focal_x: x, image_focal_y: y })}
                 required
               />
               <ImageUpload

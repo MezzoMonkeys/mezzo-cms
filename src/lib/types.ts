@@ -79,6 +79,8 @@ export interface HomePage extends PageRecord {
   hero_subheading: string | null
   hero_image: string | null
   hero_image_alt: string
+  hero_image_focal_x: number | null
+  hero_image_focal_y: number | null
   brand_title: string | null
   brand_subtitle: string | null
   service_section_heading: string | null
@@ -101,6 +103,8 @@ export interface WorkImage {
   page: 'home' | 'about'
   image_url: string
   image_alt: string
+  focal_x: number | null
+  focal_y: number | null
   sort_order: number
 }
 
@@ -145,6 +149,8 @@ export interface PortfolioItem {
   title: string
   image_url: string
   image_alt: string
+  image_focal_x: number | null
+  image_focal_y: number | null
   brand: string | null
   brand_logo_url: string | null
   brand_logo_alt: string | null
@@ -192,6 +198,8 @@ export interface Article extends PageRecord {
   publish_date: string | null
   featured_image_url: string | null
   featured_image_alt: string
+  featured_image_focal_x: number | null
+  featured_image_focal_y: number | null
   excerpt: string | null
   content_blocks: ContentBlock[]
   category: string | null

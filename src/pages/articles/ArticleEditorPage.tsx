@@ -29,6 +29,7 @@ const DEFAULT: Article = {
   geo_topic_clusters: [], geo_entity_mentions: [], geo_ai_summary: null, geo_llms_txt_flag: true,
   article_title: '', slug: '', publish_date: null,
   featured_image_url: null, featured_image_alt: '',
+  featured_image_focal_x: null, featured_image_focal_y: null,
   excerpt: null, content_blocks: [], category: null,
 }
 
@@ -190,7 +191,11 @@ export default function ArticleEditorPage() {
                 <ImageUpload label="Featured Image"
                   value={data.featured_image_url} altValue={data.featured_image_alt}
                   onChange={url => patch({ featured_image_url: url })}
-                  onAltChange={alt => patch({ featured_image_alt: alt })} required />
+                  onAltChange={alt => patch({ featured_image_alt: alt })}
+                  focalX={data.featured_image_focal_x}
+                  focalY={data.featured_image_focal_y}
+                  onFocalChange={(x, y) => patch({ featured_image_focal_x: x, featured_image_focal_y: y })}
+                  required />
               </section>
 
               <section>
