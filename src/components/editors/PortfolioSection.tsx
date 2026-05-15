@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef, useImperativeHandle, forwardRef } from 'react'
 import toast from 'react-hot-toast'
 import { Plus, Trash2, ChevronUp, ChevronDown } from 'lucide-react'
 import { getChildItems, upsertChildItem, deleteChildItem } from '@/lib/queries'
@@ -11,10 +11,17 @@ const BLANK: Omit<PortfolioItem, 'id' | 'sort_order'> = {
   description: null, layout_side: 'left', colour_scheme: 'light', link_url: null,
 }
 
-export function PortfolioSection() {
+export interface PortfolioSectionHandle {
+  save: () => Promise<void>
+}
+
+export const PortfolioSection = forwardRef<PortfolioSectionHandle>(function PortfolioSection(_, ref) {
   const [items, setItems] = useState<PortfolioItem[]>([])
   const [saving, setSaving] = useState(false)
   const [loading, setLoading] = useState(true)
+  const itemsRef = useRef<PortfolioItem[]>([])
+
+  useEffect(() => { itemsRef.current = items }, [items])
 
   useEffect(() => {
     getChildItems('portfolio_items')
@@ -46,21 +53,23 @@ export function PortfolioSection() {
     })
   }
 
-  async function save() {
+  async function save(silent = false) {
     setSaving(true)
     try {
       await Promise.all(
-        items.map((item, i) =>
+        itemsRef.current.map((item, i) =>
           upsertChildItem('portfolio_items', { ...item, sort_order: i } as Record<string, unknown>)
         )
       )
-      toast.success('Portfolio items saved')
+      if (!silent) toast.success('Portfolio items saved')
     } catch {
       toast.error('Save failed')
     } finally {
       setSaving(false)
     }
   }
+
+  useImperativeHandle(ref, () => ({ save: () => save(true) }))
 
   if (loading) return <p className="text-sm" style={{ color: '#6b6b6b' }}>Loading…</p>
 
@@ -149,4 +158,4 @@ export function PortfolioSection() {
       </div>
     </section>
   )
-}
+})

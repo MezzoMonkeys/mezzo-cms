@@ -1,7 +1,8 @@
+import { useRef } from 'react'
 import EditorPage from '@/components/editors/EditorPage'
 import { TextField } from '@/components/editors/fields'
 import ImageUpload from '@/components/editors/ImageUpload'
-import { PortfolioSection } from '@/components/editors/PortfolioSection'
+import { PortfolioSection, type PortfolioSectionHandle } from '@/components/editors/PortfolioSection'
 import type { OurWorkPage } from '@/lib/types'
 
 const DEFAULT: OurWorkPage = {
@@ -15,8 +16,16 @@ const DEFAULT: OurWorkPage = {
 }
 
 export default function WorkEditor() {
+  const portfolioRef = useRef<PortfolioSectionHandle>(null)
+
   return (
-    <EditorPage table="our_work_page" title="Our Work" defaultData={DEFAULT} previewPath="/our-work">
+    <EditorPage
+      table="our_work_page"
+      title="Our Work"
+      defaultData={DEFAULT}
+      previewPath="/our-work"
+      onBeforeSave={() => portfolioRef.current?.save() ?? Promise.resolve()}
+    >
       {(data, onChange) => (
         <div className="flex flex-col gap-8">
           <section>
@@ -52,7 +61,7 @@ export default function WorkEditor() {
             </div>
           </section>
 
-          <PortfolioSection />
+          <PortfolioSection ref={portfolioRef} />
         </div>
       )}
     </EditorPage>

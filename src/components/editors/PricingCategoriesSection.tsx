@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef, useImperativeHandle, forwardRef } from 'react'
 import toast from 'react-hot-toast'
 import { Plus, Trash2, ChevronUp, ChevronDown, ChevronRight } from 'lucide-react'
 import { getChildItems, upsertChildItem, deleteChildItem } from '@/lib/queries'
@@ -8,10 +8,17 @@ import type { PricingCategory, PricingCard } from '@/lib/types'
 type CardDraft = PricingCard & { _featuresText: string }
 type CategoryDraft = PricingCategory & { _cards: CardDraft[]; _expanded: boolean }
 
-export function PricingCategoriesSection() {
+export interface PricingCategoriesSectionHandle {
+  save: () => Promise<void>
+}
+
+export const PricingCategoriesSection = forwardRef<PricingCategoriesSectionHandle>(function PricingCategoriesSection(_, ref) {
   const [cats, setCats] = useState<CategoryDraft[]>([])
   const [saving, setSaving] = useState(false)
   const [loading, setLoading] = useState(true)
+  const catsRef = useRef<CategoryDraft[]>([])
+
+  useEffect(() => { catsRef.current = cats }, [cats])
 
   useEffect(() => {
     Promise.all([
@@ -127,11 +134,12 @@ export function PricingCategoriesSection() {
     await deleteChildItem('pricing_cards', card.id).catch(() => null)
   }
 
-  async function save() {
+  async function save(silent = false) {
     setSaving(true)
     try {
+      const current = catsRef.current
       await Promise.all(
-        cats.map((cat, i) =>
+        current.map((cat, i) =>
           upsertChildItem('pricing_categories', {
             id: cat.id,
             category_title: cat.category_title,
@@ -141,7 +149,7 @@ export function PricingCategoriesSection() {
         ),
       )
       await Promise.all(
-        cats.flatMap((cat, _catIdx) =>
+        current.flatMap((cat, _catIdx) =>
           cat._cards.map((card, cardIdx) =>
             upsertChildItem('pricing_cards', {
               id: card.id,
@@ -160,13 +168,15 @@ export function PricingCategoriesSection() {
           ),
         ),
       )
-      toast.success('Pricing saved')
+      if (!silent) toast.success('Pricing saved')
     } catch {
       toast.error('Save failed')
     } finally {
       setSaving(false)
     }
   }
+
+  useImperativeHandle(ref, () => ({ save: () => save(true) }))
 
   if (loading) return <p className="text-sm" style={{ color: '#6b6b6b' }}>Loading…</p>
 
@@ -408,4 +418,4 @@ export function PricingCategoriesSection() {
       </div>
     </section>
   )
-}
+})

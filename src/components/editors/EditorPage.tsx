@@ -22,6 +22,7 @@ interface Props<T extends PageRecord> {
   title: string
   defaultData: T
   previewPath: string
+  onBeforeSave?: () => Promise<void>
   children: (data: T, onChange: (patch: Partial<T>) => void) => ReactNode
 }
 
@@ -30,6 +31,7 @@ export default function EditorPage<T extends PageRecord>({
   title,
   defaultData,
   previewPath,
+  onBeforeSave,
   children,
 }: Props<T>) {
   const [data, setData] = useState<T>(defaultData)
@@ -51,6 +53,7 @@ export default function EditorPage<T extends PageRecord>({
   async function save(status: Status) {
     setSaving(true)
     try {
+      if (onBeforeSave) await onBeforeSave()
       const payload: Record<string, unknown> = { ...data, status }
       if (status === 'published') payload.published_at = new Date().toISOString()
       const result = await upsertSingletonPage(table, payload)

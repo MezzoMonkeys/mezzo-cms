@@ -1,6 +1,7 @@
+import { useRef } from 'react'
 import EditorPage from '@/components/editors/EditorPage'
 import { TextField } from '@/components/editors/fields'
-import { PricingCategoriesSection } from '@/components/editors/PricingCategoriesSection'
+import { PricingCategoriesSection, type PricingCategoriesSectionHandle } from '@/components/editors/PricingCategoriesSection'
 import type { PricingPage } from '@/lib/types'
 
 const DEFAULT: PricingPage = {
@@ -14,8 +15,16 @@ const DEFAULT: PricingPage = {
 }
 
 export default function PricingEditor() {
+  const pricingRef = useRef<PricingCategoriesSectionHandle>(null)
+
   return (
-    <EditorPage table="pricing_page" title="Pricing" defaultData={DEFAULT} previewPath="/pricing">
+    <EditorPage
+      table="pricing_page"
+      title="Pricing"
+      defaultData={DEFAULT}
+      previewPath="/pricing"
+      onBeforeSave={() => pricingRef.current?.save() ?? Promise.resolve()}
+    >
       {(data, onChange) => (
         <div className="flex flex-col gap-8">
           <section>
@@ -28,7 +37,7 @@ export default function PricingEditor() {
               onChange={e => onChange({ page_title: e.target.value })} />
           </section>
 
-          <PricingCategoriesSection />
+          <PricingCategoriesSection ref={pricingRef} />
         </div>
       )}
     </EditorPage>

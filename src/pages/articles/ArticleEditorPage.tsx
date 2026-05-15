@@ -115,8 +115,12 @@ export default function ArticleEditorPage() {
         title={isNew ? 'New Article' : (data.article_title || 'Untitled')}
         status={data.status}
         saving={saving}
-        onSaveDraft={() => save('draft')}
-        onPublish={() => save('published')}
+        onSave={() => save('draft')}
+        onSaveAndPreview={async () => {
+          await save('draft')
+          if (data.slug) window.open(`https://mezzo-html-mezzomonkeys-projects.vercel.app/insights/${data.slug}`, '_blank')
+        }}
+        onSaveAndPublish={() => save('published')}
       />
       <TabBar tabs={TABS} active={activeTab} onChange={setActiveTab} />
 
