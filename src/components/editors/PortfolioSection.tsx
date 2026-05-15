@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useImperativeHandle, forwardRef } from 're
 import toast from 'react-hot-toast'
 import { Plus, Trash2, ChevronUp, ChevronDown } from 'lucide-react'
 import { getChildItems, upsertChildItem, deleteChildItem } from '@/lib/queries'
+import { supabase } from '@/lib/supabase'
 import { TextField, TextareaField, SelectField } from '@/components/editors/fields'
 import ImageUpload from '@/components/editors/ImageUpload'
 import type { PortfolioItem } from '@/lib/types'
@@ -9,7 +10,10 @@ import type { PortfolioItem } from '@/lib/types'
 const BLANK: Omit<PortfolioItem, 'id' | 'sort_order'> = {
   title: '', image_url: '', image_alt: '', brand: null, brand_logo_url: null, brand_logo_alt: null,
   date: null, description: null, layout_side: 'left', colour_scheme: 'light', link_url: null,
+  article_slug: null,
 }
+
+interface ArticleOption { article_title: string; slug: string }
 
 export interface PortfolioSectionHandle {
   save: () => Promise<void>
@@ -17,6 +21,7 @@ export interface PortfolioSectionHandle {
 
 export const PortfolioSection = forwardRef<PortfolioSectionHandle>(function PortfolioSection(_, ref) {
   const [items, setItems] = useState<PortfolioItem[]>([])
+  const [articles, setArticles] = useState<ArticleOption[]>([])
   const [saving, setSaving] = useState(false)
   const [loading, setLoading] = useState(true)
   const itemsRef = useRef<PortfolioItem[]>([])
@@ -24,8 +29,14 @@ export const PortfolioSection = forwardRef<PortfolioSectionHandle>(function Port
   useEffect(() => { itemsRef.current = items }, [items])
 
   useEffect(() => {
-    getChildItems('portfolio_items')
-      .then(data => setItems(data as PortfolioItem[]))
+    Promise.all([
+      getChildItems('portfolio_items'),
+      supabase.from('articles').select('article_title, slug').order('article_title', { ascending: true }),
+    ])
+      .then(([portfolioData, { data: articleData }]) => {
+        setItems(portfolioData as PortfolioItem[])
+        setArticles(articleData ?? [])
+      })
       .catch(() => toast.error('Failed to load portfolio items'))
       .finally(() => setLoading(false))
   }, [])
@@ -130,14 +141,27 @@ export const PortfolioSection = forwardRef<PortfolioSectionHandle>(function Port
                 <TextField label="Date" value={item.date ?? ''}
                   placeholder="e.g. March 2024"
                   onChange={e => updateItem(i, { date: e.target.value || null })} />
-                <TextField label="Link URL" type="url" value={item.link_url ?? ''}
-                  onChange={e => updateItem(i, { link_url: e.target.value || null })} />
                 <SelectField label="Layout Side" value={item.layout_side}
                   onChange={v => updateItem(i, { layout_side: v as 'left' | 'right' })}
                   options={[{ value: 'left', label: 'Image Left' }, { value: 'right', label: 'Image Right' }]} />
                 <SelectField label="Colour Scheme" value={item.colour_scheme}
                   onChange={v => updateItem(i, { colour_scheme: v as 'light' | 'dark' })}
                   options={[{ value: 'light', label: 'Light' }, { value: 'dark', label: 'Dark' }]} />
+                <div className="flex flex-col gap-1">
+                  <label className="text-xs font-medium" style={{ color: '#6b6b6b' }}>
+                    Project Article
+                  </label>
+                  <select
+                    value={item.article_slug ?? ''}
+                    onChange={e => updateItem(i, { article_slug: e.target.value || null })}
+                    className="text-sm rounded-lg px-3 py-2"
+                    style={{ border: '1px solid #e8e8e8', color: '#2b2b2b', background: '#ffffff' }}>
+                    <option value="">— No article linked —</option>
+                    {articles.map(a => (
+                      <option key={a.slug} value={a.slug}>{a.article_title}</option>
+                    ))}
+                  </select>
+                </div>
               </div>
               <TextareaField label="Description" rows={3} value={item.description ?? ''}
                 onChange={e => updateItem(i, { description: e.target.value || null })} />
