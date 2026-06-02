@@ -113,6 +113,8 @@ export interface ClientLogo {
   name: string
   logo_url: string
   logo_alt: string
+  background_image_url: string
+  background_image_alt: string
   website_url: string | null
   sort_order: number
 }

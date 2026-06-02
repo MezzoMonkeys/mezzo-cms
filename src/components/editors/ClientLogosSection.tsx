@@ -20,7 +20,9 @@ export function ClientLogosSection() {
 
   function addItem() {
     setItems(prev => [...prev, {
-      id: crypto.randomUUID(), name: '', logo_url: '', logo_alt: '', website_url: null, sort_order: prev.length,
+      id: crypto.randomUUID(), name: '', logo_url: '', logo_alt: '',
+      background_image_url: '', background_image_alt: '',
+      website_url: null, sort_order: prev.length,
     }])
   }
 
@@ -99,7 +101,7 @@ export function ClientLogosSection() {
                 onChange={e => updateItem(i, { name: e.target.value })} />
               <TextField label="Website URL" type="url" value={item.website_url ?? ''}
                 onChange={e => updateItem(i, { website_url: e.target.value || null })} />
-              <div className="col-span-2">
+              <div>
                 <ImageUpload
                   label="Logo"
                   value={item.logo_url || null}
@@ -107,6 +109,15 @@ export function ClientLogosSection() {
                   onChange={url => updateItem(i, { logo_url: url ?? '' })}
                   onAltChange={alt => updateItem(i, { logo_alt: alt })}
                   required
+                />
+              </div>
+              <div>
+                <ImageUpload
+                  label="Card Background Image"
+                  value={item.background_image_url || null}
+                  altValue={item.background_image_alt}
+                  onChange={url => updateItem(i, { background_image_url: url ?? '' })}
+                  onAltChange={alt => updateItem(i, { background_image_alt: alt })}
                 />
               </div>
             </div>
