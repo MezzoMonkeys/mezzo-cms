@@ -66,7 +66,12 @@ export async function getArticle(id: string) {
 }
 
 export async function createArticle(data: Record<string, unknown>) {
-  const { data: result, error } = await supabase.from('articles').insert(data).select().single()
+  // Never send a blank `id` (or other empty DB-managed uuid/timestamp fields) on
+  // insert — an empty string fails the uuid column. Let the DB defaults generate them.
+  const { id, created_at, updated_at, ...rest } = data
+  void id; void created_at; void updated_at
+  const payload: Record<string, unknown> = { ...rest, updated_at: new Date().toISOString() }
+  const { data: result, error } = await supabase.from('articles').insert(payload).select().single()
   if (error) throw error
   return result
 }

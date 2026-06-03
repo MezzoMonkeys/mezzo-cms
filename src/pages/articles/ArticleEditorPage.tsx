@@ -94,7 +94,8 @@ export default function ArticleEditorPage() {
         toast.success(status === 'published' ? 'Published' : 'Saved')
       }
     } catch (err) {
-      toast.error('Save failed')
+      const msg = (err as { message?: string })?.message || 'unknown error'
+      toast.error(`Save failed: ${msg}`)
       console.error(err)
     } finally {
       setSaving(false)
