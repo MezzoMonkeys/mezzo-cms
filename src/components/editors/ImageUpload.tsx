@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { Upload, X, ImageIcon } from 'lucide-react'
 import { uploadFile } from '@/lib/queries'
 import { FieldWrap } from './fields'
@@ -21,6 +21,14 @@ const CROP_VIEWS = [
   { label: '9:16', ratio: 16 / 9 },
 ]
 
+function fileSizeBadge(bytes: number) {
+  const kb = bytes / 1024
+  const label = kb >= 1024 ? `${(kb / 1024).toFixed(1)} MB` : `${Math.round(kb)} KB`
+  if (kb <= 200) return { label, color: '#16a34a', bg: '#dcfce7', text: 'Good size' }
+  if (kb <= 800) return { label, color: '#d97706', bg: '#fef3c7', text: 'Consider optimising' }
+  return { label, color: '#dc2626', bg: '#fee2e2', text: 'Too large — compress before uploading' }
+}
+
 export default function ImageUpload({
   label, value, altValue, onChange, onAltChange, required,
   focalX, focalY, onFocalChange,
@@ -28,21 +36,39 @@ export default function ImageUpload({
   const [uploading, setUploading] = useState(false)
   const [altError, setAltError] = useState(false)
   const [isDraggingFocal, setIsDraggingFocal] = useState(false)
+  const [fileBytes, setFileBytes] = useState<number | null>(null)
   const inputRef = useRef<HTMLInputElement>(null)
+  const lastValueRef = useRef<string | null>(null)
 
   const fx = focalX ?? 0.5
   const fy = focalY ?? 0.5
   const showPicker = !!onFocalChange && !!value
 
+  // Fetch size for existing images (on mount or when value changes externally)
+  useEffect(() => {
+    if (!value || value === lastValueRef.current) return
+    lastValueRef.current = value
+    setFileBytes(null)
+    fetch(value, { method: 'HEAD' })
+      .then(r => {
+        const len = r.headers.get('content-length')
+        if (len) setFileBytes(parseInt(len, 10))
+      })
+      .catch(() => {})
+  }, [value])
+
   async function handleFile(file: File) {
     setUploading(true)
+    setFileBytes(file.size)
     try {
       const path = `uploads/${Date.now()}-${file.name.replace(/[^a-z0-9.]/gi, '-')}`
       const url = await uploadFile('media', path, file)
+      lastValueRef.current = url
       onChange(url)
       if (onFocalChange) onFocalChange(0.5, 0.5)
     } catch (err) {
       console.error('Upload failed', err)
+      setFileBytes(null)
     } finally {
       setUploading(false)
     }
@@ -74,6 +100,8 @@ export default function ImageUpload({
     const { x, y } = getFocal(e)
     onFocalChange!(x, y)
   }
+
+  const sizeBadge = fileBytes !== null ? fileSizeBadge(fileBytes) : null
 
   return (
     <div className="flex flex-col gap-3">
@@ -130,13 +158,26 @@ export default function ImageUpload({
               <button
                 type="button"
                 onPointerDown={e => e.stopPropagation()}
-                onClick={() => onChange('')}
+                onClick={() => { onChange(''); setFileBytes(null) }}
                 className="absolute top-2 right-2 w-7 h-7 rounded-full flex items-center justify-center"
                 style={{ background: 'rgba(0,0,0,0.6)', color: '#fff', zIndex: 2 }}
               >
                 <X size={14} />
               </button>
             </div>
+
+            {/* File size badge */}
+            {sizeBadge && (
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                <span style={{
+                  fontSize: 11, fontWeight: 600, padding: '2px 8px', borderRadius: 4,
+                  background: sizeBadge.bg, color: sizeBadge.color,
+                }}>
+                  {sizeBadge.label}
+                </span>
+                <span style={{ fontSize: 11, color: sizeBadge.color }}>{sizeBadge.text}</span>
+              </div>
+            )}
 
             {/* Crop previews */}
             {showPicker && (
