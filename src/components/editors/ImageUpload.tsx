@@ -129,6 +129,7 @@ export default function ImageUpload({
               )}
               <button
                 type="button"
+                onPointerDown={e => e.stopPropagation()}
                 onClick={() => onChange('')}
                 className="absolute top-2 right-2 w-7 h-7 rounded-full flex items-center justify-center"
                 style={{ background: 'rgba(0,0,0,0.6)', color: '#fff', zIndex: 2 }}
