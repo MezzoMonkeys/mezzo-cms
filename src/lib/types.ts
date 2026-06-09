@@ -49,6 +49,32 @@ export interface Profile {
   full_name: string | null
   role: UserRole
   avatar_url: string | null
+  status: 'active' | 'invited' | 'disabled'
+  invited_by: string | null
+}
+
+export interface Site {
+  id: string
+  name: string
+  slug: string
+  domain: string | null
+  created_at: string
+}
+
+export interface UserWithAccess extends Profile {
+  site_ids: string[]
+}
+
+export interface Invitation {
+  id: string
+  email: string
+  role: UserRole
+  token: string
+  invited_by: string | null
+  site_ids: string[]
+  expires_at: string
+  accepted_at: string | null
+  created_at: string
 }
 
 // ── Site Settings ─────────────────────────────────────────

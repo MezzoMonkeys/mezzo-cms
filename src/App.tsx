@@ -12,11 +12,17 @@ import SiteSettingsEditor from '@/pages/editors/SiteSettingsEditor'
 import ArticlesListPage from '@/pages/articles/ArticlesListPage'
 import ArticleEditorPage from '@/pages/articles/ArticleEditorPage'
 import SubmissionsPage from '@/pages/SubmissionsPage'
+import UsersPage from '@/pages/UsersPage'
+import AcceptInvitePage from '@/pages/AcceptInvitePage'
 
 const router = createBrowserRouter([
   {
     path: '/login',
     element: <LoginPage />,
+  },
+  {
+    path: '/accept-invite',
+    element: <AcceptInvitePage />,
   },
   {
     path: '/',
@@ -34,6 +40,7 @@ const router = createBrowserRouter([
       { path: 'articles/:id', element: <ArticleEditorPage /> },
       { path: 'submissions', element: <SubmissionsPage /> },
       { path: 'settings', element: <SiteSettingsEditor /> },
+      { path: 'team', element: <UsersPage /> },
     ],
   },
 ])

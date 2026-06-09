@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, type ReactNode } from 'react'
 import toast from 'react-hot-toast'
-import { getSingletonPage, upsertSingletonPage } from '@/lib/queries'
+import { getSingletonPage, upsertSingletonPage, classifyError } from '@/lib/queries'
 import type { PageRecord, Status } from '@/lib/types'
 import ContentHeader from '@/components/layout/ContentHeader'
 import TabBar from './TabBar'
@@ -54,13 +54,13 @@ export default function EditorPage<T extends PageRecord>({
     setSaving(true)
     try {
       if (onBeforeSave) await onBeforeSave()
-      const payload: Record<string, unknown> = { ...data, status }
+      const payload: Record<string, unknown> = { ...(data as Record<string, unknown>), status }
       if (status === 'published') payload.published_at = new Date().toISOString()
       const result = await upsertSingletonPage(table, payload)
       setData(result as T)
       return true
     } catch (err) {
-      toast.error('Save failed')
+      toast.error(classifyError(err))
       console.error(err)
       return false
     } finally {
@@ -112,9 +112,9 @@ export default function EditorPage<T extends PageRecord>({
       <div className="flex-1 overflow-y-auto">
         <div className="max-w-3xl mx-auto px-8 py-8">
           {activeTab === 'content' && children(data, patch)}
-          {activeTab === 'seo' && <SeoTab data={data} onChange={patch} />}
-          {activeTab === 'aeo' && <AeoTab data={data} onChange={patch} />}
-          {activeTab === 'geo' && <GeoTab data={data} onChange={patch} />}
+          {activeTab === 'seo' && <SeoTab data={data} onChange={patch as Parameters<typeof SeoTab>[0]['onChange']} />}
+          {activeTab === 'aeo' && <AeoTab data={data} onChange={patch as Parameters<typeof AeoTab>[0]['onChange']} />}
+          {activeTab === 'geo' && <GeoTab data={data} onChange={patch as Parameters<typeof GeoTab>[0]['onChange']} />}
         </div>
       </div>
     </div>

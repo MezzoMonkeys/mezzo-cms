@@ -1,5 +1,6 @@
 import { NavLink, useNavigate } from 'react-router-dom'
-import { FileText, Home, Info, Briefcase, DollarSign, Lightbulb, Mail, Settings, Plus, Inbox } from 'lucide-react'
+import { FileText, Home, Info, Briefcase, DollarSign, Lightbulb, Mail, Settings, Plus, Inbox, Users } from 'lucide-react'
+import { useAuth } from '@/contexts/AuthContext'
 
 const pages = [
   { path: '/home', label: 'Home', icon: Home },
@@ -48,6 +49,8 @@ function NavItem({
 
 export default function Sidebar() {
   const navigate = useNavigate()
+  const { profile } = useAuth()
+  const isAdmin = profile?.role === 'admin'
 
   return (
     <aside
@@ -98,6 +101,11 @@ export default function Sidebar() {
         <NavItem to="/settings" icon={Settings}>
           Site Settings
         </NavItem>
+        {isAdmin && (
+          <NavItem to="/team" icon={Users}>
+            Team
+          </NavItem>
+        )}
       </nav>
     </aside>
   )
