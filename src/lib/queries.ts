@@ -8,6 +8,7 @@ export function classifyError(err: unknown): string {
   if (err instanceof Error) {
     const m = err.message
     if (m.includes('Failed to fetch') || m.includes('NetworkError')) return 'Network error — check your connection'
+    if (m.includes('Failed to send a request to the Edge Function')) return 'Could not reach the server — try again in a moment'
     if (m.includes('JWT') || m.includes('invalid api key')) return 'Session expired — please refresh'
     if (m.includes('row-level security') || m.includes('permission denied')) return "You don't have permission to do that"
     if (m.includes('23505') || m.toLowerCase().includes('unique')) return 'Duplicate entry — this already exists'
@@ -287,6 +288,7 @@ export async function acceptInvitation(
 export async function sendInvite(email: string, role: UserRole, siteIds: string[]): Promise<void> {
   const { data: { session } } = await supabase.auth.getSession()
   if (!session) throw new Error('Not authenticated')
+
   const { data, error } = await supabase.functions.invoke('send-invite', {
     body: {
       email,
@@ -295,7 +297,21 @@ export async function sendInvite(email: string, role: UserRole, siteIds: string[
       redirectTo: `${window.location.origin}/accept-invite`,
     },
   })
-  if (error) throw error
+
+  if (error) {
+    // FunctionsHttpError — extract JSON body for the precise server-side message
+    const ctx = (error as unknown as { context?: Response }).context
+    if (ctx instanceof Response) {
+      try {
+        const body = await ctx.clone().json()
+        throw new Error(body?.error ?? error.message)
+      } catch (parseErr) {
+        if (parseErr instanceof Error && parseErr !== error) throw parseErr
+      }
+    }
+    throw error
+  }
+
   if (data?.error) throw new Error(data.error)
 }
 
