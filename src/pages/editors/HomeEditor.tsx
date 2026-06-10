@@ -3,7 +3,7 @@ import { TextField, TextareaField } from '@/components/editors/fields'
 import ImageUpload from '@/components/editors/ImageUpload'
 import { ServiceCardsSection } from '@/components/editors/ServiceCardsSection'
 import { WorkImagesSection } from '@/components/editors/WorkImagesSection'
-import { ClientLogosSection } from '@/components/editors/ClientLogosSection'
+import { ClientShowcaseSection } from '@/components/editors/ClientShowcaseSection'
 import type { HomePage } from '@/lib/types'
 
 const DEFAULT: HomePage = {
@@ -98,12 +98,13 @@ export default function HomeEditor() {
               style={{ color: '#6b6b6b', borderBottom: '1px solid #e8e8e8' }}>
               Clients Section
             </h3>
-            <TextField label="Clients Section Title"
+            <TextField label="Orbit Phrase"
+              hint="Centre phrase in the orbit. The last word is shown in italic orange — e.g. “Our Clients”."
               value={data.clients_title ?? ''}
               onChange={e => onChange({ clients_title: e.target.value })} />
           </section>
 
-          <ClientLogosSection />
+          <ClientShowcaseSection />
         </div>
       )}
     </EditorPage>

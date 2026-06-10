@@ -145,6 +145,17 @@ export interface ClientLogo {
   sort_order: number
 }
 
+// Circle gallery cards (home "Our Clients" orbit) — front + lifestyle back
+export interface ClientShowcase {
+  id: string
+  label: string
+  front_image_url: string
+  front_image_alt: string
+  back_image_url: string
+  back_image_alt: string
+  sort_order: number
+}
+
 // ── About Us Page ─────────────────────────────────────────
 export interface AboutUsPage extends PageRecord {
   hero_title: string | null

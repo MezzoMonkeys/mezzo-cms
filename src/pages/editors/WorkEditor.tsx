@@ -3,6 +3,7 @@ import EditorPage from '@/components/editors/EditorPage'
 import { TextField } from '@/components/editors/fields'
 import ImageUpload from '@/components/editors/ImageUpload'
 import { PortfolioSection, type PortfolioSectionHandle } from '@/components/editors/PortfolioSection'
+import { ClientLogosSection } from '@/components/editors/ClientLogosSection'
 import type { OurWorkPage } from '@/lib/types'
 
 const DEFAULT: OurWorkPage = {
@@ -36,7 +37,12 @@ export default function WorkEditor() {
             <TextField label="Hero Title"
               value={data.hero_title ?? ''}
               onChange={e => onChange({ hero_title: e.target.value })} />
+            <p className="text-xs mt-3" style={{ color: '#6b6b6b' }}>
+              The hero shows a rotating 3D ring of the client logos below.
+            </p>
           </section>
+
+          <ClientLogosSection />
 
           <section>
             <h3 className="text-xs font-semibold uppercase tracking-widest mb-4 pb-2"
