@@ -65,13 +65,7 @@ export async function getWorkImages(page: 'home' | 'about') {
 }
 
 export async function upsertChildItem(table: Table, data: Record<string, unknown>) {
-  const uid = await currentUserId()
-  const payload = { ...data }
-  if (uid) {
-    payload.updated_by = uid
-    if (!payload.id) payload.created_by = uid
-  }
-  const { data: result, error } = await supabase.from(table).upsert(payload).select().single()
+  const { data: result, error } = await supabase.from(table).upsert(data).select().single()
   if (error) throw error
   return result
 }
