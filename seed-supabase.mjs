@@ -8,7 +8,7 @@ import initSqlJs from 'sql.js'
 import { readFileSync } from 'fs'
 import { createClient } from '@supabase/supabase-js'
 
-const SUPABASE_URL = 'https://vbnlwejcdimsgcaznzwa.supabase.co'
+const SUPABASE_URL = 'https://psycpnkxukydrjwdkaqm.supabase.co'
 const SERVICE_ROLE_KEY = process.argv[2]
 
 if (!SERVICE_ROLE_KEY) {
