@@ -65,13 +65,13 @@ export function ClientLogosSection() {
     <section>
       <div className="flex items-center justify-between mb-4 pb-2" style={{ borderBottom: '1px solid #e8e8e8' }}>
         <h3 className="text-xs font-semibold uppercase tracking-widest" style={{ color: '#6b6b6b' }}>
-          Client Logos
+          Client Cards
         </h3>
         <div className="flex items-center gap-2">
           <button onClick={addItem}
             className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg"
             style={{ background: '#111111', color: '#f7f7f7' }}>
-            <Plus size={12} /> Add Logo
+            <Plus size={12} /> Add Card
           </button>
           <button onClick={save} disabled={saving}
             className="text-xs font-semibold px-3 py-1.5 rounded-lg disabled:opacity-50"
@@ -96,30 +96,21 @@ export function ClientLogosSection() {
                 <ChevronDown size={14} />
               </button>
             </div>
-            <div className="flex-1 grid grid-cols-2 gap-4">
-              <TextField label="Client Name" value={item.name}
-                onChange={e => updateItem(i, { name: e.target.value })} />
-              <TextField label="Website URL" type="url" value={item.website_url ?? ''}
-                onChange={e => updateItem(i, { website_url: e.target.value || null })} />
-              <div>
-                <ImageUpload
-                  label="Logo"
-                  value={item.logo_url || null}
-                  altValue={item.logo_alt}
-                  onChange={url => updateItem(i, { logo_url: url ?? '' })}
-                  onAltChange={alt => updateItem(i, { logo_alt: alt })}
-                  required
-                />
+            <div className="flex-1 flex flex-col gap-4">
+              <div className="grid grid-cols-2 gap-4">
+                <TextField label="Client Name" value={item.name}
+                  onChange={e => updateItem(i, { name: e.target.value })} />
+                <TextField label="Website URL" type="url" value={item.website_url ?? ''}
+                  onChange={e => updateItem(i, { website_url: e.target.value || null })} />
               </div>
-              <div>
-                <ImageUpload
-                  label="Card Background Image"
-                  value={item.background_image_url || null}
-                  altValue={item.background_image_alt}
-                  onChange={url => updateItem(i, { background_image_url: url ?? '' })}
-                  onAltChange={alt => updateItem(i, { background_image_alt: alt })}
-                />
-              </div>
+              <ImageUpload
+                label="Card Image"
+                value={item.background_image_url || null}
+                altValue={item.background_image_alt}
+                onChange={url => updateItem(i, { background_image_url: url ?? '' })}
+                onAltChange={alt => updateItem(i, { background_image_alt: alt })}
+                required
+              />
             </div>
             <button onClick={() => removeItem(item, i)}
               className="mt-6 w-7 h-7 flex items-center justify-center rounded-lg"
@@ -131,7 +122,7 @@ export function ClientLogosSection() {
           </div>
         ))}
         {items.length === 0 && (
-          <p className="text-sm" style={{ color: '#6b6b6b' }}>No client logos yet — click Add Logo to create one.</p>
+          <p className="text-sm" style={{ color: '#6b6b6b' }}>No client cards yet — click Add Card to create one.</p>
         )}
       </div>
     </section>
