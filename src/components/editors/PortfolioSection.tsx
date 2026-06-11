@@ -97,7 +97,7 @@ export const PortfolioSection = forwardRef<PortfolioSectionHandle>(function Port
             style={{ background: '#111111', color: '#f7f7f7' }}>
             <Plus size={12} /> Add Item
           </button>
-          <button onClick={save} disabled={saving}
+          <button onClick={() => save()} disabled={saving}
             className="text-xs font-semibold px-3 py-1.5 rounded-lg disabled:opacity-50"
             style={{ background: '#f4bf00', color: '#111111' }}>
             {saving ? 'Saving…' : 'Save'}
