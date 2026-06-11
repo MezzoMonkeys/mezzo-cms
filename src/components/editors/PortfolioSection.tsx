@@ -25,9 +25,16 @@ export const PortfolioSection = forwardRef<PortfolioSectionHandle>(function Port
   const [articles, setArticles] = useState<ArticleOption[]>([])
   const [saving, setSaving] = useState(false)
   const [loading, setLoading] = useState(true)
+  const [uploadingCount, setUploadingCount] = useState(0)
   const itemsRef = useRef<PortfolioItem[]>([])
+  const uploadingRef = useRef(0)
 
   useEffect(() => { itemsRef.current = items }, [items])
+
+  function trackUploading(active: boolean) {
+    uploadingRef.current = Math.max(0, uploadingRef.current + (active ? 1 : -1))
+    setUploadingCount(uploadingRef.current)
+  }
 
   useEffect(() => {
     Promise.all([
@@ -66,6 +73,11 @@ export const PortfolioSection = forwardRef<PortfolioSectionHandle>(function Port
   }
 
   async function save(silent = false) {
+    if (uploadingRef.current > 0) {
+      // Abort both save paths: the portfolio button (catches below) and the
+      // parent page save (EditorPage surfaces this message via classifyError).
+      throw new Error('Images still uploading — wait for them to finish before saving')
+    }
     setSaving(true)
     try {
       await Promise.all(
@@ -97,10 +109,10 @@ export const PortfolioSection = forwardRef<PortfolioSectionHandle>(function Port
             style={{ background: '#111111', color: '#f7f7f7' }}>
             <Plus size={12} /> Add Item
           </button>
-          <button onClick={() => save()} disabled={saving}
+          <button onClick={() => save().catch(err => toast.error(err.message))} disabled={saving || uploadingCount > 0}
             className="text-xs font-semibold px-3 py-1.5 rounded-lg disabled:opacity-50"
             style={{ background: '#f4bf00', color: '#111111' }}>
-            {saving ? 'Saving…' : 'Save'}
+            {uploadingCount > 0 ? 'Uploading…' : saving ? 'Saving…' : 'Save'}
           </button>
         </div>
       </div>
@@ -175,6 +187,7 @@ export const PortfolioSection = forwardRef<PortfolioSectionHandle>(function Port
                 focalX={item.image_focal_x}
                 focalY={item.image_focal_y}
                 onFocalChange={(x, y) => updateItem(i, { image_focal_x: x, image_focal_y: y })}
+                onUploadingChange={trackUploading}
                 required
               />
               <ImageUpload
@@ -183,6 +196,7 @@ export const PortfolioSection = forwardRef<PortfolioSectionHandle>(function Port
                 altValue={item.brand_logo_alt ?? ''}
                 onChange={url => updateItem(i, { brand_logo_url: url })}
                 onAltChange={alt => updateItem(i, { brand_logo_alt: alt || null })}
+                onUploadingChange={trackUploading}
               />
             </div>
           </div>

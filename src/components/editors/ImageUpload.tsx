@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
+import toast from 'react-hot-toast'
 import { Upload, X, ImageIcon } from 'lucide-react'
-import { uploadFile } from '@/lib/queries'
+import { uploadFile, classifyError } from '@/lib/queries'
 import { FieldWrap } from './fields'
 
 interface Props {
@@ -13,6 +14,7 @@ interface Props {
   focalX?: number | null
   focalY?: number | null
   onFocalChange?: (x: number, y: number) => void
+  onUploadingChange?: (uploading: boolean) => void
 }
 
 const CROP_VIEWS = [
@@ -31,7 +33,7 @@ function fileSizeBadge(bytes: number) {
 
 export default function ImageUpload({
   label, value, altValue, onChange, onAltChange, required,
-  focalX, focalY, onFocalChange,
+  focalX, focalY, onFocalChange, onUploadingChange,
 }: Props) {
   const [uploading, setUploading] = useState(false)
   const [altError, setAltError] = useState(false)
@@ -59,6 +61,7 @@ export default function ImageUpload({
 
   async function handleFile(file: File) {
     setUploading(true)
+    onUploadingChange?.(true)
     setFileBytes(file.size)
     try {
       const path = `uploads/${Date.now()}-${file.name.replace(/[^a-z0-9.]/gi, '-')}`
@@ -69,8 +72,10 @@ export default function ImageUpload({
     } catch (err) {
       console.error('Upload failed', err)
       setFileBytes(null)
+      toast.error(`Image upload failed — ${classifyError(err)}`)
     } finally {
       setUploading(false)
+      onUploadingChange?.(false)
     }
   }
 
