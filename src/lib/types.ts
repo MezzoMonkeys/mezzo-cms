@@ -178,9 +178,6 @@ export interface FaqItem {
 // ── Our Work Page ─────────────────────────────────────────
 export interface OurWorkPage extends PageRecord {
   hero_title: string | null
-  showreel_video_url: string | null
-  showreel_poster_url: string | null
-  showreel_poster_alt: string
 }
 
 export interface PortfolioItem {
