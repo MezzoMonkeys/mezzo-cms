@@ -6,7 +6,7 @@ import ImageUpload from '@/components/editors/ImageUpload'
 import type { WorkImage } from '@/lib/types'
 
 interface Props {
-  page: 'home' | 'about'
+  page: 'home' | 'about' | 'our-work'
   label?: string
 }
 

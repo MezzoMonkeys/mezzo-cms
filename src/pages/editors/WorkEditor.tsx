@@ -3,6 +3,7 @@ import EditorPage from '@/components/editors/EditorPage'
 import { TextField } from '@/components/editors/fields'
 import { PortfolioSection, type PortfolioSectionHandle } from '@/components/editors/PortfolioSection'
 import { ClientLogosSection } from '@/components/editors/ClientLogosSection'
+import { WorkImagesSection } from '@/components/editors/WorkImagesSection'
 import type { OurWorkPage } from '@/lib/types'
 
 const DEFAULT: OurWorkPage = {
@@ -37,9 +38,12 @@ export default function WorkEditor() {
               value={data.hero_title ?? ''}
               onChange={e => onChange({ hero_title: e.target.value })} />
             <p className="text-xs mt-3" style={{ color: '#6b6b6b' }}>
-              The hero shows a rotating 3D ring of the client logos below.
+              The landing section shows a big "Our Work" wordmark with the Hero Gallery
+              images scattering in on scroll, then wipes up into the rotating client ring.
             </p>
           </section>
+
+          <WorkImagesSection page="our-work" label="Hero Gallery (landing scatter)" />
 
           <ClientLogosSection />
 

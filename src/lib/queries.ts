@@ -54,7 +54,7 @@ export async function getChildItems(table: Table) {
   return data ?? []
 }
 
-export async function getWorkImages(page: 'home' | 'about') {
+export async function getWorkImages(page: 'home' | 'about' | 'our-work') {
   const { data, error } = await supabase
     .from('work_images')
     .select('*')
