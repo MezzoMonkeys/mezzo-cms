@@ -3,14 +3,14 @@ import toast from 'react-hot-toast'
 import { Plus, Trash2, ChevronUp, ChevronDown } from 'lucide-react'
 import { getChildItems, upsertChildItem, deleteChildItem } from '@/lib/queries'
 import { supabase } from '@/lib/supabase'
-import { TextField, TextareaField, SelectField } from '@/components/editors/fields'
+import { TextField, TextareaField } from '@/components/editors/fields'
 import ImageUpload from '@/components/editors/ImageUpload'
 import type { PortfolioItem } from '@/lib/types'
 
 const BLANK: Omit<PortfolioItem, 'id' | 'sort_order'> = {
   title: '', image_url: '', image_alt: '', image_focal_x: null, image_focal_y: null,
   brand: null, brand_logo_url: null, brand_logo_alt: null,
-  date: null, description: null, layout_side: 'left', colour_scheme: 'light', link_url: null,
+  date: null, description: null, link_url: null,
   article_slug: null,
 }
 
@@ -154,12 +154,6 @@ export const PortfolioSection = forwardRef<PortfolioSectionHandle>(function Port
                 <TextField label="Date" value={item.date ?? ''}
                   placeholder="e.g. March 2024"
                   onChange={e => updateItem(i, { date: e.target.value || null })} />
-                <SelectField label="Layout Side" value={item.layout_side}
-                  onChange={v => updateItem(i, { layout_side: v as 'left' | 'right' })}
-                  options={[{ value: 'left', label: 'Image Left' }, { value: 'right', label: 'Image Right' }]} />
-                <SelectField label="Colour Scheme" value={item.colour_scheme}
-                  onChange={v => updateItem(i, { colour_scheme: v as 'light' | 'dark' })}
-                  options={[{ value: 'light', label: 'Light' }, { value: 'dark', label: 'Dark' }]} />
                 <div className="flex flex-col gap-1">
                   <label className="text-xs font-medium" style={{ color: '#6b6b6b' }}>
                     Project Article
@@ -188,6 +182,7 @@ export const PortfolioSection = forwardRef<PortfolioSectionHandle>(function Port
                 focalY={item.image_focal_y}
                 onFocalChange={(x, y) => updateItem(i, { image_focal_x: x, image_focal_y: y })}
                 onUploadingChange={trackUploading}
+                cropViews={[{ label: 'Cube face (1:1)', ratio: 1 }]}
                 required
               />
               <ImageUpload

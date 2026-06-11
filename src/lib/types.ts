@@ -192,8 +192,6 @@ export interface PortfolioItem {
   brand_logo_alt: string | null
   date: string | null
   description: string | null
-  layout_side: 'left' | 'right'
-  colour_scheme: 'light' | 'dark'
   link_url: string | null
   article_slug: string | null
   sort_order: number

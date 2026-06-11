@@ -15,9 +15,10 @@ interface Props {
   focalY?: number | null
   onFocalChange?: (x: number, y: number) => void
   onUploadingChange?: (uploading: boolean) => void
+  cropViews?: { label: string; ratio: number }[]
 }
 
-const CROP_VIEWS = [
+const DEFAULT_CROP_VIEWS = [
   { label: '16:9', ratio: 9 / 16 },
   { label: '1:1', ratio: 1 },
   { label: '9:16', ratio: 16 / 9 },
@@ -33,8 +34,9 @@ function fileSizeBadge(bytes: number) {
 
 export default function ImageUpload({
   label, value, altValue, onChange, onAltChange, required,
-  focalX, focalY, onFocalChange, onUploadingChange,
+  focalX, focalY, onFocalChange, onUploadingChange, cropViews,
 }: Props) {
+  const CROP_VIEWS = cropViews ?? DEFAULT_CROP_VIEWS
   const [uploading, setUploading] = useState(false)
   const [altError, setAltError] = useState(false)
   const [isDraggingFocal, setIsDraggingFocal] = useState(false)
@@ -193,7 +195,13 @@ export default function ImageUpload({
                 }}>
                   Crop previews
                 </p>
-                <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 0.65fr', gap: 6 }}>
+                <div style={{
+                  display: 'grid',
+                  // Column widths ∝ 1/ratio so every preview renders at the same height
+                  gridTemplateColumns: CROP_VIEWS.map(v => `${(1 / v.ratio).toFixed(3)}fr`).join(' '),
+                  gap: 6,
+                  maxWidth: CROP_VIEWS.length === 1 ? 200 : '100%',
+                }}>
                   {CROP_VIEWS.map(({ label: l, ratio }) => (
                     <div key={l}>
                       <div style={{
