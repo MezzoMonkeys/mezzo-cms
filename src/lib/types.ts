@@ -126,7 +126,7 @@ export interface ServiceCard {
 
 export interface WorkImage {
   id: string
-  page: 'home' | 'about'
+  page: 'home' | 'about' | 'our-work'
   image_url: string
   image_alt: string
   focal_x: number | null

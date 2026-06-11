@@ -16,6 +16,11 @@ interface Props {
   onFocalChange?: (x: number, y: number) => void
   onUploadingChange?: (uploading: boolean) => void
   cropViews?: { label: string; ratio: number }[]
+  allowVideo?: boolean
+}
+
+function isVideoUrl(url: string | null): boolean {
+  return !!url && /\.(mp4|webm|mov|m4v|ogv)(\?|$)/i.test(url)
 }
 
 const DEFAULT_CROP_VIEWS = [
@@ -34,9 +39,10 @@ function fileSizeBadge(bytes: number) {
 
 export default function ImageUpload({
   label, value, altValue, onChange, onAltChange, required,
-  focalX, focalY, onFocalChange, onUploadingChange, cropViews,
+  focalX, focalY, onFocalChange, onUploadingChange, cropViews, allowVideo,
 }: Props) {
   const CROP_VIEWS = cropViews ?? DEFAULT_CROP_VIEWS
+  const valueIsVideo = isVideoUrl(value)
   const [uploading, setUploading] = useState(false)
   const [altError, setAltError] = useState(false)
   const [isDraggingFocal, setIsDraggingFocal] = useState(false)
@@ -46,7 +52,7 @@ export default function ImageUpload({
 
   const fx = focalX ?? 0.5
   const fy = focalY ?? 0.5
-  const showPicker = !!onFocalChange && !!value
+  const showPicker = !!onFocalChange && !!value && !valueIsVideo
 
   // Fetch size for existing images (on mount or when value changes externally)
   useEffect(() => {
@@ -84,7 +90,8 @@ export default function ImageUpload({
   function handleDrop(e: React.DragEvent) {
     e.preventDefault()
     const file = e.dataTransfer.files[0]
-    if (file?.type.startsWith('image/')) handleFile(file)
+    const ok = file?.type.startsWith('image/') || (allowVideo && file?.type.startsWith('video/'))
+    if (ok) handleFile(file)
   }
 
   function getFocal(e: React.PointerEvent<HTMLDivElement>) {
@@ -127,12 +134,21 @@ export default function ImageUpload({
               onPointerMove={showPicker ? handlePointerMove : undefined}
               onPointerUp={showPicker ? () => setIsDraggingFocal(false) : undefined}
             >
-              <img
-                src={value}
-                alt={altValue || 'Preview'}
-                className="w-full object-cover"
-                style={{ maxHeight: '220px', display: 'block', pointerEvents: 'none' }}
-              />
+              {valueIsVideo ? (
+                <video
+                  src={value}
+                  muted loop playsInline controls
+                  className="w-full"
+                  style={{ maxHeight: '220px', display: 'block', background: '#000' }}
+                />
+              ) : (
+                <img
+                  src={value}
+                  alt={altValue || 'Preview'}
+                  className="w-full object-cover"
+                  style={{ maxHeight: '220px', display: 'block', pointerEvents: 'none' }}
+                />
+              )}
               {showPicker && (
                 <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
                   {/* Crosshair lines */}
@@ -173,8 +189,8 @@ export default function ImageUpload({
               </button>
             </div>
 
-            {/* File size badge */}
-            {sizeBadge && (
+            {/* File size badge (image only — the kb thresholds don't apply to video) */}
+            {sizeBadge && !valueIsVideo && (
               <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                 <span style={{
                   fontSize: 11, fontWeight: 600, padding: '2px 8px', borderRadius: 4,
@@ -254,7 +270,7 @@ export default function ImageUpload({
               <>
                 <ImageIcon size={24} style={{ color: '#6b6b6b' }} />
                 <span className="text-sm" style={{ color: '#6b6b6b' }}>
-                  Drop image or click to upload
+                  {allowVideo ? 'Drop image or video, or click to upload' : 'Drop image or click to upload'}
                 </span>
               </>
             )}
@@ -263,7 +279,7 @@ export default function ImageUpload({
         <input
           ref={inputRef}
           type="file"
-          accept="image/*"
+          accept={allowVideo ? 'image/*,video/*' : 'image/*'}
           className="hidden"
           onChange={e => {
             const file = e.target.files?.[0]

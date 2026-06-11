@@ -3,7 +3,7 @@ import EditorPage from '@/components/editors/EditorPage'
 import { TextField } from '@/components/editors/fields'
 import { PortfolioSection, type PortfolioSectionHandle } from '@/components/editors/PortfolioSection'
 import { ClientLogosSection } from '@/components/editors/ClientLogosSection'
-import { WorkImagesSection } from '@/components/editors/WorkImagesSection'
+import { OurWorkHeroSection } from '@/components/editors/OurWorkHeroSection'
 import type { OurWorkPage } from '@/lib/types'
 
 const DEFAULT: OurWorkPage = {
@@ -43,7 +43,7 @@ export default function WorkEditor() {
             </p>
           </section>
 
-          <WorkImagesSection page="our-work" label="Hero Gallery (landing scatter)" />
+          <OurWorkHeroSection />
 
           <ClientLogosSection />
 
