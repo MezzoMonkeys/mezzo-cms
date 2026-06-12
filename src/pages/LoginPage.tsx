@@ -37,8 +37,8 @@ export default function LoginPage() {
               <img src="/mezzo-logo.png" alt="Mezzo" style={{ height: 38, width: 'auto', display: 'block' }} />
             </div>
           </div>
-          <span className="font-bold text-2xl tracking-tight" style={{ color: 'var(--ci-navy)' }}>
-            MEZZO <span style={{ color: 'var(--ci-orange)' }}>CMS</span>
+          <span className="text-sm font-semibold tracking-widest uppercase" style={{ color: 'var(--ci-muted)', letterSpacing: '0.15em' }}>
+            CMS
           </span>
           <p style={{ color: 'var(--ci-muted)', fontSize: '14px', marginTop: 4 }}>Content Management System</p>
         </div>

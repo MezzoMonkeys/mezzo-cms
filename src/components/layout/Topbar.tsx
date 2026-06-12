@@ -16,10 +16,10 @@ export default function Topbar() {
       className="h-12 flex items-center justify-between px-5 flex-shrink-0"
       style={{ background: 'var(--ci-navy-deep)', borderBottom: '1px solid rgba(255,255,255,0.08)' }}
     >
-      <div className="flex items-center gap-2.5">
-        <img src="/mezzo-logo.png" alt="Mezzo" style={{ height: 24, width: 'auto', display: 'block' }} />
-        <span className="font-bold text-sm tracking-tight" style={{ color: '#ffffff' }}>
-          MEZZO <span style={{ color: 'var(--ci-yellow)' }}>CMS</span>
+      <div className="flex items-center gap-2">
+        <img src="/mezzo-logo.png" alt="Mezzo CMS" style={{ height: 28, width: 'auto', display: 'block' }} />
+        <span className="text-xs font-semibold tracking-widest uppercase" style={{ color: 'var(--ci-yellow)', letterSpacing: '0.15em' }}>
+          CMS
         </span>
       </div>
 
