@@ -15,6 +15,7 @@ const SLOTS = [
   { label: 'Bottom right', ratio: 5 / 4 },
   { label: 'Mid left', ratio: 5 / 4 },
   { label: 'Mid right', ratio: 5 / 4 },
+  { label: 'Final reveal — full-screen image that expands at the end of the scroll', ratio: 16 / 9 },
 ]
 
 function blankSlot(i: number): WorkImage {
@@ -81,8 +82,9 @@ export function OurWorkHeroSection() {
         </button>
       </div>
       <p className="text-xs mb-4" style={{ color: '#6b6b6b' }}>
-        Seven fixed slots. Each can be an image <em>or</em> a video (mp4/webm) — videos autoplay
-        muted &amp; looped on the site. Leave a slot empty to skip it.
+        Eight fixed slots. Slots 1–7 stream through as the parallax collage; slot 8 is the final
+        full-screen reveal at the end of the scroll. Each can be an image <em>or</em> a video —
+        videos autoplay muted &amp; looped. Leave a slot empty to skip it.
       </p>
       <div className="grid grid-cols-2 gap-4">
         {SLOTS.map((slot, i) => (
