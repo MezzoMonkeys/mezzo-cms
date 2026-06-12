@@ -76,16 +76,16 @@ function InviteModal({ sites, onClose, onInvited }: InviteModalProps) {
     >
       <div
         className="w-full max-w-md rounded-xl p-6"
-        style={{ background: '#ffffff', border: '1px solid #e8e8e8', boxShadow: '0 8px 32px rgba(0,0,0,0.12)' }}
+        style={{ background: '#ffffff', border: '1px solid var(--ci-border)', boxShadow: '0 8px 32px rgba(0,0,0,0.12)' }}
       >
         <div className="flex items-center justify-between mb-5">
-          <h2 className="text-base font-semibold" style={{ color: '#111111' }}>
+          <h2 className="text-base font-semibold" style={{ color: 'var(--ci-navy)' }}>
             Invite Team Member
           </h2>
           <button
             onClick={onClose}
             className="p-1 rounded transition-colors"
-            style={{ color: '#6b6b6b' }}
+            style={{ color: 'var(--ci-muted)' }}
             onMouseEnter={e => (e.currentTarget.style.background = '#f0f0f0')}
             onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
           >
@@ -96,7 +96,7 @@ function InviteModal({ sites, onClose, onInvited }: InviteModalProps) {
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           {/* Email */}
           <div className="flex flex-col gap-1.5">
-            <label className="text-sm font-medium" style={{ color: '#2b2b2b' }}>
+            <label className="text-sm font-medium" style={{ color: 'var(--ci-navy)' }}>
               Email address
             </label>
             <input
@@ -107,15 +107,15 @@ function InviteModal({ sites, onClose, onInvited }: InviteModalProps) {
               autoFocus
               placeholder="colleague@example.com"
               className="w-full rounded-lg px-3 py-2 text-sm outline-none transition-all"
-              style={{ border: '1px solid #e8e8e8', color: '#111111', background: '#ffffff' }}
+              style={{ border: '1px solid var(--ci-border)', color: 'var(--ci-navy)', background: '#ffffff' }}
               onFocus={e => (e.currentTarget.style.borderColor = '#f4bf00')}
-              onBlur={e => (e.currentTarget.style.borderColor = '#e8e8e8')}
+              onBlur={e => (e.currentTarget.style.borderColor = 'var(--ci-border)')}
             />
           </div>
 
           {/* Role */}
           <div className="flex flex-col gap-1.5">
-            <label className="text-sm font-medium" style={{ color: '#2b2b2b' }}>
+            <label className="text-sm font-medium" style={{ color: 'var(--ci-navy)' }}>
               Role
             </label>
             <div className="flex gap-2">
@@ -126,16 +126,16 @@ function InviteModal({ sites, onClose, onInvited }: InviteModalProps) {
                   onClick={() => setRole(r)}
                   className="flex-1 py-2 rounded-lg text-sm font-medium transition-all"
                   style={{
-                    border: `1px solid ${role === r ? roleConfig[r].color : '#e8e8e8'}`,
+                    border: `1px solid ${role === r ? roleConfig[r].color : 'var(--ci-border)'}`,
                     background: role === r ? roleConfig[r].bg : '#ffffff',
-                    color: role === r ? roleConfig[r].color : '#6b6b6b',
+                    color: role === r ? roleConfig[r].color : 'var(--ci-muted)',
                   }}
                 >
                   {roleConfig[r].label}
                 </button>
               ))}
             </div>
-            <p className="text-xs" style={{ color: '#6b6b6b' }}>
+            <p className="text-xs" style={{ color: 'var(--ci-muted)' }}>
               {role === 'admin'
                 ? 'Full access — can manage users, all pages, and settings.'
                 : 'Can edit content and articles. Cannot manage team.'}
@@ -145,7 +145,7 @@ function InviteModal({ sites, onClose, onInvited }: InviteModalProps) {
           {/* Site access */}
           {sites.length > 0 && (
             <div className="flex flex-col gap-1.5">
-              <label className="text-sm font-medium" style={{ color: '#2b2b2b' }}>
+              <label className="text-sm font-medium" style={{ color: 'var(--ci-navy)' }}>
                 Site access
               </label>
               <div className="flex flex-col gap-1.5">
@@ -153,8 +153,8 @@ function InviteModal({ sites, onClose, onInvited }: InviteModalProps) {
                   <label
                     key={site.id}
                     className="flex items-center gap-2.5 px-3 py-2 rounded-lg cursor-pointer transition-colors"
-                    style={{ border: '1px solid #e8e8e8' }}
-                    onMouseEnter={e => (e.currentTarget.style.background = '#fafafa')}
+                    style={{ border: '1px solid var(--ci-border)' }}
+                    onMouseEnter={e => (e.currentTarget.style.background = 'var(--ci-linen)')}
                     onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
                   >
                     <input
@@ -163,7 +163,7 @@ function InviteModal({ sites, onClose, onInvited }: InviteModalProps) {
                       onChange={() => toggleSite(site.id)}
                       style={{ accentColor: '#f4bf00', width: 14, height: 14 }}
                     />
-                    <span className="text-sm" style={{ color: '#2b2b2b' }}>{site.name}</span>
+                    <span className="text-sm" style={{ color: 'var(--ci-navy)' }}>{site.name}</span>
                     {site.domain && (
                       <span className="text-xs ml-auto" style={{ color: '#9b9b9b' }}>
                         {site.domain}
@@ -189,8 +189,8 @@ function InviteModal({ sites, onClose, onInvited }: InviteModalProps) {
               type="button"
               onClick={onClose}
               className="flex-1 py-2 rounded-lg text-sm font-medium transition-colors"
-              style={{ border: '1px solid #e8e8e8', color: '#6b6b6b', background: '#ffffff' }}
-              onMouseEnter={e => (e.currentTarget.style.background = '#f7f7f7')}
+              style={{ border: '1px solid var(--ci-border)', color: 'var(--ci-muted)', background: '#ffffff' }}
+              onMouseEnter={e => (e.currentTarget.style.background = 'var(--ci-hover)')}
               onMouseLeave={e => (e.currentTarget.style.background = '#ffffff')}
             >
               Cancel
@@ -199,7 +199,7 @@ function InviteModal({ sites, onClose, onInvited }: InviteModalProps) {
               type="submit"
               disabled={loading}
               className="flex-1 py-2 rounded-lg text-sm font-semibold transition-opacity disabled:opacity-50"
-              style={{ background: '#f4bf00', color: '#111111' }}
+              style={{ background: '#f4bf00', color: 'var(--ci-navy)' }}
             >
               {loading ? 'Sending…' : 'Send Invite'}
             </button>
@@ -288,18 +288,18 @@ export default function UsersPage() {
       {/* Header */}
       <div
         className="flex items-center justify-between px-8 py-4 flex-shrink-0"
-        style={{ background: '#ffffff', borderBottom: '1px solid #e8e8e8' }}
+        style={{ background: '#ffffff', borderBottom: '1px solid var(--ci-border)' }}
       >
         <div>
-          <h1 className="text-lg font-semibold" style={{ color: '#111111' }}>Team</h1>
-          <p className="text-xs mt-0.5" style={{ color: '#6b6b6b' }}>
+          <h1 className="text-lg font-semibold" style={{ color: 'var(--ci-navy)' }}>Team</h1>
+          <p className="text-xs mt-0.5" style={{ color: 'var(--ci-muted)' }}>
             Manage who has access to Mezzo CMS
           </p>
         </div>
         <button
           onClick={() => setShowInviteModal(true)}
           className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold transition-opacity"
-          style={{ background: '#f4bf00', color: '#111111' }}
+          style={{ background: '#f4bf00', color: 'var(--ci-navy)' }}
           onMouseEnter={e => (e.currentTarget.style.opacity = '0.85')}
           onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
         >
@@ -324,14 +324,14 @@ export default function UsersPage() {
             <section>
               <h2
                 className="text-xs font-semibold tracking-widest uppercase mb-3"
-                style={{ color: '#6b6b6b' }}
+                style={{ color: 'var(--ci-muted)' }}
               >
                 Members ({activeUsers.length})
               </h2>
-              <div className="rounded-xl overflow-hidden" style={{ border: '1px solid #e8e8e8' }}>
+              <div className="rounded-xl overflow-hidden" style={{ border: '1px solid var(--ci-border)' }}>
                 {activeUsers.length === 0 ? (
                   <div className="flex items-center justify-center py-10">
-                    <p className="text-sm" style={{ color: '#6b6b6b' }}>No active members.</p>
+                    <p className="text-sm" style={{ color: 'var(--ci-muted)' }}>No active members.</p>
                   </div>
                 ) : (
                   activeUsers.map((user, i) => (
@@ -346,7 +346,7 @@ export default function UsersPage() {
                       <Avatar name={user.full_name} email={user.email} />
 
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium truncate" style={{ color: '#111111' }}>
+                        <p className="text-sm font-medium truncate" style={{ color: 'var(--ci-navy)' }}>
                           {user.full_name ?? '—'}
                           {user.id === currentProfile?.id && (
                             <span className="ml-1.5 text-xs font-normal" style={{ color: '#9b9b9b' }}>
@@ -354,7 +354,7 @@ export default function UsersPage() {
                             </span>
                           )}
                         </p>
-                        <p className="text-xs truncate" style={{ color: '#6b6b6b' }}>
+                        <p className="text-xs truncate" style={{ color: 'var(--ci-muted)' }}>
                           {user.email}
                         </p>
                       </div>
@@ -385,7 +385,7 @@ export default function UsersPage() {
                               className="absolute right-0 top-full mt-1 z-20 rounded-lg py-1 min-w-28"
                               style={{
                                 background: '#ffffff',
-                                border: '1px solid #e8e8e8',
+                                border: '1px solid var(--ci-border)',
                                 boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
                               }}
                             >
@@ -395,16 +395,16 @@ export default function UsersPage() {
                                   onClick={() => handleRoleChange(user.id, r)}
                                   className="flex items-center gap-2 w-full px-3 py-2 text-sm text-left transition-colors"
                                   style={{
-                                    background: user.role === r ? '#f7f7f7' : 'transparent',
-                                    color: '#2b2b2b',
+                                    background: user.role === r ? 'var(--ci-hover)' : 'transparent',
+                                    color: 'var(--ci-navy)',
                                     fontWeight: user.role === r ? 500 : 400,
                                   }}
                                   onMouseEnter={e =>
-                                    (e.currentTarget.style.background = '#f7f7f7')
+                                    (e.currentTarget.style.background = 'var(--ci-hover)')
                                   }
                                   onMouseLeave={e =>
                                     (e.currentTarget.style.background =
-                                      user.role === r ? '#f7f7f7' : 'transparent')
+                                      user.role === r ? 'var(--ci-hover)' : 'transparent')
                                   }
                                 >
                                   {roleConfig[r].label}
@@ -428,7 +428,7 @@ export default function UsersPage() {
                               style={{
                                 background: has ? '#fef3c7' : '#f0f0f0',
                                 color: has ? '#92400e' : '#9b9b9b',
-                                border: `1px solid ${has ? '#fde68a' : '#e8e8e8'}`,
+                                border: `1px solid ${has ? '#fde68a' : 'var(--ci-border)'}`,
                               }}
                             >
                               {site.name.split(' ')[0]}
@@ -460,24 +460,24 @@ export default function UsersPage() {
               <section>
                 <h2
                   className="text-xs font-semibold tracking-widest uppercase mb-3"
-                  style={{ color: '#6b6b6b' }}
+                  style={{ color: 'var(--ci-muted)' }}
                 >
                   Disabled ({disabledUsers.length})
                 </h2>
-                <div className="rounded-xl overflow-hidden" style={{ border: '1px solid #e8e8e8' }}>
+                <div className="rounded-xl overflow-hidden" style={{ border: '1px solid var(--ci-border)' }}>
                   {disabledUsers.map((user, i) => (
                     <div
                       key={user.id}
                       className="flex items-center gap-4 px-5 py-4"
                       style={{
-                        background: '#fafafa',
+                        background: 'var(--ci-linen)',
                         borderTop: i > 0 ? '1px solid #f0f0f0' : 'none',
                         opacity: 0.65,
                       }}
                     >
                       <Avatar name={user.full_name} email={user.email} />
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium truncate" style={{ color: '#6b6b6b' }}>
+                        <p className="text-sm font-medium truncate" style={{ color: 'var(--ci-muted)' }}>
                           {user.full_name ?? '—'}
                         </p>
                         <p className="text-xs truncate" style={{ color: '#9b9b9b' }}>
@@ -486,7 +486,7 @@ export default function UsersPage() {
                       </div>
                       <span
                         className="text-xs px-2.5 py-1 rounded-full"
-                        style={{ background: '#f0f0f0', color: '#6b6b6b' }}
+                        style={{ background: '#f0f0f0', color: 'var(--ci-muted)' }}
                       >
                         Disabled
                       </span>
@@ -510,11 +510,11 @@ export default function UsersPage() {
               <section>
                 <h2
                   className="text-xs font-semibold tracking-widest uppercase mb-3"
-                  style={{ color: '#6b6b6b' }}
+                  style={{ color: 'var(--ci-muted)' }}
                 >
                   Pending Invitations ({invitations.length})
                 </h2>
-                <div className="rounded-xl overflow-hidden" style={{ border: '1px solid #e8e8e8' }}>
+                <div className="rounded-xl overflow-hidden" style={{ border: '1px solid var(--ci-border)' }}>
                   {invitations.map((inv, i) => (
                     <div
                       key={inv.id}
@@ -531,10 +531,10 @@ export default function UsersPage() {
                         <Mail size={15} style={{ color: '#9b9b9b' }} />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium truncate" style={{ color: '#111111' }}>
+                        <p className="text-sm font-medium truncate" style={{ color: 'var(--ci-navy)' }}>
                           {inv.email}
                         </p>
-                        <p className="text-xs" style={{ color: '#6b6b6b' }}>
+                        <p className="text-xs" style={{ color: 'var(--ci-muted)' }}>
                           Expires {new Date(inv.expires_at).toLocaleDateString('en-AU')}
                         </p>
                       </div>
@@ -571,7 +571,7 @@ export default function UsersPage() {
 
             {users.length === 0 && invitations.length === 0 && (
               <div className="flex flex-col items-center justify-center py-16 gap-3">
-                <p className="text-sm" style={{ color: '#6b6b6b' }}>
+                <p className="text-sm" style={{ color: 'var(--ci-muted)' }}>
                   No team members yet. Invite someone to get started.
                 </p>
               </div>

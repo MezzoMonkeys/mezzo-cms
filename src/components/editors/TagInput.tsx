@@ -37,14 +37,14 @@ export default function TagInput({ label, hint, values, onChange }: Props) {
     <FieldWrap label={label} hint={hint}>
       <div
         className="flex flex-wrap gap-1.5 min-h-[40px] p-2 rounded-lg"
-        style={{ border: '1px solid #e8e8e8', background: '#ffffff', cursor: 'text' }}
+        style={{ border: '1px solid var(--ci-border)', background: '#ffffff', cursor: 'text' }}
         onClick={() => document.getElementById(`tag-input-${label}`)?.focus()}
       >
         {values.map((tag, i) => (
           <span
             key={i}
             className="flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium"
-            style={{ background: '#f4bf0020', color: '#2b2b2b', border: '1px solid #f4bf0040' }}
+            style={{ background: '#f4bf0020', color: 'var(--ci-navy)', border: '1px solid #f4bf0040' }}
           >
             {tag}
             <button
@@ -53,7 +53,7 @@ export default function TagInput({ label, hint, values, onChange }: Props) {
                 e.stopPropagation()
                 removeTag(i)
               }}
-              style={{ color: '#6b6b6b', lineHeight: 1 }}
+              style={{ color: 'var(--ci-muted)', lineHeight: 1 }}
             >
               <X size={11} />
             </button>
@@ -67,7 +67,7 @@ export default function TagInput({ label, hint, values, onChange }: Props) {
           onBlur={() => addTag(input)}
           placeholder={values.length === 0 ? 'Type and press Enter or comma' : ''}
           className="flex-1 min-w-24 text-sm outline-none"
-          style={{ background: 'transparent', border: 'none', color: '#2b2b2b' }}
+          style={{ background: 'transparent', border: 'none', color: 'var(--ci-navy)' }}
         />
       </div>
     </FieldWrap>

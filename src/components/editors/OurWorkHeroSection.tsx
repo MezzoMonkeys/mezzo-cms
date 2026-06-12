@@ -67,21 +67,21 @@ export function OurWorkHeroSection() {
     }
   }
 
-  if (loading) return <p className="text-sm" style={{ color: '#6b6b6b' }}>Loading…</p>
+  if (loading) return <p className="text-sm" style={{ color: 'var(--ci-muted)' }}>Loading…</p>
 
   return (
     <section>
-      <div className="flex items-center justify-between mb-2 pb-2" style={{ borderBottom: '1px solid #e8e8e8' }}>
-        <h3 className="text-xs font-semibold uppercase tracking-widest" style={{ color: '#6b6b6b' }}>
+      <div className="flex items-center justify-between mb-2 pb-2" style={{ borderBottom: '1px solid var(--ci-border)' }}>
+        <h3 className="text-xs font-semibold uppercase tracking-widest" style={{ color: 'var(--ci-muted)' }}>
           Hero Gallery (landing scatter)
         </h3>
         <button onClick={save} disabled={saving || uploadingCount > 0}
           className="text-xs font-semibold px-3 py-1.5 rounded-lg disabled:opacity-50"
-          style={{ background: '#f4bf00', color: '#111111' }}>
+          style={{ background: '#f4bf00', color: 'var(--ci-navy)' }}>
           {uploadingCount > 0 ? 'Uploading…' : saving ? 'Saving…' : 'Save'}
         </button>
       </div>
-      <p className="text-xs mb-4" style={{ color: '#6b6b6b' }}>
+      <p className="text-xs mb-4" style={{ color: 'var(--ci-muted)' }}>
         Eight fixed slots. Slots 1–7 stream through as the parallax collage; slot 8 is the final
         full-screen reveal at the end of the scroll. Each can be an image <em>or</em> a video —
         videos autoplay muted &amp; looped. Leave a slot empty to skip it.
@@ -89,8 +89,8 @@ export function OurWorkHeroSection() {
       <div className="grid grid-cols-2 gap-4">
         {SLOTS.map((slot, i) => (
           <div key={slots[i].id} className="p-4 rounded-xl"
-            style={{ border: '1px solid #e8e8e8', background: i === 0 ? '#fffdf5' : '#ffffff' }}>
-            <p className="text-xs font-semibold mb-2" style={{ color: '#2b2b2b' }}>
+            style={{ border: '1px solid var(--ci-border)', background: i === 0 ? '#fffdf5' : '#ffffff' }}>
+            <p className="text-xs font-semibold mb-2" style={{ color: 'var(--ci-navy)' }}>
               {i + 1}. {slot.label}
             </p>
             <ImageUpload

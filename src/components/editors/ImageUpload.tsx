@@ -126,7 +126,7 @@ export default function ImageUpload({
             <div
               className="relative rounded-lg overflow-hidden"
               style={{
-                border: '1px solid #e8e8e8',
+                border: '1px solid var(--ci-border)',
                 cursor: showPicker ? 'crosshair' : 'default',
                 userSelect: 'none',
               }}
@@ -224,7 +224,7 @@ export default function ImageUpload({
                         position: 'relative', width: '100%',
                         paddingBottom: `${ratio * 100}%`,
                         overflow: 'hidden', borderRadius: 4,
-                        border: '1px solid #e8e8e8',
+                        border: '1px solid var(--ci-border)',
                       }}>
                         <img
                           src={value}
@@ -249,7 +249,7 @@ export default function ImageUpload({
           <div
             className="flex flex-col items-center justify-center gap-2 rounded-lg cursor-pointer transition-colors"
             style={{
-              border: '2px dashed #e8e8e8',
+              border: '2px dashed var(--ci-border)',
               padding: '24px',
               minHeight: '120px',
             }}
@@ -257,7 +257,7 @@ export default function ImageUpload({
               e.preventDefault()
               e.currentTarget.style.borderColor = '#f4bf00'
             }}
-            onDragLeave={e => (e.currentTarget.style.borderColor = '#e8e8e8')}
+            onDragLeave={e => (e.currentTarget.style.borderColor = 'var(--ci-border)')}
             onDrop={handleDrop}
             onClick={() => inputRef.current?.click()}
           >
@@ -268,8 +268,8 @@ export default function ImageUpload({
               />
             ) : (
               <>
-                <ImageIcon size={24} style={{ color: '#6b6b6b' }} />
-                <span className="text-sm" style={{ color: '#6b6b6b' }}>
+                <ImageIcon size={24} style={{ color: 'var(--ci-muted)' }} />
+                <span className="text-sm" style={{ color: 'var(--ci-muted)' }}>
                   {allowVideo ? 'Drop image or video, or click to upload' : 'Drop image or click to upload'}
                 </span>
               </>
@@ -291,8 +291,8 @@ export default function ImageUpload({
             type="button"
             onClick={() => inputRef.current?.click()}
             className="flex items-center gap-2 text-sm px-3 py-2 rounded-lg transition-colors self-start"
-            style={{ border: '1px solid #e8e8e8', color: '#2b2b2b', background: '#ffffff' }}
-            onMouseEnter={e => (e.currentTarget.style.background = '#f7f7f7')}
+            style={{ border: '1px solid var(--ci-border)', color: 'var(--ci-navy)', background: '#ffffff' }}
+            onMouseEnter={e => (e.currentTarget.style.background = 'var(--ci-hover)')}
             onMouseLeave={e => (e.currentTarget.style.background = '#ffffff')}
           >
             <Upload size={14} />
@@ -303,10 +303,10 @@ export default function ImageUpload({
 
       {/* Alt text */}
       <div className="flex flex-col gap-1.5">
-        <label className="text-sm font-medium" style={{ color: '#2b2b2b' }}>
+        <label className="text-sm font-medium" style={{ color: 'var(--ci-navy)' }}>
           Alt Text <span style={{ color: '#ef4444' }}>*</span>
         </label>
-        <p className="text-xs" style={{ color: '#6b6b6b' }}>
+        <p className="text-xs" style={{ color: 'var(--ci-muted)' }}>
           Describe the image for screen readers and SEO
         </p>
         <input
@@ -322,9 +322,9 @@ export default function ImageUpload({
           placeholder="e.g. Team photo at Mezzo head office"
           className="w-full rounded-lg px-3 py-2 text-sm outline-none"
           style={{
-            border: `1px solid ${altError ? '#ef4444' : '#e8e8e8'}`,
+            border: `1px solid ${altError ? '#ef4444' : 'var(--ci-border)'}`,
             background: '#ffffff',
-            color: '#2b2b2b',
+            color: 'var(--ci-navy)',
           }}
           onFocus={e => (e.currentTarget.style.borderColor = '#f4bf00')}
         />

@@ -11,7 +11,7 @@ export default function SeoTab({ data, onChange }: Props) {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h2 className="text-sm font-semibold mb-4 pb-2" style={{ color: '#111111', borderBottom: '1px solid #e8e8e8' }}>
+        <h2 className="text-sm font-semibold mb-4 pb-2" style={{ color: 'var(--ci-navy)', borderBottom: '1px solid var(--ci-border)' }}>
           Search Engine Optimisation
         </h2>
         <div className="flex flex-col gap-5">
@@ -41,7 +41,7 @@ export default function SeoTab({ data, onChange }: Props) {
       </div>
 
       <div>
-        <h2 className="text-sm font-semibold mb-4 pb-2" style={{ color: '#111111', borderBottom: '1px solid #e8e8e8' }}>
+        <h2 className="text-sm font-semibold mb-4 pb-2" style={{ color: 'var(--ci-navy)', borderBottom: '1px solid var(--ci-border)' }}>
           Open Graph / Social Sharing
         </h2>
         <ImageUpload
@@ -55,7 +55,7 @@ export default function SeoTab({ data, onChange }: Props) {
       </div>
 
       <div>
-        <h2 className="text-sm font-semibold mb-4 pb-2" style={{ color: '#111111', borderBottom: '1px solid #e8e8e8' }}>
+        <h2 className="text-sm font-semibold mb-4 pb-2" style={{ color: 'var(--ci-navy)', borderBottom: '1px solid var(--ci-border)' }}>
           Crawling
         </h2>
         <div className="flex flex-col gap-3">

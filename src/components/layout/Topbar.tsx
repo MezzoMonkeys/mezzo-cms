@@ -14,27 +14,29 @@ export default function Topbar() {
   return (
     <header
       className="h-12 flex items-center justify-between px-5 flex-shrink-0"
-      style={{ background: '#111111', borderBottom: '1px solid #1e1e1e' }}
+      style={{ background: 'var(--ci-navy-deep)', borderBottom: '1px solid rgba(255,255,255,0.08)' }}
     >
-      <div className="flex items-center gap-2">
-        <span style={{ color: '#f4bf00', fontSize: '16px', lineHeight: 1 }}>▪</span>
-        <span className="text-white font-bold text-sm tracking-tight">MEZZO CMS</span>
+      <div className="flex items-center gap-2.5">
+        <img src="/mezzo-logo.png" alt="Mezzo" style={{ height: 24, width: 'auto', display: 'block' }} />
+        <span className="font-bold text-sm tracking-tight" style={{ color: '#ffffff' }}>
+          MEZZO <span style={{ color: 'var(--ci-yellow)' }}>CMS</span>
+        </span>
       </div>
 
       <div className="flex items-center gap-3">
-        <span className="text-sm" style={{ color: '#6b6b6b' }}>
+        <span className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>
           {user?.email}
         </span>
         <button
           onClick={handleSignOut}
           className="flex items-center justify-center w-8 h-8 rounded-lg transition-colors"
-          style={{ color: '#6b6b6b' }}
+          style={{ color: 'rgba(255,255,255,0.6)' }}
           onMouseEnter={e => {
-            e.currentTarget.style.color = '#f7f7f7'
-            e.currentTarget.style.background = '#1c1c1c'
+            e.currentTarget.style.color = '#ffffff'
+            e.currentTarget.style.background = 'rgba(255,255,255,0.1)'
           }}
           onMouseLeave={e => {
-            e.currentTarget.style.color = '#6b6b6b'
+            e.currentTarget.style.color = 'rgba(255,255,255,0.6)'
             e.currentTarget.style.background = 'transparent'
           }}
           title="Sign out"

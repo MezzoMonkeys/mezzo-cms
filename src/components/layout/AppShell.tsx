@@ -8,13 +8,13 @@ export default function AppShell() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: '#111111' }}>
+      <div className="min-h-screen flex items-center justify-center ci-aurora">
         <div className="flex flex-col items-center gap-3">
           <div
             className="w-6 h-6 rounded-full border-2 border-t-transparent animate-spin"
-            style={{ borderColor: '#f4bf00', borderTopColor: 'transparent' }}
+            style={{ borderColor: 'var(--ci-navy)', borderTopColor: 'transparent' }}
           />
-          <span className="text-sm" style={{ color: '#6b6b6b' }}>
+          <span className="text-sm" style={{ color: 'var(--ci-muted)' }}>
             Loading…
           </span>
         </div>
@@ -29,7 +29,7 @@ export default function AppShell() {
       <Topbar />
       <div className="flex flex-1 overflow-hidden">
         <Sidebar />
-        <main className="flex-1 overflow-y-auto" style={{ background: '#fafafa' }}>
+        <main className="flex-1 overflow-y-auto" style={{ background: 'var(--ci-linen)' }}>
           <Outlet />
         </main>
       </div>

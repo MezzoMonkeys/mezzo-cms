@@ -14,13 +14,13 @@ createRoot(root).render(
       position="bottom-right"
       toastOptions={{
         style: {
-          background: '#1c1c1c',
-          color: '#f7f7f7',
+          background: 'var(--ci-navy-deep)',
+          color: 'var(--ci-hover)',
           borderRadius: '8px',
           fontSize: '14px',
         },
         success: {
-          iconTheme: { primary: '#f4bf00', secondary: '#1c1c1c' },
+          iconTheme: { primary: '#f4bf00', secondary: 'var(--ci-navy-deep)' },
         },
       }}
     />

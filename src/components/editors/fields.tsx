@@ -13,12 +13,12 @@ export function FieldWrap({ label, hint, error, required, counter, children }: F
   const [min, max] = counter?.target ?? [0, 0]
   const count = counter?.current ?? 0
   const counterColor =
-    counter === undefined ? undefined : count > max ? '#ef4444' : count >= min ? '#16a34a' : '#6b6b6b'
+    counter === undefined ? undefined : count > max ? '#ef4444' : count >= min ? '#16a34a' : 'var(--ci-muted)'
 
   return (
     <div className="flex flex-col gap-1.5">
       <div className="flex items-center justify-between">
-        <label className="text-sm font-medium" style={{ color: '#2b2b2b' }}>
+        <label className="text-sm font-medium" style={{ color: 'var(--ci-navy)' }}>
           {label}
           {required && <span style={{ color: '#ef4444' }}> *</span>}
         </label>
@@ -28,7 +28,7 @@ export function FieldWrap({ label, hint, error, required, counter, children }: F
           </span>
         )}
       </div>
-      {hint && <p className="text-xs" style={{ color: '#6b6b6b' }}>{hint}</p>}
+      {hint && <p className="text-xs" style={{ color: 'var(--ci-muted)' }}>{hint}</p>}
       {children}
       {error && <p className="text-xs" style={{ color: '#ef4444' }}>{error}</p>}
     </div>
@@ -37,11 +37,11 @@ export function FieldWrap({ label, hint, error, required, counter, children }: F
 
 const inputStyle = {
   background: '#ffffff',
-  border: '1px solid #e8e8e8',
+  border: '1px solid var(--ci-border)',
   borderRadius: '8px',
   padding: '8px 12px',
   fontSize: '14px',
-  color: '#2b2b2b',
+  color: 'var(--ci-navy)',
   outline: 'none',
   width: '100%',
   transition: 'border-color 0.15s',
@@ -61,7 +61,7 @@ export function TextField({ label, hint, error, counter, ...props }: TextFieldPr
         {...props}
         style={inputStyle}
         onFocus={e => (e.currentTarget.style.borderColor = '#f4bf00')}
-        onBlur={e => (e.currentTarget.style.borderColor = error ? '#ef4444' : '#e8e8e8')}
+        onBlur={e => (e.currentTarget.style.borderColor = error ? '#ef4444' : 'var(--ci-border)')}
       />
     </FieldWrap>
   )
@@ -82,7 +82,7 @@ export function TextareaField({ label, hint, error, counter, ...props }: Textare
         rows={props.rows ?? 3}
         style={{ ...inputStyle, resize: 'vertical' }}
         onFocus={e => (e.currentTarget.style.borderColor = '#f4bf00')}
-        onBlur={e => (e.currentTarget.style.borderColor = error ? '#ef4444' : '#e8e8e8')}
+        onBlur={e => (e.currentTarget.style.borderColor = error ? '#ef4444' : 'var(--ci-border)')}
       />
     </FieldWrap>
   )
@@ -106,10 +106,10 @@ export function ToggleField({ label, hint, checked, onChange }: ToggleFieldProps
         style={{ accentColor: '#f4bf00' }}
       />
       <div>
-        <span className="text-sm font-medium" style={{ color: '#2b2b2b' }}>
+        <span className="text-sm font-medium" style={{ color: 'var(--ci-navy)' }}>
           {label}
         </span>
-        {hint && <p className="text-xs mt-0.5" style={{ color: '#6b6b6b' }}>{hint}</p>}
+        {hint && <p className="text-xs mt-0.5" style={{ color: 'var(--ci-muted)' }}>{hint}</p>}
       </div>
     </label>
   )
@@ -131,7 +131,7 @@ export function SelectField({ label, hint, value, onChange, options }: SelectFie
         onChange={e => onChange(e.target.value)}
         style={{ ...inputStyle, cursor: 'pointer' }}
         onFocus={e => (e.currentTarget.style.borderColor = '#f4bf00')}
-        onBlur={e => (e.currentTarget.style.borderColor = '#e8e8e8')}
+        onBlur={e => (e.currentTarget.style.borderColor = 'var(--ci-border)')}
       >
         {options.map(o => (
           <option key={o.value} value={o.value}>{o.label}</option>

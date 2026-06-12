@@ -56,28 +56,28 @@ export function EnquiryOptionsSection() {
     }
   }
 
-  if (loading) return <p className="text-sm" style={{ color: '#6b6b6b' }}>Loading…</p>
+  if (loading) return <p className="text-sm" style={{ color: 'var(--ci-muted)' }}>Loading…</p>
 
   return (
     <section>
-      <div className="flex items-center justify-between mb-4 pb-2" style={{ borderBottom: '1px solid #e8e8e8' }}>
-        <h3 className="text-xs font-semibold uppercase tracking-widest" style={{ color: '#6b6b6b' }}>
+      <div className="flex items-center justify-between mb-4 pb-2" style={{ borderBottom: '1px solid var(--ci-border)' }}>
+        <h3 className="text-xs font-semibold uppercase tracking-widest" style={{ color: 'var(--ci-muted)' }}>
           Enquiry Options
         </h3>
         <div className="flex items-center gap-2">
           <button onClick={addItem}
             className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg"
-            style={{ background: '#111111', color: '#f7f7f7' }}>
+            style={{ background: 'var(--ci-navy)', color: 'var(--ci-hover)' }}>
             <Plus size={12} /> Add Option
           </button>
           <button onClick={save} disabled={saving}
             className="text-xs font-semibold px-3 py-1.5 rounded-lg disabled:opacity-50"
-            style={{ background: '#f4bf00', color: '#111111' }}>
+            style={{ background: '#f4bf00', color: 'var(--ci-navy)' }}>
             {saving ? 'Saving…' : 'Save'}
           </button>
         </div>
       </div>
-      <p className="text-xs mb-3" style={{ color: '#6b6b6b' }}>
+      <p className="text-xs mb-3" style={{ color: 'var(--ci-muted)' }}>
         These appear as dropdown choices in the contact form's "What can we help you with?" field.
       </p>
       <div className="flex flex-col gap-2">
@@ -86,12 +86,12 @@ export function EnquiryOptionsSection() {
             <div className="flex flex-col gap-0.5 flex-shrink-0">
               <button onClick={() => moveItem(i, -1)} disabled={i === 0}
                 className="w-6 h-5 flex items-center justify-center rounded disabled:opacity-30"
-                style={{ color: '#6b6b6b' }}>
+                style={{ color: 'var(--ci-muted)' }}>
                 <ChevronUp size={12} />
               </button>
               <button onClick={() => moveItem(i, 1)} disabled={i === items.length - 1}
                 className="w-6 h-5 flex items-center justify-center rounded disabled:opacity-30"
-                style={{ color: '#6b6b6b' }}>
+                style={{ color: 'var(--ci-muted)' }}>
                 <ChevronDown size={12} />
               </button>
             </div>
@@ -102,15 +102,15 @@ export function EnquiryOptionsSection() {
             </div>
             <button onClick={() => removeItem(item, i)}
               className="w-7 h-7 flex items-center justify-center rounded-lg flex-shrink-0"
-              style={{ color: '#6b6b6b' }}
+              style={{ color: 'var(--ci-muted)' }}
               onMouseEnter={e => { e.currentTarget.style.background = '#fee2e2'; e.currentTarget.style.color = '#ef4444' }}
-              onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#6b6b6b' }}>
+              onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--ci-muted)' }}>
               <Trash2 size={14} />
             </button>
           </div>
         ))}
         {items.length === 0 && (
-          <p className="text-sm" style={{ color: '#6b6b6b' }}>No enquiry options yet — click Add Option to create one.</p>
+          <p className="text-sm" style={{ color: 'var(--ci-muted)' }}>No enquiry options yet — click Add Option to create one.</p>
         )}
       </div>
     </section>

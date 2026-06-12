@@ -178,17 +178,17 @@ export const PricingCategoriesSection = forwardRef<PricingCategoriesSectionHandl
 
   useImperativeHandle(ref, () => ({ save: () => save(true) }))
 
-  if (loading) return <p className="text-sm" style={{ color: '#6b6b6b' }}>Loading…</p>
+  if (loading) return <p className="text-sm" style={{ color: 'var(--ci-muted)' }}>Loading…</p>
 
   return (
     <section>
       <div
         className="flex items-center justify-between mb-4 pb-2"
-        style={{ borderBottom: '1px solid #e8e8e8' }}
+        style={{ borderBottom: '1px solid var(--ci-border)' }}
       >
         <h3
           className="text-xs font-semibold uppercase tracking-widest"
-          style={{ color: '#6b6b6b' }}
+          style={{ color: 'var(--ci-muted)' }}
         >
           Pricing Categories & Cards
         </h3>
@@ -196,7 +196,7 @@ export const PricingCategoriesSection = forwardRef<PricingCategoriesSectionHandl
           <button
             onClick={addCategory}
             className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg"
-            style={{ background: '#111111', color: '#f7f7f7' }}
+            style={{ background: 'var(--ci-navy)', color: 'var(--ci-hover)' }}
           >
             <Plus size={12} /> Add Category
           </button>
@@ -204,7 +204,7 @@ export const PricingCategoriesSection = forwardRef<PricingCategoriesSectionHandl
             onClick={save}
             disabled={saving}
             className="text-xs font-semibold px-3 py-1.5 rounded-lg disabled:opacity-50"
-            style={{ background: '#f4bf00', color: '#111111' }}
+            style={{ background: '#f4bf00', color: 'var(--ci-navy)' }}
           >
             {saving ? 'Saving…' : 'Save All'}
           </button>
@@ -216,20 +216,20 @@ export const PricingCategoriesSection = forwardRef<PricingCategoriesSectionHandl
           <div
             key={cat.id}
             className="rounded-xl overflow-hidden"
-            style={{ border: '1px solid #e8e8e8' }}
+            style={{ border: '1px solid var(--ci-border)' }}
           >
             {/* Category header */}
             <div
               className="flex items-center gap-2 px-4 py-3"
               style={{
-                background: '#f7f7f7',
-                borderBottom: cat._expanded ? '1px solid #e8e8e8' : 'none',
+                background: 'var(--ci-hover)',
+                borderBottom: cat._expanded ? '1px solid var(--ci-border)' : 'none',
               }}
             >
               <button
                 onClick={() => toggleCat(catIdx)}
                 className="flex-shrink-0"
-                style={{ color: '#6b6b6b' }}
+                style={{ color: 'var(--ci-muted)' }}
               >
                 <ChevronRight
                   size={14}
@@ -245,14 +245,14 @@ export const PricingCategoriesSection = forwardRef<PricingCategoriesSectionHandl
                   placeholder="Category title…"
                   value={cat.category_title}
                   onChange={e => updateCat(catIdx, { category_title: e.target.value })}
-                  style={{ color: '#111111' }}
+                  style={{ color: 'var(--ci-navy)' }}
                 />
                 <input
                   className="w-36 text-xs bg-transparent border-0 outline-none flex-shrink-0"
                   placeholder="slug-key"
                   value={cat.category_key}
                   onChange={e => updateCat(catIdx, { category_key: e.target.value })}
-                  style={{ color: '#6b6b6b', fontFamily: 'monospace' }}
+                  style={{ color: 'var(--ci-muted)', fontFamily: 'monospace' }}
                 />
               </div>
               <div className="flex items-center gap-1 flex-shrink-0">
@@ -260,7 +260,7 @@ export const PricingCategoriesSection = forwardRef<PricingCategoriesSectionHandl
                   onClick={() => moveCat(catIdx, -1)}
                   disabled={catIdx === 0}
                   className="w-6 h-6 flex items-center justify-center rounded disabled:opacity-30"
-                  style={{ color: '#6b6b6b' }}
+                  style={{ color: 'var(--ci-muted)' }}
                 >
                   <ChevronUp size={12} />
                 </button>
@@ -268,21 +268,21 @@ export const PricingCategoriesSection = forwardRef<PricingCategoriesSectionHandl
                   onClick={() => moveCat(catIdx, 1)}
                   disabled={catIdx === cats.length - 1}
                   className="w-6 h-6 flex items-center justify-center rounded disabled:opacity-30"
-                  style={{ color: '#6b6b6b' }}
+                  style={{ color: 'var(--ci-muted)' }}
                 >
                   <ChevronDown size={12} />
                 </button>
                 <button
                   onClick={() => removeCat(cat, catIdx)}
                   className="w-6 h-6 flex items-center justify-center rounded"
-                  style={{ color: '#6b6b6b' }}
+                  style={{ color: 'var(--ci-muted)' }}
                   onMouseEnter={e => {
                     e.currentTarget.style.background = '#fee2e2'
                     e.currentTarget.style.color = '#ef4444'
                   }}
                   onMouseLeave={e => {
                     e.currentTarget.style.background = 'transparent'
-                    e.currentTarget.style.color = '#6b6b6b'
+                    e.currentTarget.style.color = 'var(--ci-muted)'
                   }}
                 >
                   <Trash2 size={12} />
@@ -297,14 +297,14 @@ export const PricingCategoriesSection = forwardRef<PricingCategoriesSectionHandl
                   <div
                     key={card.id}
                     className="rounded-lg p-4 flex gap-3"
-                    style={{ background: '#fafafa', border: '1px solid #efefef' }}
+                    style={{ background: 'var(--ci-linen)', border: '1px solid #efefef' }}
                   >
                     <div className="flex flex-col gap-1 pt-1 flex-shrink-0">
                       <button
                         onClick={() => moveCard(catIdx, cardIdx, -1)}
                         disabled={cardIdx === 0}
                         className="w-6 h-6 flex items-center justify-center rounded disabled:opacity-30"
-                        style={{ color: '#6b6b6b' }}
+                        style={{ color: 'var(--ci-muted)' }}
                       >
                         <ChevronUp size={12} />
                       </button>
@@ -312,7 +312,7 @@ export const PricingCategoriesSection = forwardRef<PricingCategoriesSectionHandl
                         onClick={() => moveCard(catIdx, cardIdx, 1)}
                         disabled={cardIdx === cat._cards.length - 1}
                         className="w-6 h-6 flex items-center justify-center rounded disabled:opacity-30"
-                        style={{ color: '#6b6b6b' }}
+                        style={{ color: 'var(--ci-muted)' }}
                       >
                         <ChevronDown size={12} />
                       </button>
@@ -346,7 +346,7 @@ export const PricingCategoriesSection = forwardRef<PricingCategoriesSectionHandl
                       <div>
                         <label
                           className="block text-xs font-medium mb-1.5"
-                          style={{ color: '#6b6b6b' }}
+                          style={{ color: 'var(--ci-muted)' }}
                         >
                           Theme
                         </label>
@@ -359,9 +359,9 @@ export const PricingCategoriesSection = forwardRef<PricingCategoriesSectionHandl
                           }
                           className="w-full text-sm px-3 py-2 rounded-lg border outline-none"
                           style={{
-                            borderColor: '#e8e8e8',
+                            borderColor: 'var(--ci-border)',
                             background: '#fff',
-                            color: '#111111',
+                            color: 'var(--ci-navy)',
                           }}
                         >
                           <option value="blue">Blue</option>
@@ -383,14 +383,14 @@ export const PricingCategoriesSection = forwardRef<PricingCategoriesSectionHandl
                     <button
                       onClick={() => removeCard(catIdx, card, cardIdx)}
                       className="mt-1 w-7 h-7 flex items-center justify-center rounded-lg flex-shrink-0"
-                      style={{ color: '#6b6b6b' }}
+                      style={{ color: 'var(--ci-muted)' }}
                       onMouseEnter={e => {
                         e.currentTarget.style.background = '#fee2e2'
                         e.currentTarget.style.color = '#ef4444'
                       }}
                       onMouseLeave={e => {
                         e.currentTarget.style.background = 'transparent'
-                        e.currentTarget.style.color = '#6b6b6b'
+                        e.currentTarget.style.color = 'var(--ci-muted)'
                       }}
                     >
                       <Trash2 size={14} />
@@ -401,7 +401,7 @@ export const PricingCategoriesSection = forwardRef<PricingCategoriesSectionHandl
                 <button
                   onClick={() => addCard(catIdx)}
                   className="flex items-center gap-1.5 text-xs font-medium px-3 py-2 rounded-lg self-start"
-                  style={{ border: '1px dashed #d4d4d4', color: '#6b6b6b' }}
+                  style={{ border: '1px dashed #d4d4d4', color: 'var(--ci-muted)' }}
                 >
                   <Plus size={12} /> Add Card
                 </button>
@@ -411,7 +411,7 @@ export const PricingCategoriesSection = forwardRef<PricingCategoriesSectionHandl
         ))}
 
         {cats.length === 0 && (
-          <p className="text-sm" style={{ color: '#6b6b6b' }}>
+          <p className="text-sm" style={{ color: 'var(--ci-muted)' }}>
             No categories yet — click Add Category to create one.
           </p>
         )}

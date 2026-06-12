@@ -28,14 +28,14 @@ export default function AeoTab({ data, onChange }: Props) {
         className="rounded-xl p-4 text-sm"
         style={{ background: '#f4bf0015', border: '1px solid #f4bf0030' }}
       >
-        <strong style={{ color: '#2b2b2b' }}>Answer Engine Optimisation (AEO)</strong>
-        <p className="mt-1" style={{ color: '#6b6b6b' }}>
+        <strong style={{ color: 'var(--ci-navy)' }}>Answer Engine Optimisation (AEO)</strong>
+        <p className="mt-1" style={{ color: 'var(--ci-muted)' }}>
           Structured Q&A signals help AI assistants (Perplexity, ChatGPT, Google AI Overviews) surface your content as a direct answer.
         </p>
       </div>
 
       <div>
-        <h2 className="text-sm font-semibold mb-4 pb-2" style={{ color: '#111111', borderBottom: '1px solid #e8e8e8' }}>
+        <h2 className="text-sm font-semibold mb-4 pb-2" style={{ color: 'var(--ci-navy)', borderBottom: '1px solid var(--ci-border)' }}>
           Primary Answer
         </h2>
         <div className="flex flex-col gap-5">
@@ -56,15 +56,15 @@ export default function AeoTab({ data, onChange }: Props) {
       </div>
 
       <div>
-        <div className="flex items-center justify-between mb-4 pb-2" style={{ borderBottom: '1px solid #e8e8e8' }}>
-          <h2 className="text-sm font-semibold" style={{ color: '#111111' }}>
+        <div className="flex items-center justify-between mb-4 pb-2" style={{ borderBottom: '1px solid var(--ci-border)' }}>
+          <h2 className="text-sm font-semibold" style={{ color: 'var(--ci-navy)' }}>
             FAQ Blocks
           </h2>
           <button
             type="button"
             onClick={addFaqBlock}
             className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg transition-colors"
-            style={{ background: '#111111', color: '#f7f7f7' }}
+            style={{ background: 'var(--ci-navy)', color: 'var(--ci-hover)' }}
           >
             <Plus size={12} />
             Add FAQ
@@ -73,7 +73,7 @@ export default function AeoTab({ data, onChange }: Props) {
 
         <div className="flex flex-col gap-4">
           {data.aeo_faq_blocks.length === 0 && (
-            <p className="text-sm" style={{ color: '#6b6b6b' }}>
+            <p className="text-sm" style={{ color: 'var(--ci-muted)' }}>
               No FAQ blocks yet. Add some to improve AI discoverability.
             </p>
           )}
@@ -81,24 +81,24 @@ export default function AeoTab({ data, onChange }: Props) {
             <div
               key={i}
               className="rounded-xl p-4"
-              style={{ border: '1px solid #e8e8e8', background: '#ffffff' }}
+              style={{ border: '1px solid var(--ci-border)', background: '#ffffff' }}
             >
               <div className="flex items-center justify-between mb-3">
-                <span className="text-xs font-semibold uppercase tracking-wide" style={{ color: '#6b6b6b' }}>
+                <span className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--ci-muted)' }}>
                   FAQ {i + 1}
                 </span>
                 <button
                   type="button"
                   onClick={() => removeFaqBlock(i)}
                   className="w-7 h-7 flex items-center justify-center rounded-lg transition-colors"
-                  style={{ color: '#6b6b6b' }}
+                  style={{ color: 'var(--ci-muted)' }}
                   onMouseEnter={e => {
                     e.currentTarget.style.background = '#fee2e2'
                     e.currentTarget.style.color = '#ef4444'
                   }}
                   onMouseLeave={e => {
                     e.currentTarget.style.background = 'transparent'
-                    e.currentTarget.style.color = '#6b6b6b'
+                    e.currentTarget.style.color = 'var(--ci-muted)'
                   }}
                 >
                   <Trash2 size={14} />
@@ -123,7 +123,7 @@ export default function AeoTab({ data, onChange }: Props) {
       </div>
 
       <div>
-        <h2 className="text-sm font-semibold mb-4 pb-2" style={{ color: '#111111', borderBottom: '1px solid #e8e8e8' }}>
+        <h2 className="text-sm font-semibold mb-4 pb-2" style={{ color: 'var(--ci-navy)', borderBottom: '1px solid var(--ci-border)' }}>
           Speakable Content
         </h2>
         <TextareaField

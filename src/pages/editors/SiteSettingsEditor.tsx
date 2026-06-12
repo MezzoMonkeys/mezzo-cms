@@ -80,11 +80,11 @@ export default function SiteSettingsEditor() {
   return (
     <div className="flex flex-col h-full">
       <div className="flex items-center justify-between px-8 py-4 flex-shrink-0"
-        style={{ background: '#ffffff', borderBottom: '1px solid #e8e8e8' }}>
-        <h1 className="text-lg font-semibold" style={{ color: '#111111' }}>Site Settings</h1>
+        style={{ background: '#ffffff', borderBottom: '1px solid var(--ci-border)' }}>
+        <h1 className="text-lg font-semibold" style={{ color: 'var(--ci-navy)' }}>Site Settings</h1>
         <button onClick={save} disabled={saving}
           className="px-4 py-2 text-sm font-semibold rounded-lg transition-opacity disabled:opacity-50"
-          style={{ background: '#f4bf00', color: '#111111' }}>
+          style={{ background: '#f4bf00', color: 'var(--ci-navy)' }}>
           {saving ? 'Saving…' : 'Save Settings'}
         </button>
       </div>
@@ -93,7 +93,7 @@ export default function SiteSettingsEditor() {
         <div className="max-w-3xl mx-auto px-8 py-8 flex flex-col gap-8">
           <section>
             <h3 className="text-xs font-semibold uppercase tracking-widest mb-4 pb-2"
-              style={{ color: '#6b6b6b', borderBottom: '1px solid #e8e8e8' }}>
+              style={{ color: 'var(--ci-muted)', borderBottom: '1px solid var(--ci-border)' }}>
               Footer
             </h3>
             <div className="flex flex-col gap-5">
@@ -107,20 +107,20 @@ export default function SiteSettingsEditor() {
           </section>
 
           <section>
-            <div className="flex items-center justify-between mb-4 pb-2" style={{ borderBottom: '1px solid #e8e8e8' }}>
-              <h3 className="text-xs font-semibold uppercase tracking-widest" style={{ color: '#6b6b6b' }}>
+            <div className="flex items-center justify-between mb-4 pb-2" style={{ borderBottom: '1px solid var(--ci-border)' }}>
+              <h3 className="text-xs font-semibold uppercase tracking-widest" style={{ color: 'var(--ci-muted)' }}>
                 Footer Navigation Links
               </h3>
               <button onClick={addLink}
                 className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg"
-                style={{ background: '#111111', color: '#f7f7f7' }}>
+                style={{ background: 'var(--ci-navy)', color: 'var(--ci-hover)' }}>
                 <Plus size={12} /> Add Link
               </button>
             </div>
             <div className="flex flex-col gap-3">
               {links.map((link, i) => (
                 <div key={link.id} className="flex items-start gap-3 p-4 rounded-xl"
-                  style={{ border: '1px solid #e8e8e8', background: '#ffffff' }}>
+                  style={{ border: '1px solid var(--ci-border)', background: '#ffffff' }}>
                   <div className="flex-1 grid grid-cols-3 gap-3">
                     <TextField label="Link Text" value={link.name}
                       onChange={e => updateLink(i, { name: e.target.value })} />
@@ -131,20 +131,20 @@ export default function SiteSettingsEditor() {
                       options={[{ value: '_self', label: 'Same tab' }, { value: '_blank', label: 'New tab' }]} />
                   </div>
                   <button onClick={() => removeLink(link, i)} className="mt-6 w-7 h-7 flex items-center justify-center rounded-lg"
-                    style={{ color: '#6b6b6b' }}
+                    style={{ color: 'var(--ci-muted)' }}
                     onMouseEnter={e => { e.currentTarget.style.background = '#fee2e2'; e.currentTarget.style.color = '#ef4444' }}
-                    onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#6b6b6b' }}>
+                    onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--ci-muted)' }}>
                     <Trash2 size={14} />
                   </button>
                 </div>
               ))}
-              {links.length === 0 && <p className="text-sm" style={{ color: '#6b6b6b' }}>No footer links yet.</p>}
+              {links.length === 0 && <p className="text-sm" style={{ color: 'var(--ci-muted)' }}>No footer links yet.</p>}
             </div>
           </section>
 
           <section>
             <h3 className="text-xs font-semibold uppercase tracking-widest mb-4 pb-2"
-              style={{ color: '#6b6b6b', borderBottom: '1px solid #e8e8e8' }}>
+              style={{ color: 'var(--ci-muted)', borderBottom: '1px solid var(--ci-border)' }}>
               Social Media
             </h3>
             <div className="flex flex-col gap-6">
@@ -154,7 +154,7 @@ export default function SiteSettingsEditor() {
                 ['facebook', 'Facebook'],
               ] as const).map(([key, label]) => (
                 <div key={key} className="flex flex-col gap-3">
-                  <p className="text-sm font-medium" style={{ color: '#2b2b2b' }}>{label}</p>
+                  <p className="text-sm font-medium" style={{ color: 'var(--ci-navy)' }}>{label}</p>
                   <div className="grid grid-cols-2 gap-4">
                     <ImageUpload
                       label={`${label} Icon`}

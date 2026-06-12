@@ -31,13 +31,13 @@ export default function WorkEditor() {
         <div className="flex flex-col gap-8">
           <section>
             <h3 className="text-xs font-semibold uppercase tracking-widest mb-4 pb-2"
-              style={{ color: '#6b6b6b', borderBottom: '1px solid #e8e8e8' }}>
+              style={{ color: 'var(--ci-muted)', borderBottom: '1px solid var(--ci-border)' }}>
               Hero
             </h3>
             <TextField label="Hero Title"
               value={data.hero_title ?? ''}
               onChange={e => onChange({ hero_title: e.target.value })} />
-            <p className="text-xs mt-3" style={{ color: '#6b6b6b' }}>
+            <p className="text-xs mt-3" style={{ color: 'var(--ci-muted)' }}>
               The landing section shows a big "Our Work" wordmark with the Hero Gallery
               images scattering in on scroll, then wipes up into the rotating client ring.
             </p>

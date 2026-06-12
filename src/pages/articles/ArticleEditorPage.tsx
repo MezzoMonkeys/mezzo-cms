@@ -130,9 +130,9 @@ export default function ArticleEditorPage() {
         <div className="max-w-3xl mx-auto px-8 py-8">
           <button onClick={() => navigate('/articles')}
             className="flex items-center gap-2 text-sm mb-6 transition-colors"
-            style={{ color: '#6b6b6b' }}
-            onMouseEnter={e => (e.currentTarget.style.color = '#111111')}
-            onMouseLeave={e => (e.currentTarget.style.color = '#6b6b6b')}>
+            style={{ color: 'var(--ci-muted)' }}
+            onMouseEnter={e => (e.currentTarget.style.color = 'var(--ci-navy)')}
+            onMouseLeave={e => (e.currentTarget.style.color = 'var(--ci-muted)')}>
             <ArrowLeft size={14} /> Back to articles
           </button>
 
@@ -140,7 +140,7 @@ export default function ArticleEditorPage() {
             <div className="flex flex-col gap-8">
               <section>
                 <h3 className="text-xs font-semibold uppercase tracking-widest mb-4 pb-2"
-                  style={{ color: '#6b6b6b', borderBottom: '1px solid #e8e8e8' }}>
+                  style={{ color: 'var(--ci-muted)', borderBottom: '1px solid var(--ci-border)' }}>
                   Article Details
                 </h3>
                 <div className="flex flex-col gap-5">
@@ -149,18 +149,18 @@ export default function ArticleEditorPage() {
                     onChange={e => patch({ article_title: e.target.value })} />
 
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-sm font-medium" style={{ color: '#2b2b2b' }}>Slug</label>
+                    <label className="text-sm font-medium" style={{ color: 'var(--ci-navy)' }}>Slug</label>
                     <div className="flex gap-2">
                       <input type="text" value={data.slug}
                         onChange={e => { setSlugManual(true); patch({ slug: slugify(e.target.value) }) }}
                         className="flex-1 rounded-lg px-3 py-2 text-sm outline-none font-mono"
-                        style={{ border: '1px solid #e8e8e8', background: '#f7f7f7', color: '#2b2b2b' }}
+                        style={{ border: '1px solid var(--ci-border)', background: 'var(--ci-hover)', color: 'var(--ci-navy)' }}
                         onFocus={e => (e.currentTarget.style.borderColor = '#f4bf00')}
-                        onBlur={e => (e.currentTarget.style.borderColor = '#e8e8e8')} />
+                        onBlur={e => (e.currentTarget.style.borderColor = 'var(--ci-border)')} />
                       {slugManual && (
                         <button onClick={() => { setSlugManual(false); patch({ slug: slugify(data.article_title) }) }}
                           className="text-xs px-3 rounded-lg"
-                          style={{ border: '1px solid #e8e8e8', color: '#6b6b6b', background: '#ffffff' }}>
+                          style={{ border: '1px solid var(--ci-border)', color: 'var(--ci-muted)', background: '#ffffff' }}>
                           Reset
                         </button>
                       )}
@@ -186,7 +186,7 @@ export default function ArticleEditorPage() {
 
               <section>
                 <h3 className="text-xs font-semibold uppercase tracking-widest mb-4 pb-2"
-                  style={{ color: '#6b6b6b', borderBottom: '1px solid #e8e8e8' }}>
+                  style={{ color: 'var(--ci-muted)', borderBottom: '1px solid var(--ci-border)' }}>
                   Featured Image
                 </h3>
                 <ImageUpload label="Featured Image"
@@ -201,7 +201,7 @@ export default function ArticleEditorPage() {
 
               <section>
                 <h3 className="text-xs font-semibold uppercase tracking-widest mb-4 pb-2"
-                  style={{ color: '#6b6b6b', borderBottom: '1px solid #e8e8e8' }}>
+                  style={{ color: 'var(--ci-muted)', borderBottom: '1px solid var(--ci-border)' }}>
                   Article Content
                 </h3>
                 <BlockEditor value={data.content_blocks}

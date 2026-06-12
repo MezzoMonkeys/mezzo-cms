@@ -15,7 +15,7 @@ function SectionLabel({ children }: { children: string }) {
   return (
     <div
       className="px-4 pt-5 pb-1 text-xs font-semibold tracking-widest uppercase"
-      style={{ color: '#6b6b6b' }}
+      style={{ color: 'rgba(255,255,255,0.4)' }}
     >
       {children}
     </div>
@@ -36,9 +36,9 @@ function NavItem({
       to={to}
       className="flex items-center gap-3 px-4 py-2.5 text-sm transition-colors relative"
       style={({ isActive }) => ({
-        color: isActive ? '#ffffff' : '#a0a0a0',
-        background: isActive ? '#1c1c1c' : 'transparent',
-        borderLeft: isActive ? '3px solid #f4bf00' : '3px solid transparent',
+        color: isActive ? '#ffffff' : 'rgba(255,255,255,0.6)',
+        background: isActive ? 'rgba(255,255,255,0.07)' : 'transparent',
+        borderLeft: isActive ? '3px solid var(--ci-yellow)' : '3px solid transparent',
       })}
     >
       <Icon size={15} />
@@ -56,8 +56,8 @@ export default function Sidebar() {
     <aside
       className="w-64 flex-shrink-0 flex flex-col overflow-y-auto sidebar-scroll"
       style={{
-        background: '#111111',
-        borderRight: '1px solid #1e1e1e',
+        background: 'var(--ci-navy-deep)',
+        borderRight: '1px solid rgba(255,255,255,0.08)',
         height: 'calc(100vh - 48px)',
       }}
     >
@@ -70,15 +70,15 @@ export default function Sidebar() {
         ))}
       </nav>
 
-      <div className="my-2 mx-4" style={{ borderTop: '1px solid #1e1e1e' }} />
+      <div className="my-2 mx-4" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }} />
 
       <SectionLabel>Articles</SectionLabel>
       <div className="px-4 py-1">
         <button
           onClick={() => navigate('/articles/new')}
           className="flex items-center gap-2 text-xs font-medium px-3 py-1.5 rounded-md transition-colors w-full"
-          style={{ color: '#f4bf00', border: '1px solid #f4bf0040', background: 'transparent' }}
-          onMouseEnter={e => (e.currentTarget.style.background = '#f4bf0015')}
+          style={{ color: 'var(--ci-yellow)', border: '1px solid rgba(244,191,0,0.4)', background: 'transparent' }}
+          onMouseEnter={e => (e.currentTarget.style.background = 'rgba(244,191,0,0.12)')}
           onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
         >
           <Plus size={13} />
@@ -91,7 +91,7 @@ export default function Sidebar() {
         </NavItem>
       </nav>
 
-      <div className="my-2 mx-4" style={{ borderTop: '1px solid #1e1e1e' }} />
+      <div className="my-2 mx-4" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }} />
 
       <SectionLabel>Other</SectionLabel>
       <nav className="flex flex-col">

@@ -95,23 +95,23 @@ export const PortfolioSection = forwardRef<PortfolioSectionHandle>(function Port
 
   useImperativeHandle(ref, () => ({ save: () => save(true) }))
 
-  if (loading) return <p className="text-sm" style={{ color: '#6b6b6b' }}>Loading…</p>
+  if (loading) return <p className="text-sm" style={{ color: 'var(--ci-muted)' }}>Loading…</p>
 
   return (
     <section>
-      <div className="flex items-center justify-between mb-4 pb-2" style={{ borderBottom: '1px solid #e8e8e8' }}>
-        <h3 className="text-xs font-semibold uppercase tracking-widest" style={{ color: '#6b6b6b' }}>
+      <div className="flex items-center justify-between mb-4 pb-2" style={{ borderBottom: '1px solid var(--ci-border)' }}>
+        <h3 className="text-xs font-semibold uppercase tracking-widest" style={{ color: 'var(--ci-muted)' }}>
           Portfolio Items
         </h3>
         <div className="flex items-center gap-2">
           <button onClick={addItem}
             className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg"
-            style={{ background: '#111111', color: '#f7f7f7' }}>
+            style={{ background: 'var(--ci-navy)', color: 'var(--ci-hover)' }}>
             <Plus size={12} /> Add Item
           </button>
           <button onClick={() => save().catch(err => toast.error(err.message))} disabled={saving || uploadingCount > 0}
             className="text-xs font-semibold px-3 py-1.5 rounded-lg disabled:opacity-50"
-            style={{ background: '#f4bf00', color: '#111111' }}>
+            style={{ background: '#f4bf00', color: 'var(--ci-navy)' }}>
             {uploadingCount > 0 ? 'Uploading…' : saving ? 'Saving…' : 'Save'}
           </button>
         </div>
@@ -119,28 +119,28 @@ export const PortfolioSection = forwardRef<PortfolioSectionHandle>(function Port
       <div className="flex flex-col gap-4">
         {items.map((item, i) => (
           <div key={item.id} className="rounded-xl overflow-hidden"
-            style={{ border: '1px solid #e8e8e8', background: '#ffffff' }}>
+            style={{ border: '1px solid var(--ci-border)', background: '#ffffff' }}>
             <div className="flex items-center justify-between px-4 py-2"
-              style={{ background: '#f7f7f7', borderBottom: '1px solid #e8e8e8' }}>
-              <span className="text-sm font-medium" style={{ color: '#2b2b2b' }}>
+              style={{ background: 'var(--ci-hover)', borderBottom: '1px solid var(--ci-border)' }}>
+              <span className="text-sm font-medium" style={{ color: 'var(--ci-navy)' }}>
                 {item.title || `Item ${i + 1}`}
               </span>
               <div className="flex items-center gap-1">
                 <button onClick={() => moveItem(i, -1)} disabled={i === 0}
                   className="w-7 h-7 flex items-center justify-center rounded disabled:opacity-30"
-                  style={{ color: '#6b6b6b' }}>
+                  style={{ color: 'var(--ci-muted)' }}>
                   <ChevronUp size={14} />
                 </button>
                 <button onClick={() => moveItem(i, 1)} disabled={i === items.length - 1}
                   className="w-7 h-7 flex items-center justify-center rounded disabled:opacity-30"
-                  style={{ color: '#6b6b6b' }}>
+                  style={{ color: 'var(--ci-muted)' }}>
                   <ChevronDown size={14} />
                 </button>
                 <button onClick={() => removeItem(item, i)}
                   className="w-7 h-7 flex items-center justify-center rounded-lg ml-1"
-                  style={{ color: '#6b6b6b' }}
+                  style={{ color: 'var(--ci-muted)' }}
                   onMouseEnter={e => { e.currentTarget.style.background = '#fee2e2'; e.currentTarget.style.color = '#ef4444' }}
-                  onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#6b6b6b' }}>
+                  onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--ci-muted)' }}>
                   <Trash2 size={14} />
                 </button>
               </div>
@@ -155,14 +155,14 @@ export const PortfolioSection = forwardRef<PortfolioSectionHandle>(function Port
                   placeholder="e.g. March 2024"
                   onChange={e => updateItem(i, { date: e.target.value || null })} />
                 <div className="flex flex-col gap-1">
-                  <label className="text-xs font-medium" style={{ color: '#6b6b6b' }}>
+                  <label className="text-xs font-medium" style={{ color: 'var(--ci-muted)' }}>
                     Project Article
                   </label>
                   <select
                     value={item.article_slug ?? ''}
                     onChange={e => updateItem(i, { article_slug: e.target.value || null })}
                     className="text-sm rounded-lg px-3 py-2"
-                    style={{ border: '1px solid #e8e8e8', color: '#2b2b2b', background: '#ffffff' }}>
+                    style={{ border: '1px solid var(--ci-border)', color: 'var(--ci-navy)', background: '#ffffff' }}>
                     <option value="">— No article linked —</option>
                     {articles.map(a => (
                       <option key={a.slug} value={a.slug}>{a.article_title}</option>
@@ -197,7 +197,7 @@ export const PortfolioSection = forwardRef<PortfolioSectionHandle>(function Port
           </div>
         ))}
         {items.length === 0 && (
-          <p className="text-sm" style={{ color: '#6b6b6b' }}>No portfolio items yet — click Add Item to create one.</p>
+          <p className="text-sm" style={{ color: 'var(--ci-muted)' }}>No portfolio items yet — click Add Item to create one.</p>
         )}
       </div>
     </section>

@@ -23,7 +23,7 @@ export default function AboutEditor() {
         <div className="flex flex-col gap-8">
           <section>
             <h3 className="text-xs font-semibold uppercase tracking-widest mb-4 pb-2"
-              style={{ color: '#6b6b6b', borderBottom: '1px solid #e8e8e8' }}>
+              style={{ color: 'var(--ci-muted)', borderBottom: '1px solid var(--ci-border)' }}>
               Hero
             </h3>
             <TextareaField label="Hero Title" rows={3}
@@ -34,7 +34,7 @@ export default function AboutEditor() {
 
           <section>
             <h3 className="text-xs font-semibold uppercase tracking-widest mb-4 pb-2"
-              style={{ color: '#6b6b6b', borderBottom: '1px solid #e8e8e8' }}>
+              style={{ color: 'var(--ci-muted)', borderBottom: '1px solid var(--ci-border)' }}>
               Intro Section
             </h3>
             <div className="flex flex-col gap-5">
@@ -59,7 +59,7 @@ export default function AboutEditor() {
 
           <section>
             <h3 className="text-xs font-semibold uppercase tracking-widest mb-4 pb-2"
-              style={{ color: '#6b6b6b', borderBottom: '1px solid #e8e8e8' }}>
+              style={{ color: 'var(--ci-muted)', borderBottom: '1px solid var(--ci-border)' }}>
               Our Work Section
             </h3>
             <div className="flex flex-col gap-5">

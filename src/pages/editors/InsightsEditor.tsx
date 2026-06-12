@@ -19,7 +19,7 @@ export default function InsightsEditor() {
         <div className="flex flex-col gap-8">
           <section>
             <h3 className="text-xs font-semibold uppercase tracking-widest mb-4 pb-2"
-              style={{ color: '#6b6b6b', borderBottom: '1px solid #e8e8e8' }}>
+              style={{ color: 'var(--ci-muted)', borderBottom: '1px solid var(--ci-border)' }}>
               Page Header
             </h3>
             <TextField label="Page Heading"
@@ -31,8 +31,8 @@ export default function InsightsEditor() {
             className="rounded-xl p-4 text-sm"
             style={{ background: '#f4bf0015', border: '1px solid #f4bf0030' }}
           >
-            <strong style={{ color: '#2b2b2b' }}>Articles</strong>
-            <p className="mt-1" style={{ color: '#6b6b6b' }}>
+            <strong style={{ color: 'var(--ci-navy)' }}>Articles</strong>
+            <p className="mt-1" style={{ color: 'var(--ci-muted)' }}>
               Individual articles are managed in the Articles section of the sidebar. Use the SEO, AEO and GEO tabs on this page for the listing page's search signals.
             </p>
           </div>

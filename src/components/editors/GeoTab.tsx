@@ -14,14 +14,14 @@ export default function GeoTab({ data, onChange }: Props) {
         className="rounded-xl p-4 text-sm"
         style={{ background: '#f4bf0015', border: '1px solid #f4bf0030' }}
       >
-        <strong style={{ color: '#2b2b2b' }}>Generative Engine Optimisation (GEO)</strong>
-        <p className="mt-1" style={{ color: '#6b6b6b' }}>
+        <strong style={{ color: 'var(--ci-navy)' }}>Generative Engine Optimisation (GEO)</strong>
+        <p className="mt-1" style={{ color: 'var(--ci-muted)' }}>
           Signals that help large language models understand, classify, and recommend your content in AI-generated responses.
         </p>
       </div>
 
       <div>
-        <h2 className="text-sm font-semibold mb-4 pb-2" style={{ color: '#111111', borderBottom: '1px solid #e8e8e8' }}>
+        <h2 className="text-sm font-semibold mb-4 pb-2" style={{ color: 'var(--ci-navy)', borderBottom: '1px solid var(--ci-border)' }}>
           Semantic Signals
         </h2>
         <div className="flex flex-col gap-5">
@@ -41,7 +41,7 @@ export default function GeoTab({ data, onChange }: Props) {
       </div>
 
       <div>
-        <h2 className="text-sm font-semibold mb-4 pb-2" style={{ color: '#111111', borderBottom: '1px solid #e8e8e8' }}>
+        <h2 className="text-sm font-semibold mb-4 pb-2" style={{ color: 'var(--ci-navy)', borderBottom: '1px solid var(--ci-border)' }}>
           AI Summary
         </h2>
         <TextareaField
@@ -54,7 +54,7 @@ export default function GeoTab({ data, onChange }: Props) {
       </div>
 
       <div>
-        <h2 className="text-sm font-semibold mb-4 pb-2" style={{ color: '#111111', borderBottom: '1px solid #e8e8e8' }}>
+        <h2 className="text-sm font-semibold mb-4 pb-2" style={{ color: 'var(--ci-navy)', borderBottom: '1px solid var(--ci-border)' }}>
           llms.txt
         </h2>
         <ToggleField

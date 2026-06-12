@@ -41,12 +41,12 @@ function BlockCard({
   return (
     <div
       className="rounded-xl p-5 relative"
-      style={{ border: '1px solid #e8e8e8', background: '#ffffff' }}
+      style={{ border: '1px solid var(--ci-border)', background: '#ffffff' }}
     >
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <GripVertical size={14} style={{ color: '#6b6b6b', cursor: 'grab' }} />
-          <span className="text-xs font-semibold uppercase tracking-wide" style={{ color: '#6b6b6b' }}>
+          <GripVertical size={14} style={{ color: 'var(--ci-muted)', cursor: 'grab' }} />
+          <span className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--ci-muted)' }}>
             {block.type}
           </span>
         </div>
@@ -54,14 +54,14 @@ function BlockCard({
           type="button"
           onClick={onDelete}
           className="w-7 h-7 flex items-center justify-center rounded-lg transition-colors"
-          style={{ color: '#6b6b6b' }}
+          style={{ color: 'var(--ci-muted)' }}
           onMouseEnter={e => {
             e.currentTarget.style.background = '#fee2e2'
             e.currentTarget.style.color = '#ef4444'
           }}
           onMouseLeave={e => {
             e.currentTarget.style.background = 'transparent'
-            e.currentTarget.style.color = '#6b6b6b'
+            e.currentTarget.style.color = 'var(--ci-muted)'
           }}
         >
           <Trash2 size={14} />
@@ -170,13 +170,13 @@ export default function BlockEditor({ value, onChange }: Props) {
 
       <div
         className="flex items-center gap-3 p-4 rounded-xl"
-        style={{ border: '2px dashed #e8e8e8' }}
+        style={{ border: '2px dashed var(--ci-border)' }}
       >
         <select
           value={addType}
           onChange={e => setAddType(e.target.value as ContentBlock['type'])}
           className="text-sm rounded-lg px-3 py-2 outline-none"
-          style={{ border: '1px solid #e8e8e8', color: '#2b2b2b', background: '#ffffff' }}
+          style={{ border: '1px solid var(--ci-border)', color: 'var(--ci-navy)', background: '#ffffff' }}
         >
           {blockTypes.map(t => (
             <option key={t.value} value={t.value}>{t.label}</option>
@@ -186,9 +186,9 @@ export default function BlockEditor({ value, onChange }: Props) {
           type="button"
           onClick={addBlock}
           className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors"
-          style={{ background: '#111111', color: '#f7f7f7' }}
-          onMouseEnter={e => (e.currentTarget.style.background = '#1c1c1c')}
-          onMouseLeave={e => (e.currentTarget.style.background = '#111111')}
+          style={{ background: 'var(--ci-navy)', color: 'var(--ci-hover)' }}
+          onMouseEnter={e => (e.currentTarget.style.background = 'var(--ci-navy-deep)')}
+          onMouseLeave={e => (e.currentTarget.style.background = 'var(--ci-navy)')}
         >
           <Plus size={14} />
           Add Block

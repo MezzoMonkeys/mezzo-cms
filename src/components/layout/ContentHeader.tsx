@@ -11,7 +11,7 @@ interface Props {
 }
 
 const statusConfig: Record<Status, { label: string; color: string; bg: string }> = {
-  draft: { label: 'Draft', color: '#6b6b6b', bg: '#f0f0f0' },
+  draft: { label: 'Draft', color: '#6b6f7e', bg: '#ece7da' },
   published: { label: 'Published', color: '#166534', bg: '#dcfce7' },
   scheduled: { label: 'Scheduled', color: '#1e40af', bg: '#dbeafe' },
 }
@@ -22,10 +22,10 @@ export default function ContentHeader({ title, status, saving, onSave, onSaveAnd
   return (
     <div
       className="flex items-center justify-between px-8 py-4 flex-shrink-0"
-      style={{ background: '#ffffff', borderBottom: '1px solid #e8e8e8' }}
+      style={{ background: '#ffffff', borderBottom: '1px solid var(--ci-border)' }}
     >
       <div className="flex items-center gap-3">
-        <h1 className="text-lg font-semibold" style={{ color: '#111111' }}>
+        <h1 className="text-lg font-semibold" style={{ color: 'var(--ci-navy)' }}>
           {title}
         </h1>
         <span
@@ -38,7 +38,7 @@ export default function ContentHeader({ title, status, saving, onSave, onSaveAnd
 
       <div className="flex items-center gap-2">
         {saving && (
-          <div className="flex items-center gap-1.5 text-sm" style={{ color: '#6b6b6b' }}>
+          <div className="flex items-center gap-1.5 text-sm" style={{ color: 'var(--ci-muted)' }}>
             <Loader2 size={14} className="animate-spin" />
             Saving…
           </div>
@@ -48,8 +48,8 @@ export default function ContentHeader({ title, status, saving, onSave, onSaveAnd
           onClick={onSave}
           disabled={saving}
           className="px-4 py-2 text-sm font-medium rounded-lg transition-colors disabled:opacity-50"
-          style={{ border: '1px solid #e8e8e8', color: '#2b2b2b', background: '#ffffff' }}
-          onMouseEnter={e => (e.currentTarget.style.background = '#f7f7f7')}
+          style={{ border: '1px solid var(--ci-border)', color: 'var(--ci-navy)', background: '#ffffff' }}
+          onMouseEnter={e => (e.currentTarget.style.background = 'var(--ci-hover)')}
           onMouseLeave={e => (e.currentTarget.style.background = '#ffffff')}
         >
           Save
@@ -59,8 +59,8 @@ export default function ContentHeader({ title, status, saving, onSave, onSaveAnd
           onClick={onSaveAndPreview}
           disabled={saving}
           className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-lg transition-colors disabled:opacity-50"
-          style={{ border: '1px solid #e8e8e8', color: '#2b2b2b', background: '#ffffff' }}
-          onMouseEnter={e => (e.currentTarget.style.background = '#f7f7f7')}
+          style={{ border: '1px solid var(--ci-border)', color: 'var(--ci-navy)', background: '#ffffff' }}
+          onMouseEnter={e => (e.currentTarget.style.background = 'var(--ci-hover)')}
           onMouseLeave={e => (e.currentTarget.style.background = '#ffffff')}
         >
           <Eye size={14} />
@@ -71,7 +71,7 @@ export default function ContentHeader({ title, status, saving, onSave, onSaveAnd
           onClick={onSaveAndPublish}
           disabled={saving}
           className="px-4 py-2 text-sm font-semibold rounded-lg transition-opacity disabled:opacity-50"
-          style={{ background: '#f4bf00', color: '#111111' }}
+          style={{ background: 'var(--ci-yellow)', color: 'var(--ci-navy)' }}
         >
           Save & Publish
         </button>

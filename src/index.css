@@ -1,14 +1,33 @@
 @import "tailwindcss";
 
 @theme {
-  --color-black: #111111;
-  --color-dark: #1c1c1c;
-  --color-cms-text: #2b2b2b;
-  --color-muted: #6b6b6b;
-  --color-light: #f7f7f7;
-  --color-border: #e8e8e8;
-  --color-accent: #f4bf00;
+  /* Mezzo CI palette (mirrors the marketing site's new-CI pages) */
+  --color-linen:       #f2efe7;
+  --color-linen-soft:  #e9e5da;
+  --color-navy:        #15275c;
+  --color-navy-deep:   #0f1c45;
+  --color-yellow:      #f4bf00;
+  --color-orange:      #ff7a00;
+  --color-muted:       #6b6f7e;
+  --color-border:      #e3ddcf;
+  --color-light:       #ece7da;
+
+  /* legacy aliases kept so existing utility classes resolve to CI colours */
+  --color-cms-text:    #15275c;
+  --color-accent:      #f4bf00;
   --font-sans: 'Inter', system-ui, sans-serif;
+}
+
+:root {
+  --ci-linen:      #f2efe7;
+  --ci-linen-soft: #e9e5da;
+  --ci-navy:       #15275c;
+  --ci-navy-deep:  #0f1c45;
+  --ci-yellow:     #f4bf00;
+  --ci-orange:     #ff7a00;
+  --ci-muted:      #6b6f7e;
+  --ci-border:     #e3ddcf;
+  --ci-hover:      #ece7da;
 }
 
 * {
@@ -17,14 +36,22 @@
 
 body {
   font-family: var(--font-sans);
-  background: #ffffff;
-  color: #2b2b2b;
+  background: var(--ci-linen);
+  color: var(--ci-navy);
   margin: 0;
   padding: 0;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Scrollbar styling for sidebar */
+/* Warm radial glow for the auth screens — same recipe as the marketing pages
+   (linen background with a soft yellow→orange bloom from the top). */
+.ci-aurora {
+  background:
+    radial-gradient(130% 80% at 50% -10%, rgba(244, 191, 0, 0.28) 0%, rgba(255, 122, 0, 0.12) 36%, rgba(242, 239, 231, 0) 66%),
+    var(--ci-linen);
+}
+
+/* Sidebar scrollbar — light thumb on the navy chrome */
 .sidebar-scroll::-webkit-scrollbar {
   width: 4px;
 }
@@ -32,6 +59,6 @@ body {
   background: transparent;
 }
 .sidebar-scroll::-webkit-scrollbar-thumb {
-  background: #333;
+  background: rgba(255, 255, 255, 0.18);
   border-radius: 2px;
 }

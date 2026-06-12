@@ -13,7 +13,7 @@ export default function TabBar({ tabs, active, onChange }: Props) {
   return (
     <div
       className="flex items-center gap-0 px-8"
-      style={{ background: '#ffffff', borderBottom: '1px solid #e8e8e8' }}
+      style={{ background: '#ffffff', borderBottom: '1px solid var(--ci-border)' }}
     >
       {tabs.map(tab => {
         const isActive = tab.id === active
@@ -23,7 +23,7 @@ export default function TabBar({ tabs, active, onChange }: Props) {
             onClick={() => onChange(tab.id)}
             className="relative px-4 py-3 text-sm font-medium transition-colors"
             style={{
-              color: isActive ? '#111111' : '#6b6b6b',
+              color: isActive ? 'var(--ci-navy)' : 'var(--ci-muted)',
               background: 'transparent',
               border: 'none',
               cursor: 'pointer',

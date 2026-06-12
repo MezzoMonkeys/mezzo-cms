@@ -60,44 +60,51 @@ export default function AcceptInvitePage() {
   // Waiting for Supabase to process the invite hash
   if (authLoading || (isInviteFlow.current && !ready)) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: '#111111' }}>
+      <div className="min-h-screen flex items-center justify-center ci-aurora">
         <div className="flex flex-col items-center gap-3">
           <div
             className="w-6 h-6 rounded-full border-2 border-t-transparent animate-spin"
-            style={{ borderColor: '#f4bf00', borderTopColor: 'transparent' }}
+            style={{ borderColor: 'var(--ci-navy)', borderTopColor: 'transparent' }}
           />
-          <span className="text-sm" style={{ color: '#6b6b6b' }}>Setting up your account…</span>
+          <span className="text-sm" style={{ color: 'var(--ci-muted)' }}>Setting up your account…</span>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center" style={{ background: '#111111' }}>
+    <div className="min-h-screen flex items-center justify-center ci-aurora">
       <div className="w-full max-w-sm">
         {/* Logo */}
         <div className="text-center mb-8">
-          <div className="flex items-center justify-center gap-2 mb-2">
-            <span style={{ color: '#f4bf00', fontSize: '24px' }}>▪</span>
-            <span className="text-white font-bold text-2xl tracking-tight">MEZZO CMS</span>
+          <div className="flex items-center justify-center mb-4">
+            <div
+              className="flex items-center justify-center rounded-2xl"
+              style={{ width: 60, height: 60, background: 'var(--ci-navy-deep)' }}
+            >
+              <img src="/mezzo-logo.png" alt="Mezzo" style={{ height: 38, width: 'auto', display: 'block' }} />
+            </div>
           </div>
-          <p style={{ color: '#6b6b6b', fontSize: '14px' }}>You've been invited to the team</p>
+          <span className="font-bold text-2xl tracking-tight" style={{ color: 'var(--ci-navy)' }}>
+            MEZZO <span style={{ color: 'var(--ci-orange)' }}>CMS</span>
+          </span>
+          <p style={{ color: 'var(--ci-muted)', fontSize: '14px', marginTop: 4 }}>You've been invited to the team</p>
         </div>
 
         {/* Card */}
         <div
-          className="rounded-xl p-8"
-          style={{ background: '#1c1c1c', border: '1px solid #2a2a2a' }}
+          className="rounded-2xl p-8"
+          style={{ background: '#ffffff', border: '1px solid var(--ci-border)', boxShadow: '0 24px 60px rgba(21,39,92,0.10)' }}
         >
-          <p className="text-sm mb-6" style={{ color: '#a0a0a0' }}>
+          <p className="text-sm mb-6" style={{ color: 'var(--ci-muted)' }}>
             Welcome,{' '}
-            <span style={{ color: '#f7f7f7' }}>{session?.user.email}</span>. Complete your
+            <span style={{ color: 'var(--ci-navy)', fontWeight: 600 }}>{session?.user.email}</span>. Complete your
             profile to get started.
           </p>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
             <div className="flex flex-col gap-1.5">
-              <label className="text-sm font-medium" style={{ color: '#f7f7f7' }}>
+              <label className="text-sm font-medium" style={{ color: 'var(--ci-navy)' }}>
                 Full name
               </label>
               <input
@@ -108,17 +115,17 @@ export default function AcceptInvitePage() {
                 placeholder="Your name"
                 className="w-full rounded-lg px-3 py-2.5 text-sm outline-none transition-all"
                 style={{
-                  background: '#111111',
-                  border: '1px solid #333',
-                  color: '#f7f7f7',
+                  background: 'var(--ci-linen)',
+                  border: '1px solid var(--ci-border)',
+                  color: 'var(--ci-navy)',
                 }}
-                onFocus={e => (e.currentTarget.style.borderColor = '#f4bf00')}
-                onBlur={e => (e.currentTarget.style.borderColor = '#333')}
+                onFocus={e => (e.currentTarget.style.borderColor = 'var(--ci-yellow)')}
+                onBlur={e => (e.currentTarget.style.borderColor = 'var(--ci-border)')}
               />
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <label className="text-sm font-medium" style={{ color: '#f7f7f7' }}>
+              <label className="text-sm font-medium" style={{ color: 'var(--ci-navy)' }}>
                 Password
               </label>
               <input
@@ -130,19 +137,19 @@ export default function AcceptInvitePage() {
                 placeholder="Choose a password (min 8 chars)"
                 className="w-full rounded-lg px-3 py-2.5 text-sm outline-none transition-all"
                 style={{
-                  background: '#111111',
-                  border: '1px solid #333',
-                  color: '#f7f7f7',
+                  background: 'var(--ci-linen)',
+                  border: '1px solid var(--ci-border)',
+                  color: 'var(--ci-navy)',
                 }}
-                onFocus={e => (e.currentTarget.style.borderColor = '#f4bf00')}
-                onBlur={e => (e.currentTarget.style.borderColor = '#333')}
+                onFocus={e => (e.currentTarget.style.borderColor = 'var(--ci-yellow)')}
+                onBlur={e => (e.currentTarget.style.borderColor = 'var(--ci-border)')}
               />
             </div>
 
             {error && (
               <p
                 className="text-sm rounded-lg px-3 py-2"
-                style={{ background: '#2a1a1a', color: '#ff6b6b', border: '1px solid #3a1a1a' }}
+                style={{ background: '#fdecec', color: '#b42318', border: '1px solid #f7d4d0' }}
               >
                 {error}
               </p>
@@ -152,7 +159,7 @@ export default function AcceptInvitePage() {
               type="submit"
               disabled={submitting}
               className="w-full rounded-lg py-2.5 text-sm font-semibold transition-opacity disabled:opacity-50"
-              style={{ background: '#f4bf00', color: '#111111' }}
+              style={{ background: 'var(--ci-yellow)', color: 'var(--ci-navy)' }}
             >
               {submitting ? 'Setting up…' : 'Complete Setup'}
             </button>

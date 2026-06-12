@@ -20,7 +20,7 @@ export default function ContactEditor() {
         <div className="flex flex-col gap-8">
           <section>
             <h3 className="text-xs font-semibold uppercase tracking-widest mb-4 pb-2"
-              style={{ color: '#6b6b6b', borderBottom: '1px solid #e8e8e8' }}>
+              style={{ color: 'var(--ci-muted)', borderBottom: '1px solid var(--ci-border)' }}>
               Page Header
             </h3>
             <TextField label="Page Heading"
@@ -30,7 +30,7 @@ export default function ContactEditor() {
 
           <section>
             <h3 className="text-xs font-semibold uppercase tracking-widest mb-4 pb-2"
-              style={{ color: '#6b6b6b', borderBottom: '1px solid #e8e8e8' }}>
+              style={{ color: 'var(--ci-muted)', borderBottom: '1px solid var(--ci-border)' }}>
               Contact Details
             </h3>
             <div className="flex flex-col gap-5">
