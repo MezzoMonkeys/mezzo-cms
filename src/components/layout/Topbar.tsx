@@ -16,9 +16,9 @@ export default function Topbar() {
       className="h-12 flex items-center justify-between px-5 flex-shrink-0"
       style={{ background: 'var(--ci-navy-deep)', borderBottom: '1px solid rgba(255,255,255,0.08)' }}
     >
-      <div className="flex items-center gap-2">
-        <img src="/mezzo-logo.png" alt="Mezzo CMS" style={{ height: 28, width: 'auto', display: 'block' }} />
-        <span className="text-xs font-semibold tracking-widest uppercase" style={{ color: 'var(--ci-yellow)', letterSpacing: '0.15em' }}>
+      <div className="flex items-center gap-3">
+        <img src="/mezzo-wordmark.png" alt="Mezzo Collective" style={{ height: 18, width: 'auto', display: 'block' }} />
+        <span className="text-xs font-semibold tracking-widest uppercase" style={{ color: 'rgba(255,255,255,0.35)', letterSpacing: '0.18em', fontSize: 10 }}>
           CMS
         </span>
       </div>

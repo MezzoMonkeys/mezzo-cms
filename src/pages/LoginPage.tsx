@@ -29,18 +29,12 @@ export default function LoginPage() {
       <div className="w-full max-w-sm">
         {/* Logo */}
         <div className="text-center mb-8">
-          <div className="flex items-center justify-center mb-4">
-            <div
-              className="flex items-center justify-center rounded-2xl"
-              style={{ width: 60, height: 60, background: 'var(--ci-navy-deep)' }}
-            >
-              <img src="/mezzo-logo.png" alt="Mezzo" style={{ height: 38, width: 'auto', display: 'block' }} />
-            </div>
+          <div className="flex items-center justify-center mb-3">
+            <img src="/mezzo-wordmark.png" alt="Mezzo Collective" style={{ height: 32, width: 'auto', display: 'block', filter: 'brightness(0) saturate(100%) invert(13%) sepia(47%) saturate(1200%) hue-rotate(204deg) brightness(90%)' }} />
           </div>
-          <span className="text-sm font-semibold tracking-widest uppercase" style={{ color: 'var(--ci-muted)', letterSpacing: '0.15em' }}>
-            CMS
+          <span className="text-xs font-semibold tracking-widest uppercase" style={{ color: 'var(--ci-muted)', letterSpacing: '0.18em' }}>
+            Content Management
           </span>
-          <p style={{ color: 'var(--ci-muted)', fontSize: '14px', marginTop: 4 }}>Content Management System</p>
         </div>
 
         {/* Card */}
