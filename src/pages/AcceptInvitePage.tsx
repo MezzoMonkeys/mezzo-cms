@@ -78,7 +78,7 @@ export default function AcceptInvitePage() {
         {/* Logo */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center mb-3">
-            <img src="/mezzo-wordmark.png" alt="Mezzo Collective" style={{ height: 32, width: 'auto', display: 'block', filter: 'brightness(0) saturate(100%) invert(13%) sepia(47%) saturate(1200%) hue-rotate(204deg) brightness(90%)' }} />
+            <img src="/mezzo-wordmark.png" alt="Mezzo Collective" style={{ height: 56, width: 'auto', display: 'block', filter: 'brightness(0) saturate(100%) invert(13%) sepia(47%) saturate(1200%) hue-rotate(204deg) brightness(90%)' }} />
           </div>
           <span className="text-xs font-semibold tracking-widest uppercase" style={{ color: 'var(--ci-muted)', letterSpacing: '0.18em' }}>
             You've been invited to the team

@@ -17,7 +17,7 @@ export default function Topbar() {
       style={{ background: 'var(--ci-navy-deep)', borderBottom: '1px solid rgba(255,255,255,0.08)' }}
     >
       <div className="flex items-center gap-3">
-        <img src="/mezzo-wordmark.png" alt="Mezzo Collective" style={{ height: 18, width: 'auto', display: 'block' }} />
+        <img src="/mezzo-wordmark.png" alt="Mezzo Collective" style={{ height: 22, width: 'auto', display: 'block' }} />
         <span className="text-xs font-semibold tracking-widest uppercase" style={{ color: 'rgba(255,255,255,0.35)', letterSpacing: '0.18em', fontSize: 10 }}>
           CMS
         </span>
