@@ -1,6 +1,5 @@
 import EditorPage from '@/components/editors/EditorPage'
 import { TextField, TextareaField } from '@/components/editors/fields'
-import ImageUpload from '@/components/editors/ImageUpload'
 import { ServiceCardsSection } from '@/components/editors/ServiceCardsSection'
 import { WorkImagesSection } from '@/components/editors/WorkImagesSection'
 import { ClientShowcaseSection } from '@/components/editors/ClientShowcaseSection'
@@ -33,14 +32,6 @@ export default function HomeEditor() {
               <TextField label="Hero Subheading"
                 value={data.hero_subheading ?? ''}
                 onChange={e => onChange({ hero_subheading: e.target.value })} />
-              <ImageUpload label="Hero Image"
-                value={data.hero_image} altValue={data.hero_image_alt}
-                onChange={url => onChange({ hero_image: url })}
-                onAltChange={alt => onChange({ hero_image_alt: alt })}
-                focalX={data.hero_image_focal_x}
-                focalY={data.hero_image_focal_y}
-                onFocalChange={(x, y) => onChange({ hero_image_focal_x: x, hero_image_focal_y: y })}
-                required />
             </div>
           </section>
 
