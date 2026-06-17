@@ -1,6 +1,7 @@
 import EditorPage from '@/components/editors/EditorPage'
 import { TextField, TextareaField } from '@/components/editors/fields'
 import { FaqSection } from '@/components/editors/FaqSection'
+import { TeamMembersSection } from '@/components/editors/TeamMembersSection'
 import { WorkImagesSection } from '@/components/editors/WorkImagesSection'
 import type { AboutUsPage } from '@/lib/types'
 
@@ -54,6 +55,8 @@ export default function AboutEditor() {
           </section>
 
           <WorkImagesSection page="about" label="About Page Work Images" />
+
+          <TeamMembersSection />
 
           <FaqSection />
 

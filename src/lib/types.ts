@@ -175,6 +175,16 @@ export interface FaqItem {
   sort_order: number
 }
 
+export interface TeamMember {
+  id: string
+  name: string
+  role: string | null
+  photo_url: string | null
+  bio: string | null
+  linkedin_url: string | null
+  sort_order: number
+}
+
 // ── Our Work Page ─────────────────────────────────────────
 export interface OurWorkPage extends PageRecord {
   hero_title: string | null
