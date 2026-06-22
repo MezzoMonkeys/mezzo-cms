@@ -166,6 +166,7 @@ export interface AboutUsPage extends PageRecord {
   our_work_heading: string | null
   our_work_button_text: string | null
   our_work_button_url: string | null
+  our_work_image: string | null
 }
 
 export interface FaqItem {

@@ -1,5 +1,6 @@
 import EditorPage from '@/components/editors/EditorPage'
 import { TextField, TextareaField } from '@/components/editors/fields'
+import ImageUpload from '@/components/editors/ImageUpload'
 import { FaqSection } from '@/components/editors/FaqSection'
 import { TeamMembersSection } from '@/components/editors/TeamMembersSection'
 import { WorkImagesSection } from '@/components/editors/WorkImagesSection'
@@ -14,7 +15,7 @@ const DEFAULT: AboutUsPage = {
   geo_topic_clusters: [], geo_entity_mentions: [], geo_ai_summary: null, geo_llms_txt_flag: true,
   hero_title: null, intro_heading: null,
   intro_column_1: null, intro_column_2: null, intro_column_3: null,
-  our_work_heading: null, our_work_button_text: null, our_work_button_url: null,
+  our_work_heading: null, our_work_button_text: null, our_work_button_url: null, our_work_image: null,
 }
 
 export default function AboutEditor() {
@@ -66,6 +67,13 @@ export default function AboutEditor() {
               Our Work Section
             </h3>
             <div className="flex flex-col gap-5">
+              <ImageUpload
+                label="Background Image"
+                value={data.our_work_image ?? null}
+                altValue=""
+                onChange={url => onChange({ our_work_image: url ?? null })}
+                onAltChange={() => {}}
+              />
               <TextField label="Heading"
                 value={data.our_work_heading ?? ''}
                 onChange={e => onChange({ our_work_heading: e.target.value })} />
