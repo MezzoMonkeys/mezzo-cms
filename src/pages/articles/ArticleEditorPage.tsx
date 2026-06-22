@@ -6,8 +6,6 @@ import { getArticle, createArticle, updateArticle } from '@/lib/queries'
 import ContentHeader from '@/components/layout/ContentHeader'
 import TabBar from '@/components/editors/TabBar'
 import SeoTab from '@/components/editors/SeoTab'
-import AeoTab from '@/components/editors/AeoTab'
-import GeoTab from '@/components/editors/GeoTab'
 import { TextField, TextareaField } from '@/components/editors/fields'
 import ImageUpload from '@/components/editors/ImageUpload'
 import BlockEditor from '@/components/editors/BlockEditor'
@@ -16,8 +14,6 @@ import type { Article, Status } from '@/lib/types'
 const TABS = [
   { id: 'content', label: 'Content' },
   { id: 'seo', label: 'SEO' },
-  { id: 'aeo', label: 'AEO' },
-  { id: 'geo', label: 'GEO' },
 ]
 
 const DEFAULT: Article = {
@@ -25,8 +21,6 @@ const DEFAULT: Article = {
   created_by: null, updated_by: null, created_at: '', updated_at: '',
   seo_title: null, seo_description: null, og_image: null, og_image_alt: '',
   canonical_url: null, no_index: false, no_follow: false,
-  aeo_primary_question: null, aeo_direct_answer: null, aeo_faq_blocks: [], aeo_speakable_content: null,
-  geo_topic_clusters: [], geo_entity_mentions: [], geo_ai_summary: null, geo_llms_txt_flag: true,
   article_title: '', slug: '', publish_date: null,
   featured_image_url: null, featured_image_alt: '',
   featured_image_focal_x: null, featured_image_focal_y: null,
@@ -120,7 +114,7 @@ export default function ArticleEditorPage() {
         onSave={() => save('draft')}
         onSaveAndPreview={async () => {
           await save('draft')
-          if (data.slug) window.open(`https://mezzo-html-mezzomonkeys-projects.vercel.app/insights/${data.slug}`, '_blank')
+          if (data.slug) window.open(`https://mezzo-html.vercel.app/insights/${data.slug}`, '_blank')
         }}
         onSaveAndPublish={() => save('published')}
       />
@@ -211,8 +205,6 @@ export default function ArticleEditorPage() {
           )}
 
           {activeTab === 'seo' && <SeoTab data={data} onChange={patch} />}
-          {activeTab === 'aeo' && <AeoTab data={data} onChange={patch} />}
-          {activeTab === 'geo' && <GeoTab data={data} onChange={patch} />}
         </div>
       </div>
     </div>

@@ -11,25 +11,6 @@ export interface SeoFields {
   no_follow: boolean
 }
 
-export interface AeoFields {
-  aeo_primary_question: string | null
-  aeo_direct_answer: string | null
-  aeo_faq_blocks: AeoFaqBlock[]
-  aeo_speakable_content: string | null
-}
-
-export interface AeoFaqBlock {
-  question: string
-  answer: string
-}
-
-export interface GeoFields {
-  geo_topic_clusters: string[]
-  geo_entity_mentions: string[]
-  geo_ai_summary: string | null
-  geo_llms_txt_flag: boolean
-}
-
 export interface WorkflowFields {
   status: Status
   published_at: string | null
@@ -40,7 +21,7 @@ export interface WorkflowFields {
   updated_at: string
 }
 
-export type PageRecord = SeoFields & AeoFields & GeoFields & WorkflowFields & { id: string }
+export type PageRecord = SeoFields & WorkflowFields & { id: string }
 
 // ── Profiles ──────────────────────────────────────────────
 export interface Profile {

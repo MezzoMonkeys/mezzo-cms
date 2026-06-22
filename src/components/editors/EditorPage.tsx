@@ -5,16 +5,12 @@ import type { PageRecord, Status } from '@/lib/types'
 import ContentHeader from '@/components/layout/ContentHeader'
 import TabBar from './TabBar'
 import SeoTab from './SeoTab'
-import AeoTab from './AeoTab'
-import GeoTab from './GeoTab'
 
-const SITE_URL = 'https://mezzo-html-mezzomonkeys-projects.vercel.app'
+const SITE_URL = 'https://mezzo-html.vercel.app'
 
 const TABS = [
   { id: 'content', label: 'Content' },
   { id: 'seo', label: 'SEO' },
-  { id: 'aeo', label: 'AEO' },
-  { id: 'geo', label: 'GEO' },
 ]
 
 interface Props<T extends PageRecord> {
@@ -113,8 +109,6 @@ export default function EditorPage<T extends PageRecord>({
         <div className="max-w-3xl mx-auto px-8 py-8">
           {activeTab === 'content' && children(data, patch)}
           {activeTab === 'seo' && <SeoTab data={data} onChange={patch as Parameters<typeof SeoTab>[0]['onChange']} />}
-          {activeTab === 'aeo' && <AeoTab data={data} onChange={patch as Parameters<typeof AeoTab>[0]['onChange']} />}
-          {activeTab === 'geo' && <GeoTab data={data} onChange={patch as Parameters<typeof GeoTab>[0]['onChange']} />}
         </div>
       </div>
     </div>
