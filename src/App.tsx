@@ -14,6 +14,7 @@ import ArticleEditorPage from '@/pages/articles/ArticleEditorPage'
 import SubmissionsPage from '@/pages/SubmissionsPage'
 import UsersPage from '@/pages/UsersPage'
 import AcceptInvitePage from '@/pages/AcceptInvitePage'
+import MediaLibraryPage from '@/pages/MediaLibraryPage'
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,7 @@ const router = createBrowserRouter([
       { path: 'articles/new', element: <ArticleEditorPage /> },
       { path: 'articles/:id', element: <ArticleEditorPage /> },
       { path: 'submissions', element: <SubmissionsPage /> },
+      { path: 'media', element: <MediaLibraryPage /> },
       { path: 'settings', element: <SiteSettingsEditor /> },
       { path: 'team', element: <UsersPage /> },
     ],

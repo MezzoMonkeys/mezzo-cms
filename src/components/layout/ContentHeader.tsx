@@ -1,4 +1,4 @@
-import { Loader2, Eye } from 'lucide-react'
+import { Loader2, Eye, Clock } from 'lucide-react'
 import type { Status } from '@/lib/types'
 
 interface Props {
@@ -8,6 +8,7 @@ interface Props {
   onSave: () => void
   onSaveAndPreview: () => void
   onSaveAndPublish: () => void
+  onSchedule?: () => void
 }
 
 const statusConfig: Record<Status, { label: string; color: string; bg: string }> = {
@@ -16,7 +17,7 @@ const statusConfig: Record<Status, { label: string; color: string; bg: string }>
   scheduled: { label: 'Scheduled', color: '#1e40af', bg: '#dbeafe' },
 }
 
-export default function ContentHeader({ title, status, saving, onSave, onSaveAndPreview, onSaveAndPublish }: Props) {
+export default function ContentHeader({ title, status, saving, onSave, onSaveAndPreview, onSaveAndPublish, onSchedule }: Props) {
   const s = statusConfig[status]
 
   return (
@@ -66,6 +67,18 @@ export default function ContentHeader({ title, status, saving, onSave, onSaveAnd
           <Eye size={14} />
           Save & Preview
         </button>
+
+        {onSchedule && (
+          <button
+            onClick={onSchedule}
+            disabled={saving}
+            className="flex items-center gap-1.5 px-4 py-2 text-sm font-semibold rounded-lg transition-opacity disabled:opacity-50"
+            style={{ background: '#dbeafe', color: '#1e40af' }}
+          >
+            <Clock size={14} />
+            Schedule
+          </button>
+        )}
 
         <button
           onClick={onSaveAndPublish}

@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
-import { Plus, Edit2, Trash2, FileText } from 'lucide-react'
-import { getArticles, deleteArticle } from '@/lib/queries'
+import { Plus, Edit2, Trash2, FileText, Copy } from 'lucide-react'
+import { getArticles, deleteArticle, duplicateArticle } from '@/lib/queries'
 import type { Status } from '@/lib/types'
 
 interface ArticleSummary {
@@ -29,6 +29,7 @@ export default function ArticlesListPage() {
   const [loading, setLoading] = useState(true)
   const [filter, setFilter] = useState<Filter>('all')
   const [deleting, setDeleting] = useState<string | null>(null)
+  const [duplicating, setDuplicating] = useState<string | null>(null)
 
   useEffect(() => {
     getArticles()
@@ -36,6 +37,19 @@ export default function ArticlesListPage() {
       .catch(() => toast.error('Failed to load articles'))
       .finally(() => setLoading(false))
   }, [])
+
+  async function handleDuplicate(id: string) {
+    setDuplicating(id)
+    try {
+      const result = await duplicateArticle(id)
+      toast.success('Article duplicated')
+      navigate(`/articles/${(result as ArticleSummary).id}`)
+    } catch {
+      toast.error('Duplicate failed')
+    } finally {
+      setDuplicating(null)
+    }
+  }
 
   async function handleDelete(id: string, title: string) {
     if (!confirm(`Delete "${title}"? This cannot be undone.`)) return
@@ -151,14 +165,25 @@ export default function ArticlesListPage() {
                     <td className="px-8 py-4">
                       <div className="flex items-center gap-2 justify-end" onClick={e => e.stopPropagation()}>
                         <button onClick={() => navigate(`/articles/${article.id}`)}
+                          title="Edit"
                           className="w-8 h-8 flex items-center justify-center rounded-lg transition-colors"
                           style={{ color: 'var(--ci-muted)' }}
                           onMouseEnter={e => { e.currentTarget.style.background = 'var(--ci-hover)'; e.currentTarget.style.color = 'var(--ci-navy)' }}
                           onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--ci-muted)' }}>
                           <Edit2 size={14} />
                         </button>
+                        <button onClick={() => handleDuplicate(article.id)}
+                          disabled={duplicating === article.id}
+                          title="Duplicate"
+                          className="w-8 h-8 flex items-center justify-center rounded-lg transition-colors disabled:opacity-50"
+                          style={{ color: 'var(--ci-muted)' }}
+                          onMouseEnter={e => { e.currentTarget.style.background = 'var(--ci-hover)'; e.currentTarget.style.color = 'var(--ci-navy)' }}
+                          onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--ci-muted)' }}>
+                          <Copy size={14} />
+                        </button>
                         <button onClick={() => handleDelete(article.id, article.article_title)}
                           disabled={deleting === article.id}
+                          title="Delete"
                           className="w-8 h-8 flex items-center justify-center rounded-lg transition-colors disabled:opacity-50"
                           style={{ color: 'var(--ci-muted)' }}
                           onMouseEnter={e => { e.currentTarget.style.background = '#fee2e2'; e.currentTarget.style.color = '#ef4444' }}

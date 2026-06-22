@@ -139,6 +139,18 @@ export async function deleteArticle(id: string) {
   if (error) throw error
 }
 
+export async function duplicateArticle(id: string) {
+  const original = await getArticle(id)
+  return createArticle({
+    ...original,
+    article_title: `Copy of ${original.article_title}`,
+    slug: `copy-of-${original.slug}`,
+    status: 'draft',
+    published_at: null,
+    scheduled_at: null,
+  })
+}
+
 export async function publishRecord(table: Table, id: string, status: Status) {
   const uid = await currentUserId()
   const updates: Record<string, unknown> = {
@@ -158,6 +170,27 @@ export async function uploadFile(bucket: string, path: string, file: File) {
   if (error) throw error
   const { data: urlData } = supabase.storage.from(bucket).getPublicUrl(data.path)
   return urlData.publicUrl
+}
+
+// ── Media library ─────────────────────────────────────────────────────────────
+export async function listMediaFiles() {
+  const { data, error } = await supabase.storage
+    .from('media')
+    .list('uploads', { limit: 500, sortBy: { column: 'created_at', order: 'desc' } })
+  if (error) throw error
+  return (data ?? []).map(f => ({
+    name: f.name,
+    id: f.id,
+    size: f.metadata?.size ?? 0,
+    mimeType: f.metadata?.mimetype ?? '',
+    updatedAt: f.updated_at ?? '',
+    publicUrl: supabase.storage.from('media').getPublicUrl(`uploads/${f.name}`).data.publicUrl,
+  }))
+}
+
+export async function deleteMediaFile(name: string) {
+  const { error } = await supabase.storage.from('media').remove([`uploads/${name}`])
+  if (error) throw error
 }
 
 // ── Contact submissions ───────────────────────────────────────────────────────

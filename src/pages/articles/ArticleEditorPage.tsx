@@ -116,6 +116,7 @@ export default function ArticleEditorPage() {
           await save('draft')
           if (data.slug) window.open(`https://mezzo-html.vercel.app/insights/${data.slug}`, '_blank')
         }}
+        onSchedule={data.scheduled_at ? () => save('scheduled') : undefined}
         onSaveAndPublish={() => save('published')}
       />
       <TabBar tabs={TABS} active={activeTab} onChange={setActiveTab} />
@@ -169,6 +170,26 @@ export default function ArticleEditorPage() {
                       hint="e.g. Brand Strategy, Digital Marketing"
                       value={data.category ?? ''}
                       onChange={e => patch({ category: e.target.value })} />
+                  </div>
+
+                  <div className="flex flex-col gap-1.5">
+                    <label className="text-sm font-medium" style={{ color: 'var(--ci-navy)' }}>
+                      Schedule publish
+                    </label>
+                    <input
+                      type="datetime-local"
+                      value={data.scheduled_at ? data.scheduled_at.slice(0, 16) : ''}
+                      onChange={e => patch({ scheduled_at: e.target.value ? new Date(e.target.value).toISOString() : null })}
+                      className="rounded-lg px-3 py-2 text-sm outline-none"
+                      style={{ border: '1px solid var(--ci-border)', background: 'var(--ci-hover)', color: 'var(--ci-navy)' }}
+                      onFocus={e => (e.currentTarget.style.borderColor = '#f4bf00')}
+                      onBlur={e => (e.currentTarget.style.borderColor = 'var(--ci-border)')}
+                    />
+                    {data.scheduled_at && (
+                      <p className="text-xs" style={{ color: 'var(--ci-muted)' }}>
+                        Will auto-publish on {new Date(data.scheduled_at).toLocaleString('en-ZA', { dateStyle: 'medium', timeStyle: 'short' })}
+                      </p>
+                    )}
                   </div>
 
                   <TextareaField label="Excerpt" rows={3}

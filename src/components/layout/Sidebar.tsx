@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom'
-import { FileText, Home, Info, Briefcase, DollarSign, Lightbulb, Mail, Settings, Plus, Inbox, Users } from 'lucide-react'
+import { FileText, Home, Info, Briefcase, DollarSign, Lightbulb, Mail, Settings, Plus, Inbox, Users, Image } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 
 const pages = [
@@ -97,6 +97,9 @@ export default function Sidebar() {
       <nav className="flex flex-col">
         <NavItem to="/submissions" icon={Inbox}>
           Submissions
+        </NavItem>
+        <NavItem to="/media" icon={Image}>
+          Media Library
         </NavItem>
         <NavItem to="/settings" icon={Settings}>
           Site Settings
