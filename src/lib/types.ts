@@ -102,6 +102,7 @@ export interface ServiceCard {
   title: string
   body_text: string | null
   link_url: string | null
+  background_image_url: string | null
   sort_order: number
 }
 

@@ -3,6 +3,7 @@ import toast from 'react-hot-toast'
 import { Plus, Trash2, ChevronUp, ChevronDown } from 'lucide-react'
 import { getChildItems, upsertChildItem, deleteChildItem } from '@/lib/queries'
 import { TextField, TextareaField } from '@/components/editors/fields'
+import ImageUpload from '@/components/editors/ImageUpload'
 import type { ServiceCard } from '@/lib/types'
 
 export function ServiceCardsSection() {
@@ -19,7 +20,8 @@ export function ServiceCardsSection() {
 
   function addItem() {
     setItems(prev => [...prev, {
-      id: crypto.randomUUID(), title: '', body_text: null, link_url: null, sort_order: prev.length,
+      id: crypto.randomUUID(), title: '', body_text: null, link_url: null,
+      background_image_url: null, sort_order: prev.length,
     }])
   }
 
@@ -100,6 +102,14 @@ export function ServiceCardsSection() {
                 onChange={e => updateItem(i, { body_text: e.target.value || null })} />
               <TextField label="Link URL" type="url" value={item.link_url ?? ''}
                 onChange={e => updateItem(i, { link_url: e.target.value || null })} />
+              <ImageUpload
+                label="Background Image (optional)"
+                value={item.background_image_url}
+                altValue={item.title || 'Service background'}
+                onChange={url => updateItem(i, { background_image_url: url || null })}
+                onAltChange={() => {}}
+                cropViews={[{ label: '16:9', ratio: 9 / 16 }]}
+              />
             </div>
             <button onClick={() => removeItem(item, i)}
               className="mt-6 w-7 h-7 flex items-center justify-center rounded-lg"
