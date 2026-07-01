@@ -177,7 +177,8 @@ export default function MediaLibraryPage() {
           alt: m?.alt ?? '',
           used: tables.size > 0,
           usage,
-          isDup: (dupCount.get(`${f.size}:${baseName(f.name)}`) ?? 0) > 1,
+          // Only flag as duplicate when it's NOT in use — a used copy isn't clutter.
+          isDup: (dupCount.get(`${f.size}:${baseName(f.name)}`) ?? 0) > 1 && tables.size === 0,
         }
       })
       setAssets(merged)
@@ -493,7 +494,7 @@ export default function MediaLibraryPage() {
                             style={{ background: 'rgba(185,28,28,0.9)', color: '#fff' }}>UNUSED</span>
                         )}
                         {file.isDup && (
-                          <span title="Possible duplicate (same name & size)" className="text-[10px] font-semibold px-1.5 py-0.5 rounded"
+                          <span title="Unused duplicate (same name & size as another file)" className="text-[10px] font-semibold px-1.5 py-0.5 rounded"
                             style={{ background: 'rgba(30,64,175,0.9)', color: '#fff' }}>DUPLICATE</span>
                         )}
                         {warn && (
