@@ -27,6 +27,30 @@ function defaultBlock(type: ContentBlock['type']): ContentBlock {
   }
 }
 
+// The primary text field on a block, used to carry content across a type change.
+function blockText(block: ContentBlock): string {
+  switch (block.type) {
+    case 'paragraph': return block.content
+    case 'heading': return block.content
+    case 'quote': return block.text
+    case 'cta': return block.text
+    case 'image': return ''
+  }
+}
+
+// Convert a block to a new type, preserving its text where the target supports it.
+function convertBlock(block: ContentBlock, type: ContentBlock['type']): ContentBlock {
+  if (block.type === type) return block
+  const text = blockText(block)
+  switch (type) {
+    case 'paragraph': return { type: 'paragraph', content: text }
+    case 'heading': return { type: 'heading', level: 2, content: text }
+    case 'quote': return { type: 'quote', text, attribution: '' }
+    case 'cta': return { type: 'cta', text, url: '' }
+    case 'image': return { type: 'image', url: '', alt: '' }
+  }
+}
+
 function BlockCard({
   block,
   index,
@@ -46,9 +70,17 @@ function BlockCard({
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <GripVertical size={14} style={{ color: 'var(--ci-muted)', cursor: 'grab' }} />
-          <span className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--ci-muted)' }}>
-            {block.type}
-          </span>
+          <select
+            value={block.type}
+            onChange={e => onChange(convertBlock(block, e.target.value as ContentBlock['type']))}
+            className="text-xs font-semibold uppercase tracking-wide rounded-md px-2 py-1 outline-none cursor-pointer"
+            style={{ color: 'var(--ci-muted)', border: '1px solid var(--ci-border)', background: '#ffffff' }}
+            title="Change block type"
+          >
+            {blockTypes.map(t => (
+              <option key={t.value} value={t.value}>{t.label}</option>
+            ))}
+          </select>
         </div>
         <button
           type="button"
