@@ -239,18 +239,27 @@ export async function uploadFile(bucket: string, path: string, file: File) {
 
 // ── Media library ─────────────────────────────────────────────────────────────
 export async function listMediaFiles() {
-  const { data, error } = await supabase.storage
-    .from('media')
-    .list('uploads', { limit: 500, sortBy: { column: 'created_at', order: 'desc' } })
-  if (error) throw error
-  return (data ?? []).map(f => ({
-    name: f.name,
-    id: f.id,
-    size: f.metadata?.size ?? 0,
-    mimeType: f.metadata?.mimetype ?? '',
-    updatedAt: f.updated_at ?? '',
-    publicUrl: supabase.storage.from('media').getPublicUrl(`uploads/${f.name}`).data.publicUrl,
-  }))
+  const pageSize = 1000
+  const rows: { name: string; id: string | null; metadata?: { size?: number; mimetype?: string } | null; updated_at?: string }[] = []
+  for (let offset = 0; offset < 20000; offset += pageSize) {
+    const { data, error } = await supabase.storage
+      .from('media')
+      .list('uploads', { limit: pageSize, offset, sortBy: { column: 'created_at', order: 'desc' } })
+    if (error) throw error
+    const batch = data ?? []
+    rows.push(...batch)
+    if (batch.length < pageSize) break
+  }
+  return rows
+    .filter(f => f.id) // drop sub-folder placeholders (they have a null id)
+    .map(f => ({
+      name: f.name,
+      id: f.id,
+      size: f.metadata?.size ?? 0,
+      mimeType: f.metadata?.mimetype ?? '',
+      updatedAt: f.updated_at ?? '',
+      publicUrl: supabase.storage.from('media').getPublicUrl(`uploads/${f.name}`).data.publicUrl,
+    }))
 }
 
 export async function deleteMediaFile(name: string) {
@@ -295,6 +304,15 @@ export async function getMediaReferences(): Promise<MediaReference[]> {
   const { data, error } = await supabase.rpc('media_references')
   if (error) throw error
   return (data ?? []) as MediaReference[]
+}
+
+export interface ArticleMediaReference { path: string; article_id: string; article_title: string }
+
+// Which specific articles reference each media path (for names + deep links).
+export async function getArticleMediaReferences(): Promise<ArticleMediaReference[]> {
+  const { data, error } = await supabase.rpc('article_media_references')
+  if (error) throw error
+  return (data ?? []) as ArticleMediaReference[]
 }
 
 // ── Contact submissions ───────────────────────────────────────────────────────
