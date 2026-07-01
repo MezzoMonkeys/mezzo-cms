@@ -16,6 +16,9 @@ const TABS = [
   { id: 'seo', label: 'SEO' },
 ]
 
+// Mirrors the articles_excerpt_check constraint in the database.
+const EXCERPT_MAX = 300
+
 const DEFAULT: Article = {
   id: '', status: 'draft', published_at: null, scheduled_at: null,
   created_by: null, updated_by: null, created_at: '', updated_at: '',
@@ -64,6 +67,11 @@ export default function ArticleEditorPage() {
   async function save(status?: Status) {
     if (!data.article_title.trim()) {
       toast.error('Article title is required')
+      return
+    }
+    const excerptLen = (data.excerpt ?? '').length
+    if (excerptLen > EXCERPT_MAX) {
+      toast.error(`Excerpt is too long — ${excerptLen}/${EXCERPT_MAX} characters. Please shorten it.`)
       return
     }
     setSaving(true)
@@ -194,6 +202,10 @@ export default function ArticleEditorPage() {
 
                   <TextareaField label="Excerpt" rows={3}
                     hint="Short summary shown on the insights listing page"
+                    counter={{ current: (data.excerpt ?? '').length, target: [0, EXCERPT_MAX] }}
+                    error={(data.excerpt ?? '').length > EXCERPT_MAX
+                      ? `Too long by ${(data.excerpt ?? '').length - EXCERPT_MAX} characters`
+                      : undefined}
                     value={data.excerpt ?? ''}
                     onChange={e => patch({ excerpt: e.target.value })} />
                 </div>
