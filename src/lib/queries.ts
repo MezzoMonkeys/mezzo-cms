@@ -258,6 +258,45 @@ export async function deleteMediaFile(name: string) {
   if (error) throw error
 }
 
+export async function deleteMediaFiles(names: string[]) {
+  if (names.length === 0) return
+  const { error } = await supabase.storage.from('media').remove(names.map(n => `uploads/${n}`))
+  if (error) throw error
+}
+
+// ── Media metadata: virtual folders, title, alt (path = "uploads/<file>") ───────
+export interface MediaAssetMeta { path: string; folder: string | null; title: string | null; alt: string | null }
+export interface MediaReference { path: string; source_table: string }
+
+export async function listMediaAssets(): Promise<MediaAssetMeta[]> {
+  const { data, error } = await supabase.from('media_assets').select('path, folder, title, alt')
+  if (error) throw error
+  return (data ?? []) as MediaAssetMeta[]
+}
+
+export async function upsertMediaAsset(
+  path: string,
+  patch: { folder?: string | null; title?: string | null; alt?: string | null },
+) {
+  const { error } = await supabase
+    .from('media_assets')
+    .upsert({ path, ...patch, updated_at: new Date().toISOString() }, { onConflict: 'path' })
+  if (error) throw error
+}
+
+export async function deleteMediaAssets(paths: string[]) {
+  if (paths.length === 0) return
+  const { error } = await supabase.from('media_assets').delete().in('path', paths)
+  if (error) throw error
+}
+
+// Every "uploads/…" path referenced anywhere in content, with its source table.
+export async function getMediaReferences(): Promise<MediaReference[]> {
+  const { data, error } = await supabase.rpc('media_references')
+  if (error) throw error
+  return (data ?? []) as MediaReference[]
+}
+
 // ── Contact submissions ───────────────────────────────────────────────────────
 export async function getContactSubmissions() {
   const { data, error } = await supabase
