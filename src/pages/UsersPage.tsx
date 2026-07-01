@@ -242,8 +242,8 @@ export default function UsersPage() {
       setUsers(prev => prev.map(u => (u.id === userId ? { ...u, role } : u)))
       setRoleDropdown(null)
       toast.success('Role updated')
-    } catch {
-      toast.error('Failed to update role')
+    } catch (err) {
+      toast.error(classifyError(err))
     }
   }
 
@@ -253,8 +253,8 @@ export default function UsersPage() {
       await updateUserStatus(userId, next)
       setUsers(prev => prev.map(u => (u.id === userId ? { ...u, status: next as 'active' | 'disabled' } : u)))
       toast.success(next === 'active' ? 'User enabled' : 'User disabled')
-    } catch {
-      toast.error('Failed to update user')
+    } catch (err) {
+      toast.error(classifyError(err))
     }
   }
 
@@ -265,8 +265,8 @@ export default function UsersPage() {
     try {
       await setUserSiteAccess(userId, next)
       setUsers(prev => prev.map(u => (u.id === userId ? { ...u, site_ids: next } : u)))
-    } catch {
-      toast.error('Failed to update site access')
+    } catch (err) {
+      toast.error(classifyError(err))
     }
   }
 
@@ -275,8 +275,8 @@ export default function UsersPage() {
       await revokeInvitation(invId)
       setInvitations(prev => prev.filter(i => i.id !== invId))
       toast.success('Invitation revoked')
-    } catch {
-      toast.error('Failed to revoke invitation')
+    } catch (err) {
+      toast.error(classifyError(err))
     }
   }
 

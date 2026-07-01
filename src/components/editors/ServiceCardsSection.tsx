@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import toast from 'react-hot-toast'
 import { Plus, Trash2, ChevronUp, ChevronDown } from 'lucide-react'
-import { getChildItems, upsertChildItem, deleteChildItem } from '@/lib/queries'
+import { getChildItems, upsertChildItem, deleteChildItem, classifyError } from '@/lib/queries'
 import { TextField, TextareaField } from '@/components/editors/fields'
 import ImageUpload from '@/components/editors/ImageUpload'
 import type { ServiceCard } from '@/lib/types'
@@ -51,8 +51,8 @@ export function ServiceCardsSection() {
         items.map((item, i) => upsertChildItem('service_cards', { ...item, sort_order: i } as Record<string, unknown>))
       )
       toast.success('Service cards saved')
-    } catch {
-      toast.error('Save failed')
+    } catch (err) {
+      toast.error(classifyError(err))
     } finally {
       setSaving(false)
     }

@@ -5,6 +5,7 @@ import { LogOut } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
 import { useAuth } from '@/contexts/AuthContext'
 import { TextField } from '@/components/editors/fields'
+import { classifyError } from '@/lib/queries'
 
 const MIN_PASSWORD = 8
 
@@ -33,8 +34,7 @@ export default function ProfilePage() {
       setNewPassword('')
       setConfirmPassword('')
     } catch (err) {
-      const msg = (err as { message?: string })?.message || 'unknown error'
-      toast.error(`Could not update password: ${msg}`)
+      toast.error(classifyError(err))
     } finally {
       setSaving(false)
     }

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import toast from 'react-hot-toast'
 import { Inbox, ChevronDown, ChevronUp } from 'lucide-react'
-import { getContactSubmissions, updateSubmissionStatus } from '@/lib/queries'
+import { getContactSubmissions, updateSubmissionStatus, classifyError } from '@/lib/queries'
 import type { ContactSubmission } from '@/lib/types'
 
 type SubStatus = ContactSubmission['status']
@@ -29,8 +29,8 @@ export default function SubmissionsPage() {
     try {
       await updateSubmissionStatus(id, status)
       setSubmissions(prev => prev.map(s => s.id === id ? { ...s, status } : s))
-    } catch {
-      toast.error('Update failed')
+    } catch (err) {
+      toast.error(classifyError(err))
     }
   }
 

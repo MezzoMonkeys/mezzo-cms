@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import toast from 'react-hot-toast'
 import { Plus, Trash2, ChevronUp, ChevronDown } from 'lucide-react'
-import { getChildItems, upsertChildItem, deleteChildItem } from '@/lib/queries'
+import { getChildItems, upsertChildItem, deleteChildItem, classifyError } from '@/lib/queries'
 import { TextField } from '@/components/editors/fields'
 import type { EnquiryOption } from '@/lib/types'
 
@@ -49,8 +49,8 @@ export function EnquiryOptionsSection() {
         )
       )
       toast.success('Enquiry options saved')
-    } catch {
-      toast.error('Save failed')
+    } catch (err) {
+      toast.error(classifyError(err))
     } finally {
       setSaving(false)
     }

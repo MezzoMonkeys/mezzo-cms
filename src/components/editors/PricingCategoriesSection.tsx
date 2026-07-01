@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useImperativeHandle, forwardRef } from 'react'
 import toast from 'react-hot-toast'
 import { Plus, Trash2, ChevronUp, ChevronDown, ChevronRight } from 'lucide-react'
-import { getChildItems, upsertChildItem, deleteChildItem } from '@/lib/queries'
+import { getChildItems, upsertChildItem, deleteChildItem, classifyError } from '@/lib/queries'
 import { TextField, TextareaField } from '@/components/editors/fields'
 import type { PricingCategory, PricingCard } from '@/lib/types'
 
@@ -169,8 +169,8 @@ export const PricingCategoriesSection = forwardRef<PricingCategoriesSectionHandl
         ),
       )
       if (!silent) toast.success('Pricing saved')
-    } catch {
-      toast.error('Save failed')
+    } catch (err) {
+      toast.error(classifyError(err))
     } finally {
       setSaving(false)
     }

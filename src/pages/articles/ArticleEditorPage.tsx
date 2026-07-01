@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { ArrowLeft } from 'lucide-react'
-import { getArticle, createArticle, updateArticle } from '@/lib/queries'
+import { getArticle, createArticle, updateArticle, classifyError } from '@/lib/queries'
 import ContentHeader from '@/components/layout/ContentHeader'
 import TabBar from '@/components/editors/TabBar'
 import SeoTab from '@/components/editors/SeoTab'
@@ -96,8 +96,7 @@ export default function ArticleEditorPage() {
         toast.success(status === 'published' ? 'Published' : 'Saved')
       }
     } catch (err) {
-      const msg = (err as { message?: string })?.message || 'unknown error'
-      toast.error(`Save failed: ${msg}`)
+      toast.error(classifyError(err))
       console.error(err)
     } finally {
       setSaving(false)

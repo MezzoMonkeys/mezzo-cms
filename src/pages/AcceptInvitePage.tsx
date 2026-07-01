@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, type FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/contexts/AuthContext'
 import { supabase } from '@/lib/supabase'
+import { classifyError } from '@/lib/queries'
 
 export default function AcceptInvitePage() {
   const navigate = useNavigate()
@@ -51,7 +52,7 @@ export default function AcceptInvitePage() {
       }
       navigate('/', { replace: true })
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Something went wrong')
+      setError(classifyError(err))
     } finally {
       setSubmitting(false)
     }

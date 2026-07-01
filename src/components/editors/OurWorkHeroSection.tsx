@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import toast from 'react-hot-toast'
-import { getWorkImages, upsertChildItem } from '@/lib/queries'
+import { getWorkImages, upsertChildItem, classifyError } from '@/lib/queries'
 import ImageUpload from '@/components/editors/ImageUpload'
 import type { WorkImage } from '@/lib/types'
 
@@ -60,8 +60,8 @@ export function OurWorkHeroSection() {
         slots.map((s, i) => upsertChildItem('work_images', { ...s, sort_order: i } as Record<string, unknown>))
       )
       toast.success('Hero gallery saved')
-    } catch {
-      toast.error('Save failed')
+    } catch (err) {
+      toast.error(classifyError(err))
     } finally {
       setSaving(false)
     }

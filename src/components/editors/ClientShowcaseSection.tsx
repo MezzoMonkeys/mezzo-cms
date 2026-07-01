@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import toast from 'react-hot-toast'
 import { Plus, Trash2, ChevronUp, ChevronDown } from 'lucide-react'
-import { getChildItems, upsertChildItem, deleteChildItem } from '@/lib/queries'
+import { getChildItems, upsertChildItem, deleteChildItem, classifyError } from '@/lib/queries'
 import { TextField } from '@/components/editors/fields'
 import ImageUpload from '@/components/editors/ImageUpload'
 import type { ClientShowcase } from '@/lib/types'
@@ -53,8 +53,8 @@ export function ClientShowcaseSection() {
         items.map((item, i) => upsertChildItem('client_showcase', { ...item, sort_order: i } as Record<string, unknown>))
       )
       toast.success('Showcase cards saved')
-    } catch {
-      toast.error('Save failed')
+    } catch (err) {
+      toast.error(classifyError(err))
     } finally {
       setSaving(false)
     }

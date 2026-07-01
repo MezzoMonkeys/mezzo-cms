@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/contexts/AuthContext'
+import { classifyError } from '@/lib/queries'
 
 export default function LoginPage() {
   const { signIn } = useAuth()
@@ -18,7 +19,7 @@ export default function LoginPage() {
       await signIn(email, password)
       navigate('/')
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Sign in failed')
+      setError(classifyError(err))
     } finally {
       setLoading(false)
     }

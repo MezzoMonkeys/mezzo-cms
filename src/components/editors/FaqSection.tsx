@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import toast from 'react-hot-toast'
 import { Plus, Trash2, ChevronUp, ChevronDown } from 'lucide-react'
-import { getChildItems, upsertChildItem, deleteChildItem } from '@/lib/queries'
+import { getChildItems, upsertChildItem, deleteChildItem, classifyError } from '@/lib/queries'
 import { TextField, TextareaField } from '@/components/editors/fields'
 import type { FaqItem } from '@/lib/types'
 
@@ -49,8 +49,8 @@ export function FaqSection() {
         items.map((item, i) => upsertChildItem('faq_items', { ...item, sort_order: i } as Record<string, unknown>))
       )
       toast.success('FAQ items saved')
-    } catch {
-      toast.error('Save failed')
+    } catch (err) {
+      toast.error(classifyError(err))
     } finally {
       setSaving(false)
     }

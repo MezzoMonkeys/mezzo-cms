@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import toast from 'react-hot-toast'
 import { Image, Trash2, Link, Upload, Search } from 'lucide-react'
-import { listMediaFiles, deleteMediaFile, uploadFile } from '@/lib/queries'
+import { listMediaFiles, deleteMediaFile, uploadFile, classifyError } from '@/lib/queries'
 
 interface MediaFile {
   name: string
@@ -55,8 +55,8 @@ export default function MediaLibraryPage() {
       await uploadFile('media', `uploads/${Date.now()}-${file.name.replace(/[^a-z0-9.\-_]/gi, '_')}`, file)
       toast.success('Uploaded')
       await load()
-    } catch {
-      toast.error('Upload failed')
+    } catch (err) {
+      toast.error(classifyError(err))
     } finally {
       setUploading(false)
       if (inputRef.current) inputRef.current.value = ''
@@ -70,8 +70,8 @@ export default function MediaLibraryPage() {
       await deleteMediaFile(name)
       setFiles(prev => prev.filter(f => f.name !== name))
       toast.success('Deleted')
-    } catch {
-      toast.error('Delete failed')
+    } catch (err) {
+      toast.error(classifyError(err))
     } finally {
       setDeleting(null)
     }

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import toast from 'react-hot-toast'
 import { Plus, Trash2, ChevronUp, ChevronDown } from 'lucide-react'
-import { getWorkImages, upsertChildItem, deleteChildItem } from '@/lib/queries'
+import { getWorkImages, upsertChildItem, deleteChildItem, classifyError } from '@/lib/queries'
 import ImageUpload from '@/components/editors/ImageUpload'
 import type { WorkImage } from '@/lib/types'
 
@@ -57,8 +57,8 @@ export function WorkImagesSection({ page, label = 'Work Images' }: Props) {
         )
       )
       toast.success(`${label} saved`)
-    } catch {
-      toast.error('Save failed')
+    } catch (err) {
+      toast.error(classifyError(err))
     } finally {
       setSaving(false)
     }

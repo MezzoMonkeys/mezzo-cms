@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { Plus, Edit2, Trash2, FileText, Copy } from 'lucide-react'
-import { getArticles, deleteArticle, duplicateArticle } from '@/lib/queries'
+import { getArticles, deleteArticle, duplicateArticle, classifyError } from '@/lib/queries'
 import type { Status } from '@/lib/types'
 
 interface ArticleSummary {
@@ -44,8 +44,8 @@ export default function ArticlesListPage() {
       const result = await duplicateArticle(id)
       toast.success('Article duplicated')
       navigate(`/articles/${(result as ArticleSummary).id}`)
-    } catch {
-      toast.error('Duplicate failed')
+    } catch (err) {
+      toast.error(classifyError(err))
     } finally {
       setDuplicating(null)
     }
@@ -58,8 +58,8 @@ export default function ArticlesListPage() {
       await deleteArticle(id)
       setArticles(prev => prev.filter(a => a.id !== id))
       toast.success('Article deleted')
-    } catch {
-      toast.error('Delete failed')
+    } catch (err) {
+      toast.error(classifyError(err))
     } finally {
       setDeleting(null)
     }

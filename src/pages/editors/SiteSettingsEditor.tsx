@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import toast from 'react-hot-toast'
 import { Plus, Trash2 } from 'lucide-react'
-import { getSingletonPage, upsertSingletonPage, getChildItems, upsertChildItem, deleteChildItem } from '@/lib/queries'
+import { getSingletonPage, upsertSingletonPage, getChildItems, upsertChildItem, deleteChildItem, classifyError } from '@/lib/queries'
 import { TextField, TextareaField, SelectField } from '@/components/editors/fields'
 import ImageUpload from '@/components/editors/ImageUpload'
 import type { SiteSettings, FooterLink } from '@/lib/types'
@@ -43,7 +43,7 @@ export default function SiteSettingsEditor() {
       await Promise.all(links.map(link => upsertChildItem('footer_links', link as Record<string, unknown>)))
       toast.success('Settings saved')
     } catch (err) {
-      toast.error('Save failed')
+      toast.error(classifyError(err))
       console.error(err)
     } finally {
       setSaving(false)

@@ -4,19 +4,84 @@ import type { Status, UserRole, Site, UserWithAccess, Invitation } from './types
 type Table = string
 
 // ── Error classifier ──────────────────────────────────────────────────────────
-export function classifyError(err: unknown): string {
-  if (err instanceof Error) {
-    const m = err.message
-    if (m.includes('Failed to fetch') || m.includes('NetworkError')) return 'Network error — check your connection'
-    if (m.includes('Failed to send a request to the Edge Function')) return 'Could not reach the server — try again in a moment'
-    if (m.includes('JWT') || m.includes('invalid api key')) return 'Session expired — please refresh'
-    if (m.includes('row-level security') || m.includes('permission denied')) return "You don't have permission to do that"
-    if (m.includes('23505') || m.toLowerCase().includes('unique')) return 'Duplicate entry — this already exists'
-    if (m.includes('23503') || m.toLowerCase().includes('foreign key')) return 'Cannot delete — other items depend on this'
-    if (m.includes('timeout')) return 'Request timed out — try again'
-    return m
+// Maps specific DB check-constraint names to plain-English messages. Add a line
+// here whenever you add a CHECK constraint an editor could realistically trip.
+const CONSTRAINT_MESSAGES: Record<string, string> = {
+  articles_excerpt_check: 'Excerpt is too long — please keep it under 300 characters.',
+}
+
+// Supabase/PostgREST errors are thrown as plain objects, not Error instances,
+// so pull the message/code/details out of whatever shape we're handed.
+function errParts(err: unknown): { message: string; code: string; details: string } {
+  if (err && typeof err === 'object') {
+    const e = err as { message?: unknown; code?: unknown; details?: unknown }
+    return {
+      message: typeof e.message === 'string' ? e.message : '',
+      code: typeof e.code === 'string' ? e.code : '',
+      details: typeof e.details === 'string' ? e.details : '',
+    }
   }
-  return 'An unexpected error occurred'
+  if (typeof err === 'string') return { message: err, code: '', details: '' }
+  return { message: '', code: '', details: '' }
+}
+
+// Turn any thrown error into a clear, non-technical message safe to show an editor.
+export function classifyError(err: unknown): string {
+  const { message: m, code, details } = errParts(err)
+  const lower = m.toLowerCase()
+
+  // Connectivity
+  if (m.includes('Failed to fetch') || m.includes('NetworkError') || lower.includes('network error'))
+    return 'Network error — check your connection and try again.'
+  if (m.includes('Failed to send a request to the Edge Function'))
+    return 'Could not reach the server — please try again in a moment.'
+  if (lower.includes('timeout') || lower.includes('timed out'))
+    return 'The request timed out — please try again.'
+
+  // Auth / session
+  if (m.includes('JWT') || lower.includes('invalid api key'))
+    return 'Your session has expired — refresh the page and sign in again.'
+  if (lower.includes('invalid login credentials'))
+    return 'Incorrect email or password.'
+  if (lower.includes('email not confirmed'))
+    return 'This account hasn’t been activated yet.'
+  if (lower.includes('already registered') || lower.includes('already been registered') || lower.includes('email_exists'))
+    return 'An account with that email already exists.'
+  if (lower.includes('should be at least') && lower.includes('password'))
+    return m // Supabase's own readable "Password should be at least N characters."
+  if (lower.includes('different from the old') || lower.includes('same_password'))
+    return 'Your new password must be different from your current one.'
+  if (lower.includes('reauthentication') || lower.includes('requires a recent login'))
+    return 'For security, sign out and back in, then change your password.'
+
+  // Permissions
+  if (lower.includes('row-level security') || lower.includes('permission denied') || code === '42501' || code.startsWith('PGRST'))
+    return 'You don’t have permission to do that.'
+
+  // Postgres constraint violations (arrive as plain objects with a numeric code)
+  if (code === '23514' || lower.includes('violates check constraint')) {
+    for (const [name, msg] of Object.entries(CONSTRAINT_MESSAGES)) {
+      if (m.includes(name)) return msg
+    }
+    return 'One of the fields has a value that isn’t allowed — please review and try again.'
+  }
+  if (code === '23505' || lower.includes('duplicate key') || lower.includes('unique constraint')) {
+    if (lower.includes('slug')) return 'That URL slug is already used — please choose a different one.'
+    return 'This already exists — a duplicate isn’t allowed.'
+  }
+  if (code === '23503' || lower.includes('foreign key'))
+    return 'This item is still linked to something else, so it can’t be removed.'
+  if (code === '23502' || lower.includes('null value') || lower.includes('not-null')) {
+    const col = m.match(/column "([^"]+)"/)?.[1] ?? details.match(/column "([^"]+)"/)?.[1]
+    return col ? `Please fill in the required field: ${col.replace(/_/g, ' ')}.` : 'Please fill in all required fields.'
+  }
+  if (code === '22001' || lower.includes('value too long'))
+    return 'One of the fields is too long — please shorten it.'
+
+  // Readable, non-technical messages pass through; anything SQL-ish gets a safe generic.
+  const looksTechnical = /relation|constraint|column|syntax|violates|postgres|\bsql\b|pgrst/i.test(m)
+  if (m && !looksTechnical && m.length < 160) return m
+  return 'Something went wrong — please try again. If it keeps happening, let the studio know.'
 }
 
 // ── Current user ID helper ────────────────────────────────────────────────────

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useImperativeHandle, forwardRef } from 'react'
 import toast from 'react-hot-toast'
 import { Plus, Trash2, ChevronUp, ChevronDown } from 'lucide-react'
-import { getChildItems, upsertChildItem, deleteChildItem } from '@/lib/queries'
+import { getChildItems, upsertChildItem, deleteChildItem, classifyError } from '@/lib/queries'
 import { supabase } from '@/lib/supabase'
 import { TextField, TextareaField } from '@/components/editors/fields'
 import ImageUpload from '@/components/editors/ImageUpload'
@@ -86,8 +86,8 @@ export const PortfolioSection = forwardRef<PortfolioSectionHandle>(function Port
         )
       )
       if (!silent) toast.success('Portfolio items saved')
-    } catch {
-      toast.error('Save failed')
+    } catch (err) {
+      toast.error(classifyError(err))
     } finally {
       setSaving(false)
     }
@@ -109,7 +109,7 @@ export const PortfolioSection = forwardRef<PortfolioSectionHandle>(function Port
             style={{ background: 'var(--ci-navy)', color: 'var(--ci-hover)' }}>
             <Plus size={12} /> Add Item
           </button>
-          <button onClick={() => save().catch(err => toast.error(err.message))} disabled={saving || uploadingCount > 0}
+          <button onClick={() => save().catch(err => toast.error(classifyError(err)))} disabled={saving || uploadingCount > 0}
             className="text-xs font-semibold px-3 py-1.5 rounded-lg disabled:opacity-50"
             style={{ background: '#f4bf00', color: 'var(--ci-navy)' }}>
             {uploadingCount > 0 ? 'Uploading…' : saving ? 'Saving…' : 'Save'}
