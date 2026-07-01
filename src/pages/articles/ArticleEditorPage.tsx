@@ -120,7 +120,7 @@ export default function ArticleEditorPage() {
         saving={saving}
         onSave={() => save('draft')}
         onSaveAndPreview={async () => {
-          await save('draft')
+          await save()
           if (data.slug) window.open(`https://mezzo-html.vercel.app/insights/${data.slug}`, '_blank')
         }}
         onSchedule={data.scheduled_at ? () => save('scheduled') : undefined}
