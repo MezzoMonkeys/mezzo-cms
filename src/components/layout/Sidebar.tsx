@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom'
-import { FileText, Home, Info, Briefcase, DollarSign, Lightbulb, Mail, Settings, Plus, Inbox, Users, Image } from 'lucide-react'
+import { FileText, Home, Info, Briefcase, DollarSign, Lightbulb, Mail, Settings, Plus, Inbox, Users, Image, UserCircle } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 
 const pages = [
@@ -49,7 +49,7 @@ function NavItem({
 
 export default function Sidebar() {
   const navigate = useNavigate()
-  const { profile } = useAuth()
+  const { user, profile } = useAuth()
   const isAdmin = profile?.role === 'admin'
 
   return (
@@ -110,6 +110,25 @@ export default function Sidebar() {
           </NavItem>
         )}
       </nav>
+
+      <div className="mt-auto">
+        <div className="mx-4 mb-1" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }} />
+        <NavLink
+          to="/profile"
+          className="flex items-center gap-3 px-4 py-3 text-sm transition-colors"
+          style={({ isActive }) => ({
+            color: isActive ? '#ffffff' : 'rgba(255,255,255,0.6)',
+            background: isActive ? 'rgba(255,255,255,0.07)' : 'transparent',
+            borderLeft: isActive ? '3px solid var(--ci-yellow)' : '3px solid transparent',
+          })}
+        >
+          <UserCircle size={18} />
+          <div className="flex flex-col min-w-0">
+            <span className="truncate">{user?.email}</span>
+            <span className="text-xs" style={{ color: 'rgba(255,255,255,0.4)' }}>Profile &amp; password</span>
+          </div>
+        </NavLink>
+      </div>
     </aside>
   )
 }
